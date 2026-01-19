@@ -9,3 +9,41 @@
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
 }
+
+@plugin "daisyui" {
+    themes: light --default;
+}
+
+
+/* Chrome, Edge, Safari */
+::-webkit-scrollbar {
+    width: 10px;
+    /* lebar scrollbar */
+    height: 10px;
+    /* tinggi scrollbar horizontal */
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    /* warna track */
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #888;
+    /* warna thumb */
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+    /* warna saat hover */
+}
+
+/* Firefox */
+* {
+    scrollbar-width: thin;
+    /* auto | thin | none */
+    scrollbar-color: #888 #f1f1f1;
+    /* thumb | track */
+}
