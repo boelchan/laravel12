@@ -12,12 +12,14 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     @livewireStyles
+    <wireui:scripts />
+    <x-notify::notify />
 </head>
 
 <body>
     <div class="min-h-screen w-full items-stretch md:flex xl:flex relative">
         <!-- Sidebar -->
-        @if (Auth::check())
+        @if (true)
             <aside id="sidebar"
                 class="fixed left-0 top-0 z-30 h-screen w-64 -translate-x-full transform flex-col overflow-y-auto border-r border-slate-200 bg-slate-50 p-4 pr-0 transition-transform duration-300 ease-in-out md:sticky md:flex md:translate-x-0">
                 <div class="mb-4 flex items-center">
