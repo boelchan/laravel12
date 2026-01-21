@@ -2,6 +2,11 @@
 
 use Livewire\Component;
 
+use App\Models\User;
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+
 new class extends Component {
     public $name = '';
 
@@ -17,7 +22,7 @@ new class extends Component {
         'password' => 'required|confirmed|min:8',
     ];
 
-    public function register()
+    public function cekregister()
     {
         $this->validate();
 
@@ -44,7 +49,7 @@ new class extends Component {
         <div class="bg-base-100/60 card relative z-10 w-96 border border-slate-200 backdrop-blur-lg">
             <div class="card-body">
                 <h2 class="card-title mb-3">Register</h2>
-                <form wire:submit="register">
+                <form wire:submit="cekregister">
                     <fieldset class="fieldset">
                         <legend class="fieldset-legend">Name</legend>
                         <input type="text" placeholder="name" class="input input-primary w-full" wire:model="name">
@@ -69,7 +74,7 @@ new class extends Component {
                     <fieldset class="fieldset">
                         <legend class="fieldset-legend">Confirm Password</legend>
                         <input type="password" placeholder="confirm password" class="input input-primary w-full" wire:model="password_confirmation">
-                        @error('email')
+                        @error('password_confirmation')
                             <span class="text-error">{{ $message }}</span>
                         @enderror
                     </fieldset>
