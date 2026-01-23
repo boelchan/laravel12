@@ -1,34 +1,3 @@
-<?php
-
-use Livewire\Component;
-
-new class extends Component {
-    public $email = '';
-
-    public $password = '';
-
-    public $remember = false;
-
-    protected $rules = [
-        'email' => 'required|email',
-        'password' => 'required',
-    ];
-
-    public function authenticate()
-    {
-        $this->validate();
-
-        if (!Auth::attempt(['email' => $this->email, 'password' => $this->password], $this->remember)) {
-            $this->addError('email', 'The provided credentials do not match our records.');
-
-            return;
-        }
-
-        return redirect()->intended(route('dashboard'));
-    }
-};
-?>
-
 <div>
     <div class="absolute left-1/2 top-1/2 w-full -translate-x-1/2 -translate-y-1/2 p-3">
         <div class="mx-auto max-w-96 align-center">
