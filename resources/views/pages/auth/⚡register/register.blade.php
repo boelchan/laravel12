@@ -20,14 +20,18 @@
                     </fieldset>
                     <fieldset class="fieldset">
                         <legend class="fieldset-legend">Password</legend>
-                        <input type="password" placeholder="Password" class="input input-primary w-full" wire:model="password">
-                        @error('Password')
+                        <input type="password" placeholder="Password" class="input input-primary w-full"
+                            wire:model="password"
+                        >
+                        @error('password')
                             <span class="text-error">{{ $message }}</span>
                         @enderror
                     </fieldset>
                     <fieldset class="fieldset">
                         <legend class="fieldset-legend">Confirm Password</legend>
-                        <input type="password" placeholder="confirm password" class="input input-primary w-full" wire:model="password_confirmation">
+                        <input type="password" placeholder="confirm password" class="input input-primary w-full"
+                            wire:model="password_confirmation"
+                        >
                         @error('password_confirmation')
                             <span class="text-error">{{ $message }}</span>
                         @enderror
@@ -40,7 +44,9 @@
                 <a href="{{ route('login') }}" class="btn btn-link">Sudah punya akun? Login</a>
             </div>
         </div>
-        <div class='pointer-events-none absolute bottom-0 left-0 right-0 z-[1] h-[60vh] w-full bg-gradient-to-br from-cyan-200 via-indigo-800 to-violet-300 opacity-30 blur-[200px]'></div>
+        <div
+            class='pointer-events-none absolute bottom-0 left-0 right-0 z-[1] h-[60vh] w-full bg-gradient-to-br from-cyan-200 via-indigo-800 to-violet-300 opacity-30 blur-[200px]'>
+        </div>
 
     </div>
 

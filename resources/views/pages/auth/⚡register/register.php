@@ -1,13 +1,16 @@
 <?php
 
-use Livewire\Component;
-
-use App\Models\User;
+use App\Actions\Fortify\CreateNewUser;
+use App\Actions\Fortify\PasswordValidationRules;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\ValidationException;
+use Livewire\Component;
 
-new class extends Component {
+new class extends Component
+{
+    use PasswordValidationRules;
+
     public $name = '';
 
     public $email = '';
@@ -16,29 +19,58 @@ new class extends Component {
 
     public $password_confirmation = '';
 
-    protected $rules = [
-        'name' => 'required|string|max:255',
-        'email' => 'required|email|unique:users,email',
-        'password' => 'required|confirmed|min:8',
-    ];
+    /**
+     * Get the validation rules.
+     */
+    protected function rules(): array
+    {
+        return [
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => $this->passwordRules(),
+        ];
+    }
 
+    /**
+     * Register a new user using Fortify's logic.
+     */
     public function cekregister()
     {
-        $this->validate();
+        // Validate input (Fortify's validation approach)
+        $validated = $this->validate();
 
-        $user = User::create([
-            'name' => $this->name,
-            'email' => $this->email,
-            'password' => Hash::make($this->password),
-        ]);
+        try {
+            // Create user using Fortify's CreateNewUser action
+            $creator = app(CreateNewUser::class);
+            $user = $creator->create([
+                'name' => $this->name,
+                'email' => $this->email,
+                'password' => $this->password,
+                'password_confirmation' => $this->password_confirmation,
+            ]);
 
-        Auth::login($user);
+            // Fire Registered event (Fortify's approach)
+            event(new Registered($user));
 
-        event(new Registered($user));
+            // Login the user (Fortify's approach)
+            Auth::login($user);
 
-        // redirect to verification notice
-        session()->flash('status', 'Registration successful. Please verify your email.');
+            // Regenerate session for security (Fortify's PrepareAuthenticatedSession logic)
+            if (request()->hasSession()) {
+                request()->session()->regenerate();
+            }
 
-        return redirect()->route('dashboard');
+            notify()->success('Registration successful. Please verify your email.');
+
+            return redirect()->route('dashboard');
+        } catch (ValidationException $e) {
+            // Re-throw validation exceptions to display errors
+            throw $e;
+        } catch (\Exception $e) {
+            // Handle any other exceptions
+            $this->addError('email', 'An error occurred during registration. Please try again.');
+
+            return;
+        }
     }
 };

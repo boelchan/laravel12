@@ -6,8 +6,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// Route::livewire('/login', 'pages::auth.login')->name('login');
-// Route::livewire('/register', 'pages::auth.register')->name('register');
+Route::livewire('/login', 'pages::auth.login')->name('login');
+Route::livewire('/register', 'pages::auth.register')->name('register');
 
 Route::middleware('web')->group(function () {
     Route::livewire('/dashboard', 'pages::dashboard')->name('dashboard');

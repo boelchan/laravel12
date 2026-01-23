@@ -12,10 +12,11 @@
                 dr. WONGSO SUHENDRO, SpOG
             </div>
         </div>
-        <div class="bg-base-100/60 card relative z-10 mx-auto mt-8 w-full max-w-96 border border-slate-200 backdrop-blur-lg">
+        <div
+            class="bg-base-100/60 card relative z-10 mx-auto mt-8 w-full max-w-96 border border-slate-200 backdrop-blur-lg">
             <div class="card-body">
                 <h2 class="card-title mb-3">Login</h2>
-                <form wire:submit.prevent="authenticate">
+                <form wire:submit="authenticate">
                     <fieldset class="fieldset">
                         <legend class="fieldset-legend">Email</legend>
                         <input type="email" placeholder="Email" class="input input-primary w-full" wire:model="email">
@@ -30,7 +31,9 @@
                             {{-- <a href="{{ route('password.request') }}" class="btn btn-link p-0 btn-sm">Lupa password ?</a> --}}
                         </div>
 
-                        <input type="password" placeholder="Password" class="input input-primary w-full" wire:model="password">
+                        <input type="password" placeholder="Password" class="input input-primary w-full"
+                            wire:model="password"
+                        >
                         @error('password')
                             <span class="text-error">{{ $message }}</span>
                         @enderror
@@ -50,7 +53,9 @@
                 @endif
             </div>
         </div>
-        <div class='pointer-events-none absolute bottom-0 left-0 right-0 z-[1] h-[60vh] w-full bg-gradient-to-br from-cyan-200 via-indigo-800 to-violet-300 opacity-30 blur-[200px]'></div>
+        <div
+            class='pointer-events-none absolute bottom-0 left-0 right-0 z-[1] h-[60vh] w-full bg-gradient-to-br from-cyan-200 via-indigo-800 to-violet-300 opacity-30 blur-[200px]'>
+        </div>
     </div>
 
 </div>

@@ -19,17 +19,20 @@
 <body>
     <div class="min-h-screen w-full items-stretch md:flex xl:flex relative">
         <!-- Sidebar -->
-        @if (true)
+        @if (Auth::check())
             <aside id="sidebar"
-                class="fixed left-0 top-0 z-30 h-screen w-64 -translate-x-full transform flex-col overflow-y-auto border-r border-slate-200 bg-slate-50 p-4 pr-0 transition-transform duration-300 ease-in-out md:sticky md:flex md:translate-x-0">
+                class="fixed left-0 top-0 z-30 h-screen w-64 -translate-x-full transform flex-col overflow-y-auto border-r border-slate-200 bg-slate-50 p-4 pr-0 transition-transform duration-300 ease-in-out md:sticky md:flex md:translate-x-0"
+            >
                 <div class="mb-4 flex items-center">
                     <img src="{{ asset('icon/icon-long.png') }}" alt="logo" class="h-10">
                 </div>
 
                 <nav class="flex-1 overflow-y-auto">
                     <ul class="menu w-full">
-                        <li><a wire:navigate class="{{ Str::startsWith(url()->current(), url('dashboard')) ? 'menu-active' : '' }}"
-                                href={{ route('dashboard') }}> <i class="ti ti-home text-lg"></i>Dashboard</a></li>
+                        <li><a wire:navigate
+                                class="{{ Str::startsWith(url()->current(), url('dashboard')) ? 'menu-active' : '' }}"
+                                href={{ route('dashboard') }}
+                            > <i class="ti ti-home text-lg"></i>Dashboard</a></li>
                         <li>
                             <a><i class="ti ti-user-plus"></i>Parent</a>
                             <ul>
@@ -48,7 +51,8 @@
                 <div class="mt-auto hidden pr-4 pt-4 sm:block">
                     <div class="dropdown dropdown-top w-full rounded-lg border border-slate-300">
                         <div tabindex="0" role="button"
-                            class="flex w-full cursor-pointer items-center justify-between rounded-lg hover:bg-slate-200">
+                            class="flex w-full cursor-pointer items-center justify-between rounded-lg hover:bg-slate-200"
+                        >
                             <div class="flex items-center gap-2">
                                 <div class="bg-base-600 flex h-8 w-8 items-center justify-center">
                                     <i class="ti ti-user-circle text-xl"></i>
@@ -63,13 +67,17 @@
                         </div>
 
                         <ul tabindex="0"
-                            class="z-100 menu dropdown-content menu-sm rounded-box bg-base-100 my-3 w-full border border-slate-200 p-2">
+                            class="z-100 menu dropdown-content menu-sm rounded-box bg-base-100 my-3 w-full border border-slate-200 p-2"
+                        >
                             <li> <a wire:navigate href=""> <i class="ti ti-user text-lg"></i> Profil </a> </li>
-                            <li> <a wire:navigate href=""> <i class="ti ti-lock text-lg"></i> Ubah Password </a> </li>
+                            <li> <a wire:navigate href=""> <i class="ti ti-lock text-lg"></i> Ubah Password </a>
+                            </li>
                             <div class="divider m-0"></div>
                             <li>
-                                <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
-                                    class="text-red-500 hover:bg-red-50 hover:text-red-600">
+                                <a href="#"
+                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
+                                    class="text-red-500 hover:bg-red-50 hover:text-red-600"
+                                >
                                     <i class="ti ti-logout text-lg"></i> Logout
                                 </a>
                             </li>
@@ -80,7 +88,7 @@
         @endif
 
         <!-- Form logout tersembunyi -->
-        <form id="logout-form" action="" method="POST" class="hidden">
+        <form id="logout-form" action="/logout" method="POST" class="hidden">
             @csrf
         </form>
 
@@ -90,10 +98,18 @@
         <div class="flex flex-1 flex-col">
             <!-- Mobile Header -->
             <header
-                class="sticky left-0 right-0 top-0 z-20 flex items-center justify-between border-b border-slate-200 bg-white/30 p-2 backdrop-blur-lg md:hidden">
+                class="sticky left-0 right-0 top-0 z-20 flex items-center justify-between border-b border-slate-200 bg-white/30 p-2 backdrop-blur-lg md:hidden"
+            >
                 <button id="hamburger-btn" class="btn btn-ghost btn-circle">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7" />
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="h-5 w-5"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                    >
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16M4 18h7" />
                     </svg>
                 </button>
                 <div class="flex items-center gap-2 text-xl font-bold text-slate-900">
@@ -108,19 +124,25 @@
                         <i class="ti ti-user text-xl"></i>
                     </div>
                     @auth
-                        <ul tabindex="0" class="z-100 menu dropdown-content menu-sm rounded-box bg-base-100 my-3 w-48 border border-slate-200 p-2">
+                        <ul tabindex="0"
+                            class="z-100 menu dropdown-content menu-sm rounded-box bg-base-100 my-3 w-48 border border-slate-200 p-2"
+                        >
                             <!-- User Info -->
                             <li class="py-1">
                                 <span class="my-0 font-semibold uppercase">{{ Auth::user()?->name }}</span>
                                 <span class="text-xs text-slate-500">{{ Auth::user()?->email }}</span>
                             </li>
                             <div class="divider m-0"></div>
-                            <li> <a wire:navigate href="{{ route('profile') }}"> <i class="ti ti-user text-lg"></i> Profil </a> </li>
-                            <li> <a wire:navigate href="{{ route('profile') }}"> <i class="ti ti-lock text-lg"></i> Ubah Password </a> </li>
+                            <li> <a wire:navigate href=""> <i class="ti ti-user text-lg"></i> Profil
+                                </a> </li>
+                            <li> <a wire:navigate href=""> <i class="ti ti-lock text-lg"></i> Ubah
+                                    Password </a> </li>
                             <div class="divider m-0"></div>
                             <li>
-                                <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
-                                    class="text-red-500 hover:bg-red-50 hover:text-red-600">
+                                <a href="#"
+                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
+                                    class="text-red-500 hover:bg-red-50 hover:text-red-600"
+                                >
                                     <i class="ti ti-logout text-lg"></i> Log out
                                 </a>
                             </li>
@@ -131,17 +153,6 @@
 
             <!-- Main Content -->
             <main class="flex-1 overflow-y-auto p-6 lg:p-8">
-                {{-- Flash messages --}}
-                @if (session('status'))
-                    <div role="alert" class="alert alert-success">
-                        <span>{{ session('status') }}</span>
-                    </div>
-                @endif
-                @if (session('error'))
-                    <div role="alert" class="alert alert-danger">
-                        <span>{{ session('error') }}</span>
-                    </div>
-                @endif
 
                 {{ $slot }}
 
