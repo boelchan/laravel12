@@ -41,10 +41,11 @@
                                 <li><a>Submenu 2</a></li>
                             </ul>
                         </li>
-                        {{-- <h2 class="menu-title mt-4">Administrator</h2>
-                        <li><a wire:navigate class="{{ Str::startsWith(url()->current(), url('user')) ? 'menu-active' : '' }}" href={{ route('user') }}> <i class="ti ti-users text-lg"></i>User</a></li> --}}
-                        {{-- <li><a wire:navigate class="{{ Str::startsWith(url()->current(), url('hak-akses')) ? 'menu-active' : '' }}" href={{ route('hak-akses') }}> <i class="ti ti-lock-cog text-lg"></i>Hak Akses</a></li> --}}
-
+                        <h2 class="menu-title mt-4">Administrator</h2>
+                        <li><a wire:navigate
+                                class="{{ Str::startsWith(url()->current(), url('user')) ? 'menu-active' : '' }}"
+                                href={{ route('user') }}
+                            > <i class="ti ti-users text-lg"></i>User</a></li>
                     </ul>
                 </nav>
 

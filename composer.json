@@ -19,8 +19,9 @@
         "wireui/wireui": "^2.5"
     },
     "require-dev": {
-        "barryvdh/laravel-debugbar": "^3.16",
         "fakerphp/faker": "^1.23",
+        "fruitcake/laravel-debugbar": "^4.0",
+        "laravel-lang/lang": "^15.27",
         "laravel/pail": "^1.2.2",
         "laravel/pint": "^1.24",
         "laravel/sail": "^1.41",

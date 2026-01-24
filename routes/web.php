@@ -9,6 +9,7 @@ Route::get('/', function () {
 Route::livewire('/login', 'pages::auth.login')->name('login');
 Route::livewire('/register', 'pages::auth.register')->name('register');
 
-Route::middleware('web')->group(function () {
+Route::middleware('auth')->group(function () {
     Route::livewire('/dashboard', 'pages::dashboard')->name('dashboard');
+    Route::livewire('/user', 'pages::user.index')->name('user');
 });
