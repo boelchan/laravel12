@@ -9,6 +9,17 @@ trait WithTableX
 {
     use WithoutUrlPagination, WithPagination;
 
+    public function mountWithTableX()
+    {
+        if (property_exists($this, 'sortFieldDefault')) {
+            $this->sortField = $this->sortFieldDefault;
+        }
+
+        if (property_exists($this, 'sortDirectionDefault')) {
+            $this->sortDirection = $this->sortDirectionDefault;
+        }
+    }
+
     public $perPage = 10;
 
     public bool $open = false;
@@ -34,6 +45,13 @@ trait WithTableX
         $this->resetPage(); // supaya balik ke page 1 kalau perPage diubah
     }
 
+    public function updated($property)
+    {
+        if (str_starts_with($property, 'search_')) {
+            $this->resetPage();
+        }
+    }
+
     public function resetFilters()
     {
         foreach (get_object_vars($this) as $property => $value) {
@@ -41,13 +59,5 @@ trait WithTableX
                 $this->$property = null;
             }
         }
-    }
-
-    public function applyTable($query)
-    {
-        return $query
-            ->orderBy($this->sortField, $this->sortDirection)
-            ->paginate($this->perPage)
-            ->onEachSide(1);
     }
 }

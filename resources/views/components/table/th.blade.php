@@ -1,4 +1,4 @@
-@props(['sort' => null, 'label'=>"", 'width' => 'auto'])
+@props(['sort' => null, 'label' => '', 'width' => 'auto'])
 
 @aware(['sortField', 'sortDirection'])
 

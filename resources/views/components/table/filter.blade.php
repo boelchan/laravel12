@@ -2,11 +2,11 @@
     <!-- Bar atas -->
     <div class="flex justify-between">
         <div class="flex gap-2">
-            <button type="button"
-                wire:click="resetFilters" class="btn btn-soft btn-secondary w-10 h-10 lg:w-auto">
+            {{-- <button type="button" wire:click="resetFilters" class="btn btn-soft btn-secondary btn-sm w-10 h-10 lg:w-auto">
                 <i class="ti ti-filter-2-x text-lg"></i>
                 <span class="hidden lg:inline">Reset Filter</span>
-            </button>
+            </button> --}}
+            Pencarian
         </div>
 
         <!-- Slot tombol tambahan -->
