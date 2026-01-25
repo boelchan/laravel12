@@ -1,6 +1,6 @@
-<nav role="navigation" class="flex flex-col items-center justify-between gap-2 sm:flex-row">
+<nav class="flex flex-col items-center justify-between gap-2 sm:flex-row" role="navigation">
     @if ($paginator->total() > $this->perPage)
-        <select wire:model.change="perPage" class="select w-16 flex-none pr-0 input-sm">
+        <select class="select input-sm w-16 flex-none pr-0" wire:model.change="perPage">
             <option value="10">10</option>
             <option value="25">25</option>
             <option value="50">50</option>
@@ -37,23 +37,39 @@
             {{-- Previous Page --}}
             @if ($paginator->onFirstPage())
             @else
-                <button type="button" wire:click="previousPage" class="join-item btn btn-ghost btn-circle btn-primary btn-sm">
-                    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="1.5"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-chevron-left"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 6l-6 6l6 6" /></svg>
+                <button class="join-item btn btn-ghost btn-circle btn-primary btn-sm" type="button" wire:click="previousPage">
+                    <svg
+                        class="icon icon-tabler icons-tabler-outline icon-tabler-chevron-left"
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.5"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    >
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <path d="M15 6l-6 6l6 6" />
+                    </svg>
                 </button>
             @endif
 
             {{-- Numbers --}}
             @foreach ($elements as $element)
                 @if (is_string($element))
-                    <button type="button" class="join-item">{{ $element }}</button>
+                    <button class="join-item" type="button">{{ $element }}</button>
                 @endif
 
                 @if (is_array($element))
                     @foreach ($element as $page => $url)
                         @if ($page == $paginator->currentPage())
-                            <button type="button" class="join-item btn btn-soft btn-circle btn-primary btn-sm">{{ $page }}</button>
+                            <button class="join-item btn btn-soft btn-circle btn-primary btn-sm" type="button">{{ $page }}</button>
                         @else
-                            <button type="button" wire:click="gotoPage({{ $page }})" class="join-item btn btn-ghost btn-circle btn-primary btn-sm">{{ $page }}</button>
+                            <button class="join-item btn btn-ghost btn-circle btn-primary btn-sm" type="button"
+                                wire:click="gotoPage({{ $page }})"
+                            >{{ $page }}</button>
                         @endif
                     @endforeach
                 @endif
@@ -61,8 +77,22 @@
 
             {{-- Next Page --}}
             @if ($paginator->hasMorePages())
-                <button type="button" wire:click="nextPage" class="join-item btn btn-ghost btn-circle btn-primary btn-sm">
-                    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="1.5"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-chevron-right"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 6l6 6l-6 6" /></svg>
+                <button class="join-item btn btn-ghost btn-circle btn-primary btn-sm" type="button" wire:click="nextPage">
+                    <svg
+                        class="icon icon-tabler icons-tabler-outline icon-tabler-chevron-right"
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.5"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    >
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <path d="M9 6l6 6l-6 6" />
+                    </svg>
                 </button>
             @else
             @endif

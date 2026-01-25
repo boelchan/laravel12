@@ -1,5 +1,5 @@
 <div>
-    <h1 class="text-2xl font-medium text-slate-900 mb-10">{{ $title }}</h1>
+    <h1 class="mb-10 text-2xl font-medium text-slate-900">{{ $title }}</h1>
 
     <div>
         {{-- filter --}}
@@ -14,13 +14,13 @@
                 </div>
 
                 <div class="flex gap-2">
-                    <a class="btn btn-soft btn-primary w-8 lg:w-auto btn-sm" href="/">
+                    <a class="btn btn-soft btn-primary btn-sm w-8 lg:w-auto" href="/">
                         <i class="ti ti-plus text-lg"></i> <span class="hidden lg:inline">Tambah</span>
                     </a>
                 </div>
             </div>
             <div>
-                <div class="grid grid-cols-2 lg:gap-4 gap-x-4 gap-y-0 lg:grid-cols-4 xl:grid-cols-5">
+                <div class="grid grid-cols-2 gap-x-4 gap-y-0 lg:grid-cols-4 lg:gap-4 xl:grid-cols-5">
                     <x-input-search label="Nama" placeholder="cari nama..." wire:model.live.debounce.500ms="search_name" />
                     <x-input-search label="Email" placeholder="cari email..." wire:model.live.debounce.500ms="search_email" />
                 </div>
@@ -45,9 +45,9 @@
                         <td class="p-2"> {{ $d->email }} </td>
                         <td class="p-2"> {{ $d->email_verified_at->format('d-m-Y H:i') }} </td>
                         <td class="p-2">
-                            <button class="btn btn-xs btn-warning btn-soft btn-square" wire:click="edit({{ $d->id }})">
+                            <button class="btn btn-xs btn-warning btn-square btn-soft" wire:click="edit({{ $d->id }})">
                                 <i class="ti ti-pencil text-lg"></i></button>
-                            <button class="btn btn-soft btn-xs btn-error btn-square" wire:click="delete({{ $d->id }})"
+                            <button class="btn btn-xs btn-square btn-error btn-soft" wire:click="delete({{ $d->id }})"
                                 wire:confirm="Hapus ?"
                             >
                                 <i class="ti ti-trash text-lg"></i>

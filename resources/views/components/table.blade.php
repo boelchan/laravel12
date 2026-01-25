@@ -2,7 +2,7 @@
     'paginate' => null, // data collection (paginator)
 ])
 
-<div class="overflow-x-auto rounded border border-slate-200 mt-4">
+<div class="mt-4 overflow-x-auto rounded border border-slate-200">
     <table class="table">
         {{ $slot }}
     </table>
