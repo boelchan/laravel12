@@ -1,6 +1,6 @@
 @props(['sortField', 'sortDirection'])
 
-<thead class="bg-slate-50">
+<thead {{ $attributes }}>
     <tr>
         {{ $slot }}
     </tr>

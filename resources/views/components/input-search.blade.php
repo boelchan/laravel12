@@ -3,7 +3,8 @@
 <x-input :label="$label" {{ $attributes }}>
     <x-slot name="append">
         <x-button
-            class="h-full"
+            class="tooltip"
+            data-tip="Reset"
             icon="x-mark"
             rounded="rounded-r-md"
             flat
