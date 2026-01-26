@@ -47,8 +47,15 @@
                         <td class="p-2">
                             <button class="btn btn-xs btn-warning btn-square btn-soft" wire:click="edit({{ $d->id }})">
                                 <i class="ti ti-pencil text-lg"></i></button>
-                            <button class="btn btn-xs btn-square btn-error btn-soft" wire:click="delete({{ $d->id }})"
-                                wire:confirm="Hapus ?"
+
+                            <button class="btn btn-xs btn-square btn-error btn-soft"
+                                x-on:confirm="{
+                                    title: 'Hapus {{ $d->name }}?',
+                                    icon: 'warning',
+                                    description: 'Data yang dihapus tidak dapat dikembalikan',
+                                    method: 'delete',
+                                    params: {{ $d->id }}
+                                }"
                             >
                                 <i class="ti ti-trash text-lg"></i>
                             </button>

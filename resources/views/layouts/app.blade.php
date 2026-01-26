@@ -14,9 +14,11 @@
     @livewireStyles
     <wireui:scripts />
 </head>
+
 <body>
-    <x-notify::notify />
-    <x-notifications />
+    <x-notifications position="top" />
+    <x-dialog z-index="z-50" />
+
     <div class="relative min-h-screen w-full items-stretch md:flex xl:flex">
         <!-- Sidebar -->
         @if (Auth::check())
