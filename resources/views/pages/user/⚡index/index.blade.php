@@ -1,7 +1,14 @@
 <div>
-    <h1 class="mb-10 text-2xl font-medium text-slate-900">{{ $title }}</h1>
+    <h1 class="text-2xl font-medium text-slate-900">User</h1>
+    <div class="breadcrumbs text-sm">
+        <ul>
+            <li><a href="{{ route('dashboard') }}"><i class="ti ti-home"></i></a></li>
+            <li>User</li>
+            <li>Data</li>
+        </ul>
+    </div>
 
-    <div>
+    <div class="mt-10">
         {{-- filter --}}
         <div>
             <div class="flex justify-between">
@@ -14,7 +21,7 @@
                 </div>
 
                 <div class="flex gap-2">
-                    <a class="btn btn-soft btn-primary btn-sm w-8 lg:w-auto" href="/">
+                    <a class="btn btn-soft btn-primary btn-sm w-8 lg:w-auto" href="{{ route('user.create') }}" wire:navigate>
                         <i class="ti ti-plus text-lg"></i> <span class="hidden lg:inline">Tambah</span>
                     </a>
                 </div>
@@ -33,6 +40,7 @@
                 <x-table.th width="5%" />
                 <x-table.th label="Nama" sort="name" width="20%" />
                 <x-table.th label="Email" sort="email" width="20%" />
+                <x-table.th label="Role" />
                 <x-table.th label="Verifikasi Email" />
                 <x-table.th />
             </x-table.thead>
@@ -43,7 +51,8 @@
                         <td class="p-2"> {{ $index + 1 }} </td>
                         <td class="p-2"> {{ $d->name }} </td>
                         <td class="p-2"> {{ $d->email }} </td>
-                        <td class="p-2"> {{ $d->email_verified_at->format('d-m-Y H:i') }} </td>
+                        <td class="p-2"> {{ $d?->roles->pluck('name')->implode(', ') }} </td>
+                        <td class="p-2"> {{ $d->email_verified_at?->format('d-m-Y H:i') }} </td>
                         <td class="p-2">
                             <button class="btn btn-xs btn-warning btn-square btn-soft" wire:click="edit({{ $d->id }})">
                                 <i class="ti ti-pencil text-lg"></i></button>

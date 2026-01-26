@@ -1,9 +1,10 @@
 <?php
 
-use Livewire\Component;
 use Illuminate\Validation\ValidationException;
+use Livewire\Component;
 
-new class extends Component {
+new class extends Component
+{
     public $email = '';
 
     public $password = '';
@@ -33,7 +34,7 @@ new class extends Component {
         }
 
         // Attempt authentication (Fortify's AttemptToAuthenticate logic)
-        if (!Auth::attempt(['email' => $this->email, 'password' => $this->password], $this->remember)) {
+        if (! Auth::attempt(['email' => $this->email, 'password' => $this->password], $this->remember)) {
             // Increment failed attempts
             $this->incrementLoginAttempts();
 

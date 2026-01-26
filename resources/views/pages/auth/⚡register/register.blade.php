@@ -6,30 +6,28 @@
                 <form wire:submit="cekregister">
                     <fieldset class="fieldset">
                         <legend class="fieldset-legend">Name</legend>
-                        <input type="text" placeholder="name" class="input input-primary w-full" wire:model="name">
+                        <input class="input input-primary w-full" type="text" placeholder="name" wire:model="name">
                         @error('name')
                             <span class="text-error">{{ $message }}</span>
                         @enderror
                     </fieldset>
                     <fieldset class="fieldset">
                         <legend class="fieldset-legend">Email</legend>
-                        <input type="email" placeholder="Email" class="input input-primary w-full" wire:model="email">
+                        <input class="input input-primary w-full" type="email" placeholder="Email" wire:model="email">
                         @error('email')
                             <span class="text-error">{{ $message }}</span>
                         @enderror
                     </fieldset>
                     <fieldset class="fieldset">
                         <legend class="fieldset-legend">Password</legend>
-                        <input type="password" placeholder="Password" class="input input-primary w-full"
-                            wire:model="password"
-                        >
+                        <input class="input input-primary w-full" type="password" placeholder="Password" wire:model="password">
                         @error('password')
                             <span class="text-error">{{ $message }}</span>
                         @enderror
                     </fieldset>
                     <fieldset class="fieldset">
                         <legend class="fieldset-legend">Confirm Password</legend>
-                        <input type="password" placeholder="confirm password" class="input input-primary w-full"
+                        <input class="input input-primary w-full" type="password" placeholder="confirm password"
                             wire:model="password_confirmation"
                         >
                         @error('password_confirmation')
@@ -41,7 +39,7 @@
                     </div>
                 </form>
                 <div class="divider">OR</div>
-                <a href="{{ route('login') }}" class="btn btn-link">Sudah punya akun? Login</a>
+                <a class="btn btn-link" href="{{ route('login') }}">Sudah punya akun? Login</a>
             </div>
         </div>
         <div

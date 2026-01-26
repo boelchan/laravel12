@@ -16,7 +16,7 @@
 
                     <x-input class="mb-5" label="Email" wire:model="email" />
 
-                    <x-input class="mb-5" label="Password" wire:model="password" />
+                    <x-input class="mb-5" type="password" label="Password" wire:model="password" />
 
                     <x-checkbox label="Remember me" wire:model="remember" />
 

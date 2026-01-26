@@ -1,16 +1,14 @@
 <?php
 
-use App\Models\User;
 use App\Livewire\Traits\WithTableX;
-use Livewire\Attributes\Computed;
+use App\Models\User;
 use Livewire\Component;
+use Livewire\Attributes\Computed;
 use WireUi\Traits\WireUiActions;
 
 new class extends Component
 {
-    use WithTableX, WireUiActions;
-
-    public $title = 'User';
+    use WireUiActions, WithTableX;
 
     public $sortFieldDefault = 'name';
     public $sortDirectionDefault = 'asc';
@@ -21,7 +19,8 @@ new class extends Component
     #[Computed]
     public function dataTable()
     {
-        return User::when($this->search_name, fn($q) => $q->where('name', 'like', '%' . $this->search_name . '%'))
+        return User::with('roles')
+            ->when($this->search_name, fn($q) => $q->where('name', 'like', '%' . $this->search_name . '%'))
             ->when($this->search_email, fn($q) => $q->where('email', 'like', '%' . $this->search_email . '%'))
             ->orderBy($this->sortField, $this->sortDirection)
             ->paginate($this->perPage)

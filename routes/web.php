@@ -12,4 +12,5 @@ Route::livewire('/register', 'pages::auth.register')->name('register');
 Route::middleware('auth')->group(function () {
     Route::livewire('/dashboard', 'pages::dashboard')->name('dashboard');
     Route::livewire('/user', 'pages::user.index')->name('user');
+    Route::livewire('/user/create', 'pages::user.create')->name('user.create');
 });
