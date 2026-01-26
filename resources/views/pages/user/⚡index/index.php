@@ -4,10 +4,11 @@ use App\Models\User;
 use App\Livewire\Traits\WithTableX;
 use Livewire\Attributes\Computed;
 use Livewire\Component;
+use WireUi\Traits\WireUiActions;
 
 new class extends Component
 {
-    use WithTableX;
+    use WithTableX, WireUiActions;
 
     public $title = 'User';
 
@@ -25,5 +26,12 @@ new class extends Component
             ->orderBy($this->sortField, $this->sortDirection)
             ->paginate($this->perPage)
             ->onEachSide(1);
+    }
+
+    public function delete($id)
+    {
+        $user = User::findOrFail($id);
+        $user->delete();
+        $this->notification()->success('Berhasil', 'User berhasil dihapus');
     }
 };

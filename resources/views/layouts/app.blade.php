@@ -13,10 +13,10 @@
 
     @livewireStyles
     <wireui:scripts />
-    <x-notify::notify />
 </head>
-
 <body>
+    <x-notify::notify />
+    <x-notifications />
     <div class="relative min-h-screen w-full items-stretch md:flex xl:flex">
         <!-- Sidebar -->
         @if (Auth::check())
