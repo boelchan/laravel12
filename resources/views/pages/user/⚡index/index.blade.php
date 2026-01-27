@@ -1,6 +1,6 @@
 <div>
     <h1 class="text-2xl font-medium text-slate-900">User</h1>
-    <div class="breadcrumbs text-sm">
+    <div class="breadcrumbs text-xs text-slate-500 p-0">
         <ul>
             <li><a href="{{ route('dashboard') }}"><i class="ti ti-home"></i></a></li>
             <li>User</li>
@@ -8,7 +8,7 @@
         </ul>
     </div>
 
-    <div class="mt-10">
+    <div class="mt-6">
         {{-- filter --}}
         <div>
             <div class="flex justify-between">
@@ -54,8 +54,8 @@
                         <td class="p-2"> {{ $d?->roles->pluck('name')->implode(', ') }} </td>
                         <td class="p-2"> {{ $d->email_verified_at?->format('d-m-Y H:i') }} </td>
                         <td class="p-2">
-                            <button class="btn btn-xs btn-warning btn-square btn-soft" wire:click="edit({{ $d->id }})">
-                                <i class="ti ti-pencil text-lg"></i></button>
+                            <a class="btn btn-xs btn-warning btn-square btn-soft" href="{{ route('user.edit', $d->id) }}">
+                                <i class="ti ti-pencil text-lg"></i></a>
 
                             <button class="btn btn-xs btn-square btn-error btn-soft"
                                 x-on:confirm="{
@@ -64,8 +64,7 @@
                                     description: 'Data yang dihapus tidak dapat dikembalikan',
                                     method: 'delete',
                                     params: {{ $d->id }}
-                                }"
-                            >
+                                }">
                                 <i class="ti ti-trash text-lg"></i>
                             </button>
                         </td>

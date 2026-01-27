@@ -16,7 +16,7 @@
 </head>
 
 <body>
-    <x-notifications position="top" />
+    <x-notifications position="top" solid />
     <x-dialog z-index="z-50" />
 
     <div class="relative min-h-screen w-full items-stretch md:flex xl:flex">

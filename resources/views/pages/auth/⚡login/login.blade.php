@@ -12,15 +12,12 @@
         <div class="bg-base-100/60 card relative z-10 mx-auto mt-8 w-full max-w-96 border border-slate-200 backdrop-blur-lg">
             <div class="card-body">
                 <h2 class="card-title mb-3">Login</h2>
-                <form wire:submit="authenticate">
+                <form wire:submit="authenticate" class="grid gap-4">
 
-                    <x-input class="mb-5" label="Email" wire:model="email" />
-
-                    <x-input class="mb-5" type="password" label="Password" wire:model="password" />
-
+                    <x-input label="Email" wire:model="email" />
+                    <x-password label="Password" wire:model="password" />
                     <x-checkbox label="Remember me" wire:model="remember" />
-
-                    <button class="btn btn-primary btn-block btn-circle mt-6">Login</button>
+                    <button class="btn btn-primary btn-block btn-circle">Login</button>
                 </form>
 
                 @if (Route::has('register'))
