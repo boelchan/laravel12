@@ -1,6 +1,6 @@
 <div>
     <h1 class="text-2xl font-medium text-slate-900">User</h1>
-    <div class="breadcrumbs text-xs text-slate-500 p-0">
+    <div class="breadcrumbs p-0 text-xs text-slate-500">
         <ul>
             <li><a href="{{ route('dashboard') }}"><i class="ti ti-home"></i></a></li>
             <li>User</li>
@@ -58,13 +58,8 @@
                                 <i class="ti ti-pencil text-lg"></i></a>
 
                             <button class="btn btn-xs btn-square btn-error btn-soft"
-                                x-on:confirm="{
-                                    title: 'Hapus {{ $d->name }}?',
-                                    icon: 'warning',
-                                    description: 'Data yang dihapus tidak dapat dikembalikan',
-                                    method: 'delete',
-                                    params: {{ $d->id }}
-                                }">
+                                wire:click="confirmDelete({{ $d->id }}, '{{ $d->name }}')"
+                            >
                                 <i class="ti ti-trash text-lg"></i>
                             </button>
                         </td>

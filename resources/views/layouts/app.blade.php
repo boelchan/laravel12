@@ -53,6 +53,12 @@
                             >
                                 <i class="ti ti-users text-lg"></i>User</a>
                         </li>
+                        <li>
+                            <a class="{{ Str::startsWith(url()->current(), url('permission')) ? 'menu-active' : '' }}"
+                                href={{ route('permission') }} wire:navigate
+                            >
+                                <i class="ti ti-adjustments-alt text-lg"></i>Hak Akses</a>
+                        </li>
                     </ul>
                 </nav>
 

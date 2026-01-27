@@ -5,14 +5,10 @@
             <div class="text-center">
                 Rekam Medis Elektronik
             </div>
-            <div class="mt-5 text-center">
-                Praktek Dokter
-            </div>
         </div>
         <div class="bg-base-100/60 card relative z-10 mx-auto mt-8 w-full max-w-96 border border-slate-200 backdrop-blur-lg">
             <div class="card-body">
-                <h2 class="card-title mb-3">Login</h2>
-                <form wire:submit="authenticate" class="grid gap-4">
+                <form class="grid gap-4" wire:submit="authenticate">
 
                     <x-input label="Email" wire:model="email" />
                     <x-password label="Password" wire:model="password" />
