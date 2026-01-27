@@ -6,10 +6,11 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 use Livewire\Component;
+use WireUi\Traits\WireUiActions;
 
 new class extends Component
 {
-    use PasswordValidationRules;
+    use PasswordValidationRules, WireUiActions;
 
     public $name = '';
 
@@ -60,7 +61,7 @@ new class extends Component
                 request()->session()->regenerate();
             }
 
-            notify()->success('Registration successful. Please verify your email.');
+            $this->notification()->success('Registration successful. Please verify your email.');
 
             return redirect()->route('dashboard');
         } catch (ValidationException $e) {
