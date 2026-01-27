@@ -4107,16 +4107,16 @@
         },
         {
             "name": "livewire/livewire",
-            "version": "v4.0.3",
+            "version": "v4.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/livewire/livewire.git",
-                "reference": "11afe7b36dbb1d98e073551c217f87b2b6911f81"
+                "reference": "4ae4ee18448f8e9d97b68c8c091b2b597f852a6f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/livewire/livewire/zipball/11afe7b36dbb1d98e073551c217f87b2b6911f81",
-                "reference": "11afe7b36dbb1d98e073551c217f87b2b6911f81",
+                "url": "https://api.github.com/repos/livewire/livewire/zipball/4ae4ee18448f8e9d97b68c8c091b2b597f852a6f",
+                "reference": "4ae4ee18448f8e9d97b68c8c091b2b597f852a6f",
                 "shasum": ""
             },
             "require": {
@@ -4171,7 +4171,7 @@
             "description": "A front-end framework for Laravel.",
             "support": {
                 "issues": "https://github.com/livewire/livewire/issues",
-                "source": "https://github.com/livewire/livewire/tree/v4.0.3"
+                "source": "https://github.com/livewire/livewire/tree/v4.1.0"
             },
             "funding": [
                 {
@@ -4179,7 +4179,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-01-23T06:13:46+00:00"
+            "time": "2026-01-27T02:21:37+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -8919,16 +8919,16 @@
         },
         {
             "name": "fruitcake/laravel-debugbar",
-            "version": "v4.0.2",
+            "version": "v4.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/fruitcake/laravel-debugbar.git",
-                "reference": "be66b2f9ac43caf894105ccb573bf90bc438d0ee"
+                "reference": "9eec3770a304c52d1dd71577b44bbb9ab904f5d8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fruitcake/laravel-debugbar/zipball/be66b2f9ac43caf894105ccb573bf90bc438d0ee",
-                "reference": "be66b2f9ac43caf894105ccb573bf90bc438d0ee",
+                "url": "https://api.github.com/repos/fruitcake/laravel-debugbar/zipball/9eec3770a304c52d1dd71577b44bbb9ab904f5d8",
+                "reference": "9eec3770a304c52d1dd71577b44bbb9ab904f5d8",
                 "shasum": ""
             },
             "require": {
@@ -9005,7 +9005,7 @@
             ],
             "support": {
                 "issues": "https://github.com/fruitcake/laravel-debugbar/issues",
-                "source": "https://github.com/fruitcake/laravel-debugbar/tree/v4.0.2"
+                "source": "https://github.com/fruitcake/laravel-debugbar/tree/v4.0.3"
             },
             "funding": [
                 {
@@ -9017,7 +9017,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-01-24T19:58:27+00:00"
+            "time": "2026-01-26T18:25:58+00:00"
         },
         {
             "name": "hamcrest/hamcrest-php",
@@ -10163,16 +10163,16 @@
         },
         {
             "name": "php-debugbar/php-debugbar",
-            "version": "v3.2.0",
+            "version": "v3.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-debugbar/php-debugbar.git",
-                "reference": "d8c8886867eb265469cd4c569a9e0ca5cbf2faf2"
+                "reference": "a1f4e156811f000efb6e118178832581fab94f11"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-debugbar/php-debugbar/zipball/d8c8886867eb265469cd4c569a9e0ca5cbf2faf2",
-                "reference": "d8c8886867eb265469cd4c569a9e0ca5cbf2faf2",
+                "url": "https://api.github.com/repos/php-debugbar/php-debugbar/zipball/a1f4e156811f000efb6e118178832581fab94f11",
+                "reference": "a1f4e156811f000efb6e118178832581fab94f11",
                 "shasum": ""
             },
             "require": {
@@ -10249,7 +10249,7 @@
             ],
             "support": {
                 "issues": "https://github.com/php-debugbar/php-debugbar/issues",
-                "source": "https://github.com/php-debugbar/php-debugbar/tree/v3.2.0"
+                "source": "https://github.com/php-debugbar/php-debugbar/tree/v3.2.2"
             },
             "funding": [
                 {
@@ -10261,7 +10261,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-01-24T19:24:36+00:00"
+            "time": "2026-01-25T20:59:56+00:00"
         },
         {
             "name": "php-debugbar/symfony-bridge",
@@ -10506,16 +10506,16 @@
         },
         {
             "name": "phpstan/phpdoc-parser",
-            "version": "2.3.1",
+            "version": "2.3.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpdoc-parser.git",
-                "reference": "16dbf9937da8d4528ceb2145c9c7c0bd29e26374"
+                "reference": "a004701b11273a26cd7955a61d67a7f1e525a45a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpdoc-parser/zipball/16dbf9937da8d4528ceb2145c9c7c0bd29e26374",
-                "reference": "16dbf9937da8d4528ceb2145c9c7c0bd29e26374",
+                "url": "https://api.github.com/repos/phpstan/phpdoc-parser/zipball/a004701b11273a26cd7955a61d67a7f1e525a45a",
+                "reference": "a004701b11273a26cd7955a61d67a7f1e525a45a",
                 "shasum": ""
             },
             "require": {
@@ -10547,9 +10547,9 @@
             "description": "PHPDoc parser with support for nullable, intersection and generic types",
             "support": {
                 "issues": "https://github.com/phpstan/phpdoc-parser/issues",
-                "source": "https://github.com/phpstan/phpdoc-parser/tree/2.3.1"
+                "source": "https://github.com/phpstan/phpdoc-parser/tree/2.3.2"
             },
-            "time": "2026-01-12T11:33:04+00:00"
+            "time": "2026-01-25T14:56:51+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -12189,12 +12189,12 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {},
+    "stability-flags": [],
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
         "php": "^8.2"
     },
-    "platform-dev": {},
-    "plugin-api-version": "2.9.0"
+    "platform-dev": [],
+    "plugin-api-version": "2.3.0"
 }
