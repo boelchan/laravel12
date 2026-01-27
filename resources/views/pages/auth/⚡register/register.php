@@ -2,6 +2,7 @@
 
 use App\Actions\Fortify\CreateNewUser;
 use App\Actions\Fortify\PasswordValidationRules;
+use App\Enums\RolesEnum;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
@@ -52,6 +53,9 @@ new class extends Component
 
             // Fire Registered event (Fortify's approach)
             event(new Registered($user));
+
+            // default operator
+            $user->assignRole(RolesEnum::PASIEN);
 
             // Login the user (Fortify's approach)
             Auth::login($user);

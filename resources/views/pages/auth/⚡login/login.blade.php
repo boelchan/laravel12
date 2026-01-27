@@ -8,6 +8,7 @@
         </div>
         <div class="bg-base-100/60 card relative z-10 mx-auto mt-8 w-full max-w-96 border border-slate-200 backdrop-blur-lg">
             <div class="card-body">
+                <h2 class="card-title mb-3">Login</h2>
                 <form class="grid gap-4" wire:submit="authenticate">
 
                     <x-input label="Email" wire:model="email" />

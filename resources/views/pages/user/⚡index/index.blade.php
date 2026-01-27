@@ -53,9 +53,9 @@
                         <td class="p-2"> {{ $d->email }} </td>
                         <td class="p-2"> {{ $d?->roles->pluck('name')->implode(', ') }} </td>
                         <td class="p-2"> {{ $d->email_verified_at?->format('d-m-Y H:i') }} </td>
-                        <td class="p-2">
+                        <td class="flex gap-2 p-2">
                             <a class="btn btn-xs btn-warning btn-square btn-soft" href="{{ route('user.edit', $d->id) }}">
-                                <i class="ti ti-pencil text-lg"></i></a>
+                                <i class="ti ti-edit text-lg"></i></a>
 
                             <button class="btn btn-xs btn-square btn-error btn-soft"
                                 wire:click="confirmDelete({{ $d->id }}, '{{ $d->name }}')"
