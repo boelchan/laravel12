@@ -10,22 +10,30 @@
     <div class="mt-6">
         <div class="grid gap-4 lg:grid-cols-3">
             <x-card class="col-span-3 border border-slate-200 lg:col-span-1" title="Role">
-                @role('dokter')
-                    @foreach ($roles as $role)
-                        <div class="mb-2 flex items-center justify-between">
-                            <span>{{ $role->name }}</span>
-                            <button class="btn btn-primary btn-soft btn-sm btn-square" wire:click="editRole({{ $role->id }})">
+                @foreach ($roles as $role)
+                    <div class="mb-2 flex items-center justify-between">
+                        <span>{{ $role->name }}</span>
+                        <div>
+                            <button class="btn btn-primary btn-soft btn-sm btn-square"
+                                wire:click="dispatch('role-edit', { role_id: {{ $role->id }} })"
+                            >
                                 <i class="ti ti-edit text-lg"></i>
                             </button>
+                            <button class="btn btn-error btn-soft btn-sm btn-square" wire:click="deleteRole({{ $role->id }})">
+                                <i class="ti ti-trash text-lg"></i>
+                            </button>
                         </div>
-                    @endforeach
-                @endrole
+                    </div>
+                @endforeach
             </x-card>
             <x-card class="col-span-3 border border-slate-200 lg:col-span-2" title="Permission">
                 @foreach ($permissions as $permission)
                     <div>{{ $permission->name }}</div>
                 @endforeach
             </x-card>
+
+            <livewire:permission.create />
+
         </div>
     </div>
 </div>
