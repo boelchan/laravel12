@@ -54,10 +54,10 @@
                                 <i class="ti ti-users text-lg"></i>User</a>
                         </li>
                         <li>
-                            <a class="{{ Str::startsWith(url()->current(), url('permission')) ? 'menu-active' : '' }}"
-                                href={{ route('permission') }} wire:navigate
+                            <a class="{{ Str::startsWith(url()->current(), url('role-permission')) ? 'menu-active' : '' }}"
+                                href={{ route('user.role_permission') }} wire:navigate
                             >
-                                <i class="ti ti-lock-access text-lg"></i>Hak Akses</a>
+                                <i class="ti ti-lock-access text-lg"></i>ACL</a>
                         </li>
                     </ul>
                 </nav>

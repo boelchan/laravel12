@@ -14,7 +14,10 @@
                     <x-input label="Email" wire:model="email" />
                     <x-password label="Password" wire:model="password" />
                     <x-checkbox label="Remember me" wire:model="remember" />
-                    <button class="btn btn-primary btn-block btn-circle">Login</button>
+                    <button class="btn btn-primary btn-block btn-circle">
+                        Login
+                        <div class="loading loading-spinner" wire:loading>Loading...</div>
+                    </button>
                 </form>
 
                 @if (Route::has('register'))

@@ -27,24 +27,6 @@ new class extends Component
             ->onEachSide(1);
     }
 
-    public function confirmDelete($id, $name)
-    {
-        $this->dialog()->confirm([
-            'title'       => "Hapus {$name}?",
-            'description' => 'Data yang dihapus tidak dapat dikembalikan',
-            'icon'        => 'error',
-            'accept'      => [
-                'label'  => 'Ya, Hapus',
-                'method' => 'delete',
-                'params' => $id,
-            ],
-            'reject' => [
-                'label'  => 'Batal',
-                'color'  => 'secondary',
-            ],
-        ]);
-    }
-
     public function delete($id)
     {
         $user = User::findOrFail($id);

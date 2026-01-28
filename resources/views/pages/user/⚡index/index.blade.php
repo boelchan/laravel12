@@ -48,17 +48,17 @@
             <tbody>
                 @forelse ($this->dataTable as $index => $d)
                     <tr class="hover:bg-neutral-50" wire:key="user-{{ $d->id }}">
-                        <td class="p-2"> {{ $index + 1 }} </td>
+                        <td class="p-2"> {{ $perPage * ($this->dataTable->currentPage() - 1) + $index + 1 }} </td>
                         <td class="p-2"> {{ $d->name }} </td>
                         <td class="p-2"> {{ $d->email }} </td>
                         <td class="p-2"> {{ $d?->roles->pluck('name')->implode(', ') }} </td>
                         <td class="p-2"> {{ $d->email_verified_at?->format('d-m-Y H:i') }} </td>
                         <td class="flex gap-2 p-2">
-                            <a class="btn btn-xs btn-warning btn-square btn-soft" href="{{ route('user.edit', $d->id) }}">
+                            <a class="btn btn-xs btn-primary btn-square btn-soft" href="{{ route('user.edit', $d->id) }}">
                                 <i class="ti ti-edit text-lg"></i></a>
 
                             <button class="btn btn-xs btn-square btn-error btn-soft"
-                                wire:click="confirmDelete({{ $d->id }}, '{{ $d->name }}')"
+                                wire:click="$js.confirmDelete({{ $d->id }}, '{{ $d->name }}')"
                             >
                                 <i class="ti ti-trash text-lg"></i>
                             </button>
