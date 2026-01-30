@@ -11,18 +11,28 @@
         <div class="grid gap-4 lg:grid-cols-3">
             <x-card class="col-span-3 border border-slate-200 lg:col-span-1" title="Role">
                 @foreach ($roles as $role)
-                    <div class="mb-2 flex gap-4 hover:bg-slate-100">
-                        <div>
-                            <button class="btn btn-primary btn-soft btn-xs btn-square"
+                    <div class="mb-2 flex items-center gap-4 rounded-lg p-2 transition-colors hover:bg-slate-100">
+                        <div class="flex gap-1">
+                            <button class="btn btn-success btn-soft btn-xs btn-square tooltip tooltip-top" data-tip="Edit Permission"
+                                wire:click="dispatch('role-permission-edit', { role_id: {{ $role->id }} })"
+                            >
+                                <i class="ti ti-key text-lg"></i>
+                            </button>
+                            <button class="btn btn-primary btn-soft btn-xs btn-square tooltip tooltip-top" data-tip="Edit Role"
                                 wire:click="dispatch('role-edit', { role_id: {{ $role->id }} })"
                             >
                                 <i class="ti ti-edit text-lg"></i>
                             </button>
-                            <button class="btn btn-error btn-soft btn-xs btn-square" wire:click="deleteRole({{ $role->id }})">
+                            <button class="btn btn-error btn-soft btn-xs btn-square tooltip tooltip-top" data-tip="Hapus Role"
+                                wire:click="deleteRole({{ $role->id }})"
+                            >
                                 <i class="ti ti-trash text-lg"></i>
                             </button>
                         </div>
-                        <span>{{ $role->name }}</span>
+                        <div class="flex flex-col">
+                            <span class="font-medium text-slate-800">{{ $role->name }}</span>
+                            <span class="text-xs text-slate-500">{{ $role->permissions->count() }} permission</span>
+                        </div>
                     </div>
                 @endforeach
 
@@ -61,4 +71,7 @@
 
         </div>
     </div>
+
+    <!-- Modal Edit Permission untuk Role -->
+    <livewire:user.role_permission_form />
 </div>

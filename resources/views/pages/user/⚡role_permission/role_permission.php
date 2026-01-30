@@ -22,7 +22,7 @@ new class extends Component
     #[On('load-role')]
     public function loadRole()
     {
-        $this->roles = Role::all();
+        $this->roles = Role::with('permissions')->get();
     }
 
     #[On('load-permission')]
