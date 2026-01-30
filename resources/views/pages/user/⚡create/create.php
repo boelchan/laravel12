@@ -18,6 +18,7 @@ new class extends Component
     public $role;
 
     public $roles;
+    public $status = 'active';
 
     public function mount()
     {
@@ -31,12 +32,14 @@ new class extends Component
             'email' => 'required|email|unique:users,email',
             'password' => 'required|confirmed',
             'role' => 'required',
+            'status' => 'required',
         ]);
 
         $user = User::create([
             'name' => $this->name,
             'email' => $this->email,
             'password' => Hash::make($this->password),
+            'status' => $this->status,
         ]);
 
         $user->assignRole($this->role);

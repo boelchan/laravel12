@@ -16,14 +16,16 @@ new class extends Component
     public $password_confirmation;
     public $role;
     public $id;
-    
+    public $status;
+
     public $roles;
-    
+
     public function mount(User $user)
     {
         $this->id = $user->id;
         $this->name = $user->name;
         $this->email = $user->email;
+        $this->status = $user->status;
 
         $this->role = $user->roles->pluck('name')->toArray();
 
@@ -37,12 +39,14 @@ new class extends Component
             'email' => 'required|email|unique:users,email,' . $this->id,
             'password' => 'confirmed',
             'role' => 'required',
+            'status' => 'required',
         ]);
 
         $user = User::findOrFail($this->id);
         $user->update([
             'name' => $this->name,
             'email' => $this->email,
+            'status' => $this->status,
         ]);
         if ($this->password) {
             $user->update([

@@ -30,6 +30,8 @@
                 <div class="grid grid-cols-2 gap-x-4 gap-y-0 lg:grid-cols-4 lg:gap-4 xl:grid-cols-5">
                     <x-input-search label="Nama" placeholder="cari nama..." wire:model.live.debounce.500ms="search_name" />
                     <x-input-search label="Email" placeholder="cari email..." wire:model.live.debounce.500ms="search_email" />
+                    <x-select label="Role" placeholder="Pilih Role" wire:model.live="search_role" :options="$roles" />
+                    <x-select label="Status" placeholder="Pilih Status" wire:model.live="search_status" :options="$status" />
                 </div>
             </div>
         </div>
@@ -41,6 +43,7 @@
                 <x-table.th label="Nama" sort="name" width="20%" />
                 <x-table.th label="Email" sort="email" width="20%" />
                 <x-table.th label="Role" />
+                <x-table.th label="Status" />
                 <x-table.th label="Verifikasi Email" />
                 <x-table.th />
             </x-table.thead>
@@ -52,6 +55,13 @@
                         <td class="p-2"> {{ $d->name }} </td>
                         <td class="p-2"> {{ $d->email }} </td>
                         <td class="p-2"> {{ $d?->roles->pluck('name')->implode(', ') }} </td>
+                        <td class="p-2">
+                            @if ($d->status === 'active')
+                                <div class="badge badge-success badge-soft">Active</div>
+                            @else
+                                <div class="badge badge-error badge-soft">Inactive</div>
+                            @endif
+                        </td>
                         <td class="p-2"> {{ $d->email_verified_at?->format('d-m-Y H:i') }} </td>
                         <td class="flex gap-2 p-2">
                             <a class="btn btn-xs btn-primary btn-square btn-soft" href="{{ route('user.edit', $d->id) }}">

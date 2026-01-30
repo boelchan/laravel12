@@ -10,13 +10,21 @@
 
     <div class="mt-6">
         <x-card class="w-full border border-slate-200 lg:w-96" title="Tambah User">
-            <form wire:submit="store" method="post" class="grid gap-4">
+            <form class="grid gap-4" wire:submit="store" method="post">
                 @csrf
                 <x-input wire:model="name" label="Nama" />
                 <x-input wire:model="email" label="Email" />
                 <x-password wire:model="password" label="Password" />
                 <x-password wire:model="password_confirmation" label="Konfirmasi Password" />
-                <x-select wire:model="role" label="Role" placeholder="Pilih Role" searchable multiselect :options="$this->roles" />
+                <x-native-select wire:model="status" label="Status" :options="['active' => 'Active', 'inactive' => 'Inactive']" />
+                <x-select
+                    wire:model="role"
+                    label="Role"
+                    placeholder="Pilih Role"
+                    searchable
+                    multiselect
+                    :options="$this->roles"
+                />
                 <x-button type="submit">Simpan</x-button>
             </form>
         </x-card>

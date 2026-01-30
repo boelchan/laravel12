@@ -51,7 +51,7 @@
                             <a class="{{ Str::startsWith(url()->current(), url('user')) ? 'menu-active' : '' }}" href={{ route('user') }}
                                 wire:navigate
                             >
-                                <i class="ti ti-users text-lg"></i>User</a>
+                                <i class="ti ti-users-group text-lg"></i>User</a>
                         </li>
                         <li>
                             <a class="{{ Str::startsWith(url()->current(), url('role-permission')) ? 'menu-active' : '' }}"
@@ -69,7 +69,7 @@
                         >
                             <div class="flex items-center gap-2">
                                 <div class="bg-base-600 flex h-8 w-8 items-center justify-center">
-                                    <i class="ti ti-user-circle text-xl"></i>
+                                    <i class="ti ti-user text-xl"></i>
                                 </div>
                                 <div>
                                     <p class="text-sm font-semibold text-slate-800">{{ Auth::user()?->name }}</p>
@@ -83,9 +83,10 @@
                         <ul class="z-100 menu dropdown-content menu-sm rounded-box bg-base-100 my-3 w-full border border-slate-200 p-2"
                             tabindex="0"
                         >
-                            <li> <a href="{{ route('account') }}" wire:navigate> <i class="ti ti-user text-lg"></i> Profil </a> </li>
+                            <li>
+                                <a href="{{ route('account') }}" wire:navigate> <i class="ti ti-user-edit text-lg"></i> Pengaturan Akun
+                                </a>
                             </li>
-                            <div class="divider m-0"></div>
                             <li>
                                 <a class="text-red-500 hover:bg-red-50 hover:text-red-600" href="#"
                                     onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
@@ -144,9 +145,9 @@
                                 <span class="text-xs text-slate-500">{{ Auth::user()?->email }}</span>
                             </li>
                             <div class="divider m-0"></div>
-                            <li> <a href="{{ route('account') }}" wire:navigate> <i class="ti ti-user text-lg"></i> Profil
-                                </a> </li>
-                            <div class="divider m-0"></div>
+                            <li>
+                                <a href="{{ route('account') }}" wire:navigate> <i class="ti ti-user-edit text-lg"></i> Pengaturan Akun </a>
+                            </li>
                             <li>
                                 <a class="text-red-500 hover:bg-red-50 hover:text-red-600" href="#"
                                     onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
