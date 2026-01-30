@@ -15,6 +15,7 @@ new class extends Component {
     public $selectedPermissions = [];
     public $allPermissions = [];
 
+    #[On('load-permission')]
     public function mount()
     {
         $this->allPermissions = Permission::all()->pluck('name', 'id')->toArray();

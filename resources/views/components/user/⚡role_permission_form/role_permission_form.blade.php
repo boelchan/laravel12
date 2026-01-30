@@ -2,31 +2,11 @@
     <!-- Modal Edit Permission -->
     <div class="fixed inset-0 z-50 overflow-y-auto" x-data="{ open: @entangle('showModal') }" x-show="open" x-cloak>
         <!-- Backdrop -->
-        <div
-            class="fixed inset-0 bg-black/50 backdrop-blur-sm"
-            x-show="open"
-            x-transition:enter="transition ease-out duration-300"
-            x-transition:enter-start="opacity-0"
-            x-transition:enter-end="opacity-100"
-            x-transition:leave="transition ease-in duration-200"
-            x-transition:leave-start="opacity-100"
-            x-transition:leave-end="opacity-0"
-            @click="$wire.closeModal()"
-        ></div>
+        <div class="fixed inset-0 bg-black/50 backdrop-blur-sm" x-show="open" @click="$wire.closeModal()"></div>
 
         <!-- Modal Content -->
         <div class="flex min-h-screen items-center justify-center p-4">
-            <div
-                class="relative w-full max-w-2xl rounded-xl bg-white shadow-2xl"
-                x-show="open"
-                x-transition:enter="transition ease-out duration-300"
-                x-transition:enter-start="opacity-0 scale-95"
-                x-transition:enter-end="opacity-100 scale-100"
-                x-transition:leave="transition ease-in duration-200"
-                x-transition:leave-start="opacity-100 scale-100"
-                x-transition:leave-end="opacity-0 scale-95"
-                @click.away="$wire.closeModal()"
-            >
+            <div class="relative w-full max-w-2xl rounded-xl bg-white shadow-2xl" x-show="open" @click.away="$wire.closeModal()">
                 <!-- Header -->
                 <div class="flex items-center justify-between border-b border-slate-200 px-6 py-4">
                     <div>
