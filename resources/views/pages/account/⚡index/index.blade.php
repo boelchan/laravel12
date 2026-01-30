@@ -1,12 +1,5 @@
 <div>
-    <h1 class="text-2xl font-medium text-slate-900">
-        Akun Saya
-        @if (auth()->user()->status == 'active')
-            <span class="badge badge-success badge-soft">Aktif</span>
-        @else
-            <span class="badge badge-error badge-soft">Tidak Aktif</span>
-        @endif
-    </h1>
+    <h1 class="text-2xl font-medium text-slate-900"> Akun Saya </h1>
     <div class="breadcrumbs p-0 text-xs text-slate-500">
         <ul>
             <li><a href="{{ route('dashboard') }}"><i class="ti ti-home"></i></a></li>
@@ -15,7 +8,17 @@
         </ul>
     </div>
 
+    @if (auth()->user()->status == 'inactive')
+        <div class="alert alert-vertical alert-error sm:alert-horizontal mt-6" role="alert">
+            <i class="ti ti-alert-triangle text-2xl"></i>
+            <div>
+                <h3 class="font-bold">Akun Anda Tidak Aktif</h3>
+                <div class="text-xs">Silahkan hubungi admin untuk mengaktifkan akun Anda.</div>
+            </div>
+        </div>
+    @endif
     <div class="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2">
+
         <!-- Edit Profile -->
         <div class="card border border-slate-200 bg-white shadow-sm">
             <div class="card-body p-6">
