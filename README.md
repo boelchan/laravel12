@@ -1,8 +1,10 @@
-# Project StarterKit Livewire
-Dalam project ini sudah tersedia manajemen user, role, dan permission. Anda cukup mengisi kontennya saja.
+# Project StarterKit Livewire versi ramah lingkungan
+Dalam project ini sudah tersedia manajemen user, role, dan permission. Anda cukup mengisi kontennya saja. dengan beberapa custom component menyerupai FLUXUI
 
-## Teknologi
-- Livewire 4
+## Stack
+- TALL Stack
+
+## Requirement
 - PHP 8.3
 
 ## Cara Instalasi
