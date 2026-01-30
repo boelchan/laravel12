@@ -15,4 +15,5 @@ Route::middleware('auth')->group(function () {
     Route::livewire('/user/create', 'pages::user.create')->name('user.create');
     Route::livewire('/user/{user}/edit', 'pages::user.edit')->name('user.edit');
     Route::livewire('/role-permission', 'pages::user.role_permission')->name('user.role_permission');
+    Route::livewire('/account', 'pages::account.index')->name('account');
 });

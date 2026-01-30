@@ -83,8 +83,7 @@
                         <ul class="z-100 menu dropdown-content menu-sm rounded-box bg-base-100 my-3 w-full border border-slate-200 p-2"
                             tabindex="0"
                         >
-                            <li> <a href="" wire:navigate> <i class="ti ti-user text-lg"></i> Profil </a> </li>
-                            <li> <a href="" wire:navigate> <i class="ti ti-lock text-lg"></i> Ubah Password </a>
+                            <li> <a href="{{ route('account') }}" wire:navigate> <i class="ti ti-user text-lg"></i> Profil </a> </li>
                             </li>
                             <div class="divider m-0"></div>
                             <li>
@@ -145,10 +144,8 @@
                                 <span class="text-xs text-slate-500">{{ Auth::user()?->email }}</span>
                             </li>
                             <div class="divider m-0"></div>
-                            <li> <a href="" wire:navigate> <i class="ti ti-user text-lg"></i> Profil
+                            <li> <a href="{{ route('account') }}" wire:navigate> <i class="ti ti-user text-lg"></i> Profil
                                 </a> </li>
-                            <li> <a href="" wire:navigate> <i class="ti ti-lock text-lg"></i> Ubah
-                                    Password </a> </li>
                             <div class="divider m-0"></div>
                             <li>
                                 <a class="text-red-500 hover:bg-red-50 hover:text-red-600" href="#"
