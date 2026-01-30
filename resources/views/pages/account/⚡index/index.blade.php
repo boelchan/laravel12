@@ -1,5 +1,12 @@
 <div>
-    <h1 class="text-2xl font-medium text-slate-900">Akun Saya</h1>
+    <h1 class="text-2xl font-medium text-slate-900">
+        Akun Saya
+        @if (auth()->user()->status == 'active')
+            <span class="badge badge-success badge-soft">Aktif</span>
+        @else
+            <span class="badge badge-error badge-soft">Tidak Aktif</span>
+        @endif
+    </h1>
     <div class="breadcrumbs p-0 text-xs text-slate-500">
         <ul>
             <li><a href="{{ route('dashboard') }}"><i class="ti ti-home"></i></a></li>
