@@ -3,7 +3,7 @@ Dalam project ini sudah tersedia manajemen user, role, dan permission. Anda cuku
 
 ## Stack
 - TALL Stack
-- [wireui] (https://github.com/wireui/wireui)
+- [wireui](https://github.com/wireui/wireui)
 
 ## UI
 - [daisyui](https://github.com/saadeghi/daisyui)
