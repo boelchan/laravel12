@@ -3,9 +3,14 @@ Dalam project ini sudah tersedia manajemen user, role, dan permission. Anda cuku
 
 ## Stack
 - TALL Stack
+- [wireui] (https://github.com/wireui/wireui)
+
+## UI
+- [daisyui](https://github.com/saadeghi/daisyui)
 
 ## Requirement
 - PHP 8.3
+- Node.js 20+
 
 ## Cara Instalasi
 Jalankan perintah berikut untuk menyiapkan project:
@@ -16,7 +21,7 @@ npm install
 npm run dev
 cp .env.example .env
 
-### Setting data
+### Setting database
 php artisan migrate:fresh --seed
 php artisan key:generate
 php artisan serve
