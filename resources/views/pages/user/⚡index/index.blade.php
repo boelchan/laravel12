@@ -37,7 +37,7 @@
         </div>
         {{-- end filter --}}
 
-        <x-table :paginate="$this->dataTable">
+        <x-table :paginate="$this->dataTable" class="bg-white">
             <x-table.thead class="bg-slate-50" :sortDirection="$sortDirection" :sortField="$sortField">
                 <x-table.th width="5%" />
                 <x-table.th label="Nama" sort="name" width="20%" />
@@ -50,7 +50,7 @@
 
             <tbody>
                 @forelse ($this->dataTable as $index => $d)
-                    <tr class="hover:bg-neutral-50" wire:key="user-{{ $d->id }}">
+                    <tr class="hover:bg-neutral-50 bg-white" wire:key="user-{{ $d->id }}">
                         <td class="p-2"> {{ $perPage * ($this->dataTable->currentPage() - 1) + $index + 1 }} </td>
                         <td class="p-2"> {{ $d->name }} </td>
                         <td class="p-2"> {{ $d->email }} </td>

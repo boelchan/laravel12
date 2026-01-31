@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="id" class="light">
+<html class="light" lang="id">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,11 +19,11 @@
     <x-notifications position="top" solid />
     <x-dialog z-index="z-50" />
 
-    <div class="relative min-h-screen w-full items-stretch md:flex xl:flex">
+    <div class="relative min-h-screen w-full items-stretch bg-white md:flex xl:flex">
         <!-- Sidebar -->
         @if (Auth::check())
             <aside
-                class="fixed left-0 top-0 z-30 h-screen w-64 -translate-x-full transform flex-col overflow-y-auto border-r border-slate-200 bg-slate-50 p-4 pr-0 transition-transform duration-300 ease-in-out md:sticky md:flex md:translate-x-0"
+                class="fixed bottom-3 left-0 top-3 z-30 h-[96vh] w-64 -translate-x-full transform flex-col overflow-y-auto rounded-3xl border border-slate-200 bg-blue-100/30 p-4 pr-0 backdrop-blur-2xl transition-transform duration-300 ease-in-out md:sticky md:left-3 md:flex md:translate-x-0"
                 id="sidebar"
             >
                 <div class="mb-4 flex items-center">
@@ -110,7 +111,7 @@
         <div class="flex flex-1 flex-col">
             <!-- Mobile Header -->
             <header
-                class="sticky left-0 right-0 top-0 z-20 flex items-center justify-between shadow-lg border-slate-200/50 bg-blue-100/30 p-2 m-2 backdrop-blur-lg md:hidden rounded-3xl"
+                class="sticky left-0 right-0 top-0 z-20 m-2 flex items-center justify-between rounded-3xl border-slate-200/50 bg-blue-100/30 p-2 shadow-lg backdrop-blur-lg md:hidden"
             >
                 <button class="btn btn-ghost btn-circle" id="hamburger-btn">
                     <svg
@@ -168,6 +169,10 @@
         </div>
 
         @livewireScripts
+
+        <div
+            class='pointer-events-none absolute bottom-0 left-0 right-0 z-[1] h-[60vh] w-full bg-gradient-to-br from-cyan-200 via-indigo-800 to-violet-300 opacity-30 blur-[200px]'>
+        </div>
     </div>
 </body>
 

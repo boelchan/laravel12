@@ -17,6 +17,7 @@ function toggleSidebar() {
     sidebar.classList.toggle('-translate-x-full');
     sidebar.classList.toggle('translate-x-0');
     overlay.classList.toggle('hidden');
+    sidebar.classList.toggle('left-3');
 }
 
 function initSidebar() {
