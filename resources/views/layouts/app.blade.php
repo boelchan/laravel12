@@ -110,7 +110,7 @@
         <div class="flex flex-1 flex-col">
             <!-- Mobile Header -->
             <header
-                class="sticky left-0 right-0 top-0 z-20 flex items-center justify-between border-b border-slate-200 bg-white/30 p-2 backdrop-blur-lg md:hidden"
+                class="sticky left-0 right-0 top-0 z-20 flex items-center justify-between shadow-lg border-slate-200/50 bg-blue-100/30 p-2 m-2 backdrop-blur-lg md:hidden rounded-3xl"
             >
                 <button class="btn btn-ghost btn-circle" id="hamburger-btn">
                     <svg
