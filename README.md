@@ -18,7 +18,11 @@ Jalankan perintah berikut untuk menyiapkan project:
 ```bash
 composer install
 npm install
+### development
 npm run dev
+### production
+npm run build
+
 cp .env.example .env
 
 ### Setting database
