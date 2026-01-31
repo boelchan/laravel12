@@ -26,3 +26,7 @@ php artisan migrate:fresh --seed
 php artisan key:generate
 php artisan serve
 ```
+
+### user default
+email : admin@app.com
+pass : 123
