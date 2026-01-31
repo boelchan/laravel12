@@ -15,6 +15,9 @@ composer install
 npm install
 npm run dev
 cp .env.example .env
+
+### Setting data
 php artisan migrate:fresh --seed
+php artisan key:generate
 php artisan serve
 ```
