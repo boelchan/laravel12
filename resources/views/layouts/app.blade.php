@@ -23,7 +23,7 @@
         <!-- Sidebar -->
         @if (Auth::check())
             <aside
-                class="fixed bottom-3 left-0 top-3 z-30 h-[96vh] w-64 -translate-x-full transform flex-col overflow-y-auto rounded-3xl border border-slate-200 bg-blue-100/30 p-4 pr-0 backdrop-blur-2xl transition-transform duration-300 ease-in-out md:sticky md:left-3 md:flex md:translate-x-0"
+                class="top-18 fixed bottom-3 left-0 z-30 h-[90vh] w-60 -translate-x-full transform flex-col overflow-y-auto rounded-3xl border border-slate-200 bg-blue-100/30 p-4 pr-0 backdrop-blur-lg transition-transform duration-300 ease-in-out md:sticky md:left-3 md:top-3 md:flex md:h-[96vh] md:translate-x-0 md:border-slate-200/50 md:bg-blue-100/40"
                 id="sidebar"
             >
                 <div class="mb-4 flex items-center">
@@ -106,12 +106,12 @@
         </form>
 
         <!-- Overlay for mobile -->
-        <div class="z-25 fixed inset-0 hidden bg-black/50 md:hidden" id="sidebar-overlay"></div>
+        <div class="z-25 fixed inset-0 hidden md:hidden" id="sidebar-overlay"></div>
 
         <div class="flex flex-1 flex-col">
             <!-- Mobile Header -->
             <header
-                class="sticky left-0 right-0 top-0 z-20 m-2 flex items-center justify-between rounded-3xl border-slate-200/50 bg-blue-100/30 p-2 shadow-lg backdrop-blur-lg md:hidden"
+                class="sticky left-0 right-0 top-2 z-20 m-2 flex items-center justify-between rounded-3xl border-slate-200/50 bg-blue-100/30 p-2 shadow-lg backdrop-blur-lg md:hidden"
             >
                 <button class="btn btn-ghost btn-circle" id="hamburger-btn">
                     <svg
@@ -170,9 +170,6 @@
 
         @livewireScripts
 
-        <div
-            class='pointer-events-none absolute bottom-0 left-0 right-0 z-[1] h-[60vh] w-full bg-gradient-to-br from-cyan-200 via-indigo-800 to-violet-300 opacity-30 blur-[200px]'>
-        </div>
     </div>
 </body>
 
