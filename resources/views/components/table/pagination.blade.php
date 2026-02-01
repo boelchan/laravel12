@@ -1,6 +1,6 @@
 <nav class="flex flex-col items-center justify-between gap-2 sm:flex-row" role="navigation">
-    @if ($paginator->total() > $this->perPage)
-        <select class="select input-sm w-16 flex-none pr-0" wire:model.change="perPage">
+    @if ($paginator->total() > 10)
+        <select class="select input-sm w-16 flex-none pr-0" wire:model.live="perPage">
             <option value="10">10</option>
             <option value="25">25</option>
             <option value="50">50</option>
