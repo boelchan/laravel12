@@ -20,7 +20,7 @@ Route::middleware('auth')->group(function () {
     Route::livewire('/account', 'pages::account.index')->name('account');
 });
 
-Route::middleware('active', 'role:administrator')->group(function () {
+Route::middleware('auth', 'role:administrator')->group(function () {
     Route::livewire('/user', 'pages::user.index')->name('user');
     Route::livewire('/user/create', 'pages::user.create')->name('user.create');
     Route::livewire('/user/{user}/edit', 'pages::user.edit')->name('user.edit');
