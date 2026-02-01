@@ -66,4 +66,24 @@ new class extends Component
             description: 'Password berhasil diubah.'
         );
     }
+
+    public function sendVerificationEmail()
+    {
+        $user = Auth::user();
+
+        if ($user->hasVerifiedEmail()) {
+            $this->notification()->info(
+                title: 'Info',
+                description: 'Email Anda sudah terverifikasi.'
+            );
+            return;
+        }
+
+        $user->sendEmailVerificationNotification();
+
+        $this->notification()->success(
+            title: 'Berhasil',
+            description: 'Link verifikasi telah dikirim ke email Anda.'
+        );
+    }
 };

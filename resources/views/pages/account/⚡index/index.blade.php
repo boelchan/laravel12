@@ -17,6 +17,21 @@
             </div>
         </div>
     @endif
+
+    @if (!auth()->user()->hasVerifiedEmail())
+        <div class="alert alert-vertical alert-warning sm:alert-horizontal mt-6" role="alert">
+            <i class="ti ti-mail-exclamation text-2xl"></i>
+            <div class="flex-1">
+                <h3 class="font-bold">Email Belum Terverifikasi</h3>
+                <div class="text-xs">Silahkan verifikasi email Anda untuk mengaktifkan semua fitur.</div>
+            </div>
+            <button class="btn btn-warning btn-sm" type="button" wire:click="sendVerificationEmail" wire:loading.attr="disabled">
+                <span wire:loading.remove wire:target="sendVerificationEmail">Kirim Ulang Verifikasi</span>
+                <span wire:loading wire:target="sendVerificationEmail">Mengirim...</span>
+            </button>
+        </div>
+    @endif
+
     <div class="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2">
 
         <!-- Edit Profile -->
