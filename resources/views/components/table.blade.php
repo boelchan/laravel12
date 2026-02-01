@@ -1,9 +1,10 @@
 @props([
     'paginate' => null, // data collection (paginator)
+    'class' => 'table ',
 ])
 
 <div class="mt-4 overflow-x-auto rounded border border-slate-200">
-    <table class="table">
+    <table class="{{ $class }}" {{ $attributes }}>
         {{ $slot }}
     </table>
 </div>
