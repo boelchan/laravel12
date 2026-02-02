@@ -26,7 +26,7 @@
                 class="top-18 fixed bottom-3 left-0 z-30 h-[90vh] w-60 -translate-x-full transform flex-col overflow-y-auto rounded-3xl border border-slate-200 bg-blue-100/30 p-4 pr-0 backdrop-blur-lg transition-transform duration-300 ease-in-out md:sticky md:left-3 md:top-3 md:flex md:h-[96vh] md:translate-x-0 md:border-slate-200/50 md:bg-blue-100/40"
                 id="sidebar"
             >
-                <div class="mb-4 flex items-center">
+                <div class="mb-4 hidden sm:block">
                     <img class="h-10" src="{{ asset('icon/icon-long.png') }}" alt="logo">
                 </div>
 
