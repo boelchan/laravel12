@@ -4,11 +4,11 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Livewire\Component;
-use WireUi\Traits\WireUiActions;
+use TallStackUi\Traits\Interactions;
 
 new class extends Component
 {
-    use WireUiActions;
+    use Interactions;
 
     // Profile Properties
     public $name = '';
@@ -51,10 +51,7 @@ new class extends Component
             'name' => $this->name,
         ]);
 
-        $this->notification()->success(
-            title: 'Berhasil',
-            description: 'Nama berhasil diubah.'
-        );
+        $this->toast()->success('Berhasil', 'Nama berhasil diubah.')->send();
     }
 
     public function updateEmail()
@@ -71,10 +68,7 @@ new class extends Component
 
         // Check if email actually changed
         if ($user->email === $this->email) {
-            $this->notification()->info(
-                title: 'Info',
-                description: 'Email yang dimasukkan sama dengan email yang terdaftar.'
-            );
+            $this->toast()->info('Info', 'Email yang dimasukkan sama dengan email yang terdaftar.')->send();
             return;
         }
 
@@ -88,10 +82,7 @@ new class extends Component
         // Send verification email
         $user->sendEmailVerificationNotification();
 
-        $this->notification()->warning(
-            title: 'Email Diubah',
-            description: 'Silahkan cek email baru Anda untuk verifikasi.'
-        );
+        $this->toast()->warning('Email Diubah', 'Silahkan cek email baru Anda untuk verifikasi.')->send();
     }
 
     public function updatePassword()
@@ -109,10 +100,7 @@ new class extends Component
 
         $this->reset(['current_password', 'password', 'password_confirmation']);
 
-        $this->notification()->success(
-            title: 'Berhasil',
-            description: 'Password berhasil diubah.'
-        );
+        $this->toast()->success('Berhasil', 'Password berhasil diubah.')->send();
     }
 
     public function sendVerificationEmail()
@@ -120,18 +108,12 @@ new class extends Component
         $user = Auth::user();
 
         if ($user->hasVerifiedEmail()) {
-            $this->notification()->info(
-                title: 'Info',
-                description: 'Email Anda sudah terverifikasi.'
-            );
+            $this->toast()->info('Info', 'Email Anda sudah terverifikasi.')->send();
             return;
         }
 
         $user->sendEmailVerificationNotification();
 
-        $this->notification()->success(
-            title: 'Berhasil',
-            description: 'Link verifikasi telah dikirim ke email Anda.'
-        );
+        $this->toast()->success('Berhasil', 'Link verifikasi telah dikirim ke email Anda.')->send();
     }
 };

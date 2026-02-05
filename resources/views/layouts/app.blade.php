@@ -12,12 +12,12 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     @livewireStyles
-    <wireui:scripts />
+    <tallstackui:script />
 </head>
 
 <body>
-    <x-notifications position="top" solid />
-    <x-dialog z-index="z-50" />
+    <x-toast />
+    <x-dialog />
 
     <div class="relative min-h-screen w-full items-stretch bg-white md:flex xl:flex">
         <!-- Sidebar -->

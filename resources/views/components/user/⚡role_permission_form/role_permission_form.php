@@ -4,10 +4,10 @@ use Livewire\Component;
 use Livewire\Attributes\On;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
-use WireUi\Traits\WireUiActions;
+use TallStackUi\Traits\Interactions;
 
 new class extends Component {
-    use WireUiActions;
+    use Interactions;
 
     public $showModal = false;
     public $role_id;
@@ -39,7 +39,7 @@ new class extends Component {
         $permissions = Permission::whereIn('id', $this->selectedPermissions)->get();
         $role->syncPermissions($permissions);
 
-        $this->notification()->success('Permission berhasil diperbarui');
+        $this->toast()->success('Permission berhasil diperbarui')->send();
         $this->closeModal();
         $this->dispatch('load-role');
     }
