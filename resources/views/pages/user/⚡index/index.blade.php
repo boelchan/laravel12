@@ -28,10 +28,22 @@
             </div>
             <div>
                 <div class="grid grid-cols-2 gap-4 lg:grid-cols-4 xl:grid-cols-5">
-                    <x-input-search label="Nama" placeholder="cari nama..." wire:model.live.debounce.500ms="search_name" />
-                    <x-input-search label="Email" placeholder="cari email..." wire:model.live.debounce.500ms="search_email" />
-                    <x-select label="Role" placeholder="Pilih Role" wire:model.live="search_role" :options="$roles" />
-                    <x-select label="Status" placeholder="Pilih Status" wire:model.live="search_status" :options="$status" />
+                    <x-input clearable label="Nama" placeholder="cari nama..." wire:model.live.debounce.500ms="search_name" />
+                    <x-input clearable label="Email" placeholder="cari email..." wire:model.live.debounce.500ms="search_email" />
+                    <x-select.styled
+                        clearable
+                        label="Role"
+                        placeholder="Pilih Role"
+                        wire:model.live="search_role"
+                        :options="$roles"
+                    />
+                    <x-select.styled
+                        clearable
+                        label="Status"
+                        placeholder="Pilih Status"
+                        wire:model.live="search_status"
+                        :options="$status"
+                    />
                 </div>
             </div>
         </div>

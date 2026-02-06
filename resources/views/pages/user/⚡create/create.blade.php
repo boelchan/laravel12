@@ -16,15 +16,15 @@
                 <x-input wire:model="email" label="Email" />
                 <x-password wire:model="password" label="Password" />
                 <x-password wire:model="password_confirmation" label="Konfirmasi Password" />
-                <x-select
+                <x-select.styled
                     wire:model="role"
                     label="Role"
                     placeholder="Pilih Role"
                     searchable
-                    multiselect
+                    multiple
                     :options="$this->roles"
                 />
-                <x-select wire:model="status" label="Status" :options="['active' => 'Active', 'inactive' => 'Inactive']" />
+                <x-select.styled wire:model="status" label="Status" :options="['active' => 'Active', 'inactive' => 'Inactive']" />
                 <x-button type="submit">Simpan</x-button>
             </form>
         </x-card>

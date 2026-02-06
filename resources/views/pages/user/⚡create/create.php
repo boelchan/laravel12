@@ -5,11 +5,11 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Livewire\Component;
 use Spatie\Permission\Models\Role;
-use WireUi\Traits\WireUiActions;
+use TallStackUi\Traits\Interactions;
 
 new class extends Component
 {
-    use WireUiActions;
+    use Interactions;
 
     public $name;
     public $email;
@@ -44,7 +44,7 @@ new class extends Component
 
         $user->assignRole($this->role);
 
-        $this->notification()->success('User berhasil ditambahkan');
+        $this->toast()->success('User berhasil ditambahkan')->send();
 
         return to_route('user');
     }

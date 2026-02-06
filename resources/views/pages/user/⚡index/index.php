@@ -5,11 +5,11 @@ use App\Models\User;
 use Livewire\Component;
 use Livewire\Attributes\Computed;
 use Spatie\Permission\Models\Role;
-use WireUi\Traits\WireUiActions;
+use TallStackUi\Traits\Interactions;
 
 new class extends Component
 {
-    use WireUiActions, WithTableX;
+    use WithTableX, Interactions;
 
     public $sortFieldDefault = 'name';
     public $sortDirectionDefault = 'asc';
@@ -46,6 +46,6 @@ new class extends Component
     {
         $user = User::findOrFail($id);
         $user->delete();
-        $this->notification()->success('User berhasil dihapus');
+        $this->toast()->success('User berhasil dihapus')->send();
     }
 };

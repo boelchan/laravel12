@@ -1,5 +1,5 @@
 this.$js.confirmDelete = (id, name) => {
-    $wireui.confirmDialog({
+    $ts.dialog({
         title: 'Hapus ' + name + '?',
         description: 'Data yang dihapus tidak dapat dikembalikan',
         icon: 'error',

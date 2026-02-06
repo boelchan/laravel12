@@ -40,6 +40,7 @@ new class extends Component {
             <div class="flex gap-0">
                 <input type="hidden" wire:model="role_id">
                 <x-input placeholder="Nama role baru" wire:model="name" />
+                <x-button>TallStackUi</x-button>
                 <button class="btn btn-primary btn-square" type="submit"><i class="ti ti-check text-lg"></i></button>
                 <button class="btn btn-soft btn-secondary btn-square" type="button" wire:click="batalEdit" wire:show="role_id"><i
                         class="ti ti-x text-lg"

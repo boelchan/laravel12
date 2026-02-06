@@ -7,11 +7,11 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 use Livewire\Component;
-use WireUi\Traits\WireUiActions;
+use TallStackUi\Traits\Interactions;
 
 new class extends Component
 {
-    use PasswordValidationRules, WireUiActions;
+    use PasswordValidationRules, Interactions;
 
     public $name = '';
 
@@ -65,7 +65,7 @@ new class extends Component
                 request()->session()->regenerate();
             }
 
-            $this->notification()->success('Registration successful. Please verify your email.');
+            $this->toast()->success('Registration successful. Please verify your email.')->send();
 
             return redirect()->route('dashboard');
         } catch (ValidationException $e) {

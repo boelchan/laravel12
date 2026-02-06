@@ -1,14 +1,14 @@
 <?php
 
 use Livewire\Component;
-use WireUi\Traits\WireUiActions;
+use TallStackUi\Traits\Interactions;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
 
 new class extends Component
 {
-    use WireUiActions;
+    use Interactions;
 
     public $name;
     public $email;
@@ -56,7 +56,7 @@ new class extends Component
 
         $user->syncRoles($this->role);
 
-        $this->notification()->success('User berhasil diubah');
+        $this->toast()->success('User berhasil diubah')->flash()->send();
 
         return to_route('user');
     }

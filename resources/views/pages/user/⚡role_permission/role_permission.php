@@ -4,11 +4,11 @@ use Livewire\Component;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use Livewire\Attributes\On;
-use WireUi\Traits\WireUiActions;
+use TallStackUi\Traits\Interactions;
 
 new class extends Component
 {
-    use WireUiActions;
+    use Interactions;
 
     public $roles;
     public $permissions;
@@ -36,7 +36,7 @@ new class extends Component
         $role = Role::find($id);
         $role->delete();
 
-        $this->notification()->success('Role berhasil dihapus');
+        $this->toast()->success('Role berhasil dihapus')->send();
         $this->dispatch('load-role');
     }
 
@@ -45,7 +45,7 @@ new class extends Component
         $permission = Permission::find($id);
         $permission->delete();
 
-        $this->notification()->success('Permission berhasil dihapus');
+        $this->toast()->success('Permission berhasil dihapus')->send();
         $this->dispatch('load-permission');
     }
 };
