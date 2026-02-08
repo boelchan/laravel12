@@ -1,16 +1,8 @@
-this.$js.confirmDelete = (id, name) => {
-    $ts.dialog({
-        title: 'Hapus ' + name + '?',
-        description: 'Data yang dihapus tidak dapat dikembalikan',
-        icon: 'error',
-        accept: {
-            label: 'Ya, Hapus',
-            execute: () => {
-                $wire.delete(id)
-            }
-        },
-        reject: {
-            label: 'Batal',
-        }
-    })
+this.$js.confirmDelete = (id, nama) => {
+    $interaction('dialog')
+        .wireable()
+        .question('Hapus ' + nama + ' ?', 'Data yang sudah dihapus tidak dapat dikembalikan')
+        .cancel('Tutup')
+        .confirm('Ya', 'delete', id)
+        .send();
 }
