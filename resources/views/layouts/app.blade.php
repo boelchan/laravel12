@@ -161,7 +161,7 @@
             </header>
 
             <!-- Main Content -->
-            <main class="flex-1 overflow-y-auto p-6 lg:p-8">
+            <main class="flex-1 overflow-y-auto p-8 lg:ms-8">
 
                 {{ $slot }}
 
