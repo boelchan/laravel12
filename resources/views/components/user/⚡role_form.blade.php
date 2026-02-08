@@ -35,17 +35,16 @@ new class extends Component {
 ?>
 
 <div>
-    @island(lazy: true)
-        <form wire:submit.prevent="store">
-            <div class="flex gap-0">
-                <input type="hidden" wire:model="role_id">
-                <x-input placeholder="Nama role baru" wire:model="name" />
-                <x-button>TallStackUi</x-button>
+    <form wire:submit.prevent="store">
+        <input type="hidden" wire:model="role_id">
+
+        <x-input placeholder="Nama role baru" wire:model="name">
+            <x-slot:suffix>
                 <button class="btn btn-primary btn-square" type="submit"><i class="ti ti-check text-lg"></i></button>
-                <button class="btn btn-soft btn-secondary btn-square" type="button" wire:click="batalEdit" wire:show="role_id"><i
-                        class="ti ti-x text-lg"
-                    ></i></button>
-            </div>
-        </form>
-    @endisland
+                <button class="btn btn-secondary btn-square" type="button" wire:click="batalEdit" wire:show="role_id">
+                    <i class="ti ti-x text-lg"></i>
+                </button>
+            </x-slot:suffix>
+        </x-input>
+    </form>
 </div>

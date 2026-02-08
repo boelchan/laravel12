@@ -34,6 +34,10 @@ new class extends Component
     public function deleteRole($id)
     {
         $role = Role::find($id);
+        if ($role->users()->count() > 0) {
+            $this->toast()->error('Role tidak bisa dihapus karena masih digunakan')->send();
+            return;
+        }
         $role->delete();
 
         $this->toast()->success('Role berhasil dihapus')->send();
@@ -43,6 +47,10 @@ new class extends Component
     public function deletePermission($id)
     {
         $permission = Permission::find($id);
+        if ($permission->roles()->count() > 0) {
+            $this->toast()->error('Permission tidak bisa dihapus karena masih digunakan')->send();
+            return;
+        }
         $permission->delete();
 
         $this->toast()->success('Permission berhasil dihapus')->send();
