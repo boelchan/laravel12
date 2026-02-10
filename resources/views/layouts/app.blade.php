@@ -23,78 +23,93 @@
         <!-- Sidebar -->
         @if (Auth::check())
             <aside
-                class="top-18 fixed bottom-3 left-0 z-30 h-[90vh] w-60 -translate-x-full transform flex-col overflow-y-auto rounded-3xl border border-slate-200 bg-blue-100/30 p-4 pr-0 backdrop-blur-md transition-transform duration-300 ease-in-out lg:sticky lg:left-3 lg:top-3 lg:flex lg:h-[96vh] lg:translate-x-0 lg:border-slate-200/50 lg:bg-blue-100/40"
+                class="top-18 fixed bottom-3 left-0 z-30 h-[90vh] w-60 -translate-x-full transform flex-col overflow-hidden rounded-3xl border border-white/30 bg-white/20 p-4 pr-0 shadow-[0_4px_24px_rgba(99,102,241,0.10),0_8px_40px_rgba(0,0,0,0.08)] backdrop-blur-xl transition-transform duration-300 ease-in-out lg:sticky lg:left-3 lg:top-3 lg:flex lg:h-[96vh] lg:translate-x-0 lg:border-white/40 lg:bg-white/25"
                 id="sidebar"
             >
-                <div class="mb-4 hidden sm:block">
-                    <img class="h-10" src="{{ asset('icon/icon-long.png') }}" alt="logo">
+                {{-- Glass gradient overlay --}}
+                <div class="pointer-events-none absolute inset-0 rounded-3xl"
+                    style="background: 
+                        radial-gradient(ellipse at 50% 0%, rgba(99,102,241,0.10) 0%, transparent 50%),
+                        radial-gradient(ellipse at 0% 100%, rgba(99,102,241,0.15) 0%, transparent 60%),
+                        radial-gradient(ellipse at 20% 80%, rgba(59,130,246,0.12) 0%, transparent 50%),
+                        radial-gradient(ellipse at 0% 60%, rgba(139,92,246,0.08) 0%, transparent 45%),
+                        linear-gradient(160deg, transparent 40%, rgba(99,102,241,0.06) 70%, rgba(59,130,246,0.1) 100%);"
+                ></div>
+                <div
+                    class="bg-linear-to-r pointer-events-none absolute left-0 top-0 h-px w-full from-transparent via-white/60 to-transparent">
                 </div>
+                {{-- Scrollable content wrapper --}}
+                <div class="relative z-10 flex h-full flex-col overflow-y-auto">
+                    <div class="mb-4 hidden sm:block">
+                        <img class="h-10" src="{{ asset('icon/icon-long.png') }}" alt="logo">
+                    </div>
 
-                <nav class="flex-1 overflow-y-auto">
-                    <ul class="menu w-full ps-0">
-                        <li>
-                            <a class="{{ Str::startsWith(url()->current(), url('dashboard')) ? 'menu-active' : '' }}"
-                                href={{ route('dashboard') }} wire:navigate
-                            >
-                                <i class="ti ti-home text-lg"></i>Dashboard</a>
-                        </li>
-                        <li>
-                            <a><i class="ti ti-user-plus"></i>Parent</a>
-                            <ul>
-                                <li><a>Submenu 1</a></li>
-                                <li><a>Submenu 1</a></li>
-                                <li><a>Submenu 2</a></li>
-                            </ul>
-                        </li>
-                        <h2 class="menu-title mt-4">Administrator</h2>
-                        <li>
-                            <a class="{{ Str::startsWith(url()->current(), url('user')) ? 'menu-active' : '' }}" href={{ route('user') }}
-                                wire:navigate
-                            >
-                                <i class="ti ti-users-group text-lg"></i>User</a>
-                        </li>
-                        <li>
-                            <a class="{{ Str::startsWith(url()->current(), url('role-permission')) ? 'menu-active' : '' }}"
-                                href={{ route('user.role_permission') }} wire:navigate
-                            >
-                                <i class="ti ti-lock-access text-lg"></i>ACL</a>
-                        </li>
-                    </ul>
-                </nav>
-
-                <div class="mt-auto hidden pr-4 pt-4 lg:block">
-                    <div class="dropdown dropdown-top w-full rounded-lg border border-slate-300">
-                        <div class="flex w-full cursor-pointer items-center justify-between rounded-lg hover:bg-slate-200" role="button"
-                            tabindex="0"
-                        >
-                            <div class="flex items-center gap-2">
-                                <div class="bg-base-600 flex h-8 w-8 items-center justify-center">
-                                    <i class="ti ti-user text-xl"></i>
-                                </div>
-                                <div>
-                                    <p class="text-sm font-semibold text-slate-800">{{ Auth::user()?->name }}</p>
-                                </div>
-                            </div>
-                            <div class="pr-2">
-                                <i class="ti ti-chevron-up"></i>
-                            </div>
-                        </div>
-
-                        <ul class="z-100 menu dropdown-content menu-sm rounded-box bg-base-100 my-3 w-full border border-slate-200 p-2"
-                            tabindex="0"
-                        >
+                    <nav class="flex-1 overflow-y-auto">
+                        <ul class="menu w-full ps-0">
                             <li>
-                                <a href="{{ route('account') }}" wire:navigate> <i class="ti ti-user-edit text-lg"></i> Pengaturan Akun
-                                </a>
+                                <a class="{{ Str::startsWith(url()->current(), url('dashboard')) ? 'menu-active' : '' }}"
+                                    href={{ route('dashboard') }} wire:navigate
+                                >
+                                    <i class="ti ti-home text-lg"></i>Dashboard</a>
                             </li>
                             <li>
-                                <a class="text-red-500 hover:bg-red-50 hover:text-red-600" href="#"
-                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
+                                <a><i class="ti ti-user-plus"></i>Parent</a>
+                                <ul>
+                                    <li><a>Submenu 1</a></li>
+                                    <li><a>Submenu 1</a></li>
+                                    <li><a>Submenu 2</a></li>
+                                </ul>
+                            </li>
+                            <h2 class="menu-title mt-4">Administrator</h2>
+                            <li>
+                                <a class="{{ Str::startsWith(url()->current(), url('user')) ? 'menu-active' : '' }}"
+                                    href={{ route('user') }} wire:navigate
                                 >
-                                    <i class="ti ti-logout text-lg"></i> Logout
-                                </a>
+                                    <x-icon class="h-5 w-5" name="users" outline /> User</a>
+                            </li>
+                            <li>
+                                <a class="{{ Str::startsWith(url()->current(), url('role-permission')) ? 'menu-active' : '' }}"
+                                    href={{ route('user.role_permission') }} wire:navigate
+                                >
+                                    <i class="ti ti-lock-access text-lg"></i>ACL</a>
                             </li>
                         </ul>
+                    </nav>
+
+                    <div class="mt-auto hidden pr-4 pt-4 lg:block">
+                        <div class="dropdown dropdown-top w-full rounded-lg border border-slate-300">
+                            <div class="flex w-full cursor-pointer items-center justify-between rounded-lg hover:bg-slate-200"
+                                role="button" tabindex="0"
+                            >
+                                <div class="flex items-center gap-2">
+                                    <div class="bg-base-600 flex h-8 w-8 items-center justify-center">
+                                        <i class="ti ti-user text-xl"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm font-semibold text-slate-800">{{ Auth::user()?->name }}</p>
+                                    </div>
+                                </div>
+                                <div class="pr-2">
+                                    <i class="ti ti-chevron-up"></i>
+                                </div>
+                            </div>
+
+                            <ul class="z-100 menu dropdown-content menu-sm rounded-box bg-base-100 my-3 w-full border border-slate-200 p-2"
+                                tabindex="0"
+                            >
+                                <li>
+                                    <a href="{{ route('account') }}" wire:navigate> <i class="ti ti-user-edit text-lg"></i> Pengaturan Akun
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="text-red-500 hover:bg-red-50 hover:text-red-600" href="#"
+                                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
+                                    >
+                                        <i class="ti ti-logout text-lg"></i> Logout
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </aside>
@@ -111,7 +126,7 @@
         <div class="flex flex-1 flex-col">
             <!-- Mobile Header -->
             <header
-                class="sticky left-0 right-0 top-2 z-20 m-2 flex items-center justify-between rounded-3xl border-slate-200/50 bg-blue-100/30 p-2 shadow-lg backdrop-blur-md lg:hidden"
+                class="sticky left-0 right-0 top-2 z-20 m-2 flex items-center justify-between rounded-3xl border-slate-200/50 bg-blue-100/30 p-2 shadow-[0_4px_24px_rgba(99,102,241,0.10),0_8px_40px_rgba(0,0,0,0.08)] backdrop-blur-md lg:hidden"
             >
                 <button class="btn btn-ghost btn-circle" id="hamburger-btn">
                     <svg
