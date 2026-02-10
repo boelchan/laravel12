@@ -19,11 +19,11 @@
     <x-toast />
     <x-dialog />
 
-    <div class="relative min-h-screen w-full items-stretch bg-white md:flex xl:flex">
+    <div class="relative min-h-screen w-full items-stretch bg-white lg:flex">
         <!-- Sidebar -->
         @if (Auth::check())
             <aside
-                class="top-18 fixed bottom-3 left-0 z-30 h-[90vh] w-60 -translate-x-full transform flex-col overflow-y-auto rounded-3xl border border-slate-200 bg-blue-100/30 p-4 pr-0 backdrop-blur-lg transition-transform duration-300 ease-in-out md:sticky md:left-3 md:top-3 md:flex md:h-[96vh] md:translate-x-0 md:border-slate-200/50 md:bg-blue-100/40"
+                class="top-18 fixed bottom-3 left-0 z-30 h-[90vh] w-60 -translate-x-full transform flex-col overflow-y-auto rounded-3xl border border-slate-200 bg-blue-100/30 p-4 pr-0 backdrop-blur-md transition-transform duration-300 ease-in-out lg:sticky lg:left-3 lg:top-3 lg:flex lg:h-[96vh] lg:translate-x-0 lg:border-slate-200/50 lg:bg-blue-100/40"
                 id="sidebar"
             >
                 <div class="mb-4 hidden sm:block">
@@ -31,7 +31,7 @@
                 </div>
 
                 <nav class="flex-1 overflow-y-auto">
-                    <ul class="menu w-full">
+                    <ul class="menu w-full ps-0">
                         <li>
                             <a class="{{ Str::startsWith(url()->current(), url('dashboard')) ? 'menu-active' : '' }}"
                                 href={{ route('dashboard') }} wire:navigate
@@ -62,7 +62,7 @@
                     </ul>
                 </nav>
 
-                <div class="mt-auto hidden pr-4 pt-4 sm:block">
+                <div class="mt-auto hidden pr-4 pt-4 lg:block">
                     <div class="dropdown dropdown-top w-full rounded-lg border border-slate-300">
                         <div class="flex w-full cursor-pointer items-center justify-between rounded-lg hover:bg-slate-200" role="button"
                             tabindex="0"
@@ -106,12 +106,12 @@
         </form>
 
         <!-- Overlay for mobile -->
-        <div class="z-25 fixed inset-0 hidden md:hidden" id="sidebar-overlay"></div>
+        <div class="z-25 fixed inset-0 hidden lg:hidden" id="sidebar-overlay"></div>
 
         <div class="flex flex-1 flex-col">
             <!-- Mobile Header -->
             <header
-                class="sticky left-0 right-0 top-2 z-20 m-2 flex items-center justify-between rounded-3xl border-slate-200/50 bg-blue-100/30 p-2 shadow-lg backdrop-blur-lg md:hidden"
+                class="sticky left-0 right-0 top-2 z-20 m-2 flex items-center justify-between rounded-3xl border-slate-200/50 bg-blue-100/30 p-2 shadow-lg backdrop-blur-md lg:hidden"
             >
                 <button class="btn btn-ghost btn-circle" id="hamburger-btn">
                     <svg
@@ -161,7 +161,7 @@
             </header>
 
             <!-- Main Content -->
-            <main class="flex-1 overflow-y-auto p-8 lg:ms-8">
+            <main class="w-full flex-1 overflow-y-auto p-8 lg:px-[64px]">
 
                 {{ $slot }}
 
