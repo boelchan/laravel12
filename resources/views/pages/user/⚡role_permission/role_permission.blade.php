@@ -13,7 +13,7 @@
                 <div class="card-body">
                     <h2 class="card-title">Role</h2>
                     @foreach ($roles as $role)
-                        <div class="flex items-center gap-2 rounded-lg p-1 border border-white hover:border-slate-300">
+                        <div class="flex items-center gap-2 rounded-lg border border-white p-1 hover:border-slate-300">
                             <div class="flex gap-1">
                                 <button class="btn btn-success btn-soft btn-xs btn-square tooltip tooltip-top" data-tip="Edit Permission"
                                     wire:click="dispatch('role-permission-edit', { role_id: {{ $role->id }} })"
@@ -48,9 +48,9 @@
             <div class="card bg-base-100 col-span-3 shadow-sm lg:col-span-2">
                 <div class="card-body">
                     <h2 class="card-title">Permission</h2>
-                    <div class="grid grid-cols-1 md:grid-flow-col md:grid-rows-10 gap-2">
+                    <div class="grid grid-cols-1 gap-2 md:grid-flow-col md:grid-rows-10">
                         @foreach ($permissions as $permission)
-                            <div class="flex items-center gap-2 rounded-lg p-1 border border-white hover:border-slate-300">
+                            <div class="flex items-center gap-2 rounded-lg border border-white p-1 hover:border-slate-300">
                                 <div>
                                     <button class="btn btn-primary btn-soft btn-xs btn-square"
                                         wire:click="dispatch('permission-edit', { permission_id: {{ $permission->id }} })"
@@ -75,6 +75,9 @@
             </div>
 
         </div>
+
+        <livewire:user.role_permission_form />
+
     </div>
 
 </div>

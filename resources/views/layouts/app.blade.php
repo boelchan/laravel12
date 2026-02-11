@@ -15,7 +15,8 @@
     <tallstackui:script />
 </head>
 
-<body style="background: 
+<body
+    style="background: 
     radial-gradient(ellipse at 50% 0%, oklch(74% 0.20 232.661 / 0.12) 0%, transparent 50%),
     radial-gradient(ellipse at 0% 100%, oklch(70% 0.22 232.661 / 0.18) 0%, transparent 60%),
     radial-gradient(ellipse at 20% 80%, oklch(78% 0.18 232.661 / 0.14) 0%, transparent 50%),
@@ -26,7 +27,8 @@
         oklch(74% 0.20 232.661 / 0.08) 70%,
         oklch(70% 0.22 232.661 / 0.12) 100%
     );
-">
+"
+>
     <x-toast />
     <x-dialog />
 
@@ -34,7 +36,7 @@
         <!-- Sidebar -->
         @if (Auth::check())
             <aside
-                class="top-18 fixed bottom-3 left-0 z-30 h-[90vh] w-60 -translate-x-full transform flex-col overflow-hidden rounded-3xl border border-white/30 bg-white/20 p-4 pr-0 backdrop-blur-3xl transition-transform duration-300 ease-in-out lg:sticky lg:left-3 lg:top-3 lg:flex lg:h-[96vh] lg:translate-x-0 lg:border-white/40 lg:bg-white/25 lg:shadow-[0_2px_12px_rgba(99,102,241,0.08),0_4px_20px_rgba(0,0,0,0.06)]"
+                class="top-18 fixed bottom-3 left-0 z-30 h-[90vh] w-60 -translate-x-full transform flex-col overflow-hidden rounded-3xl border border-white/30 bg-white/20 p-4 pr-0 backdrop-blur-3xl transition-transform duration-300 ease-in-out lg:sticky lg:left-3 lg:top-3 lg:flex lg:h-[96vh] lg:translate-x-0 lg:border-slate-200 lg:bg-white/25 lg:shadow-[0_2px_12px_rgba(99,102,241,0.08),0_4px_20px_rgba(0,0,0,0.06)]"
                 id="sidebar"
             >
                 {{-- Glass gradient overlay --}}
@@ -64,19 +66,21 @@
                                     <li><a>Submenu 2</a></li>
                                 </ul>
                             </li>
-                            <h2 class="menu-title mt-4">Administrator</h2>
-                            <li>
-                                <a class="{{ Str::startsWith(url()->current(), url('user')) ? 'menu-active' : '' }}"
-                                    href={{ route('user') }} wire:navigate
-                                >
-                                    <x-icon class="h-5 w-5" name="users" outline /> User</a>
-                            </li>
-                            <li>
-                                <a class="{{ Str::startsWith(url()->current(), url('role-permission')) ? 'menu-active' : '' }}"
-                                    href={{ route('user.role_permission') }} wire:navigate
-                                >
-                                    <i class="ti ti-lock-access text-lg"></i>ACL</a>
-                            </li>
+                            @role('administrator')
+                                <h2 class="menu-title mt-4">Administrator</h2>
+                                <li>
+                                    <a class="{{ Str::startsWith(url()->current(), url('user')) ? 'menu-active' : '' }}"
+                                        href={{ route('user') }} wire:navigate
+                                    >
+                                        <x-icon class="h-5 w-5" name="users" outline /> User</a>
+                                </li>
+                                <li>
+                                    <a class="{{ Str::startsWith(url()->current(), url('role-permission')) ? 'menu-active' : '' }}"
+                                        href={{ route('user.role_permission') }} wire:navigate
+                                    >
+                                        <i class="ti ti-lock-access text-lg"></i>ACL</a>
+                                </li>
+                            @endrole
                         </ul>
                     </nav>
 
