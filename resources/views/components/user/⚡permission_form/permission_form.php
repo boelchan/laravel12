@@ -20,7 +20,7 @@ new class extends Component {
     public function store()
     {
         $this->validate([
-            'name' => 'required|unique:permissions,name',
+            'name' => 'required|unique:permissions,name,' . $this->permission_id,
         ]);
 
         Permission::updateOrCreate(['id' => $this->permission_id], ['name' => Str::kebab($this->name)]);

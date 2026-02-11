@@ -24,7 +24,7 @@ new class extends Component {
     public function store()
     {
         $this->validate([
-            'name' => 'required|unique:roles,name',
+            'name' => 'required|unique:roles,name,' . $this->role_id,
         ]);
 
         Role::updateOrCreate(['id' => $this->role_id], ['name' => $this->name]);
