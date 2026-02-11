@@ -48,7 +48,7 @@
             <div class="card bg-base-100 col-span-3 shadow-sm lg:col-span-2">
                 <div class="card-body">
                     <h2 class="card-title">Permission</h2>
-                    <div class="grid grid-flow-col grid-rows-20 md:grid-rows-10 gap-2">
+                    <div class="grid grid-cols-1 md:grid-flow-col md:grid-rows-10 gap-2">
                         @foreach ($permissions as $permission)
                             <div class="flex items-center gap-2 rounded-lg p-1 border border-white hover:border-slate-300">
                                 <div>
