@@ -7,18 +7,18 @@
         </ul>
     </div>
 
-    <div>
+    <div class="mt-6">
         {{-- Alerts --}}
         <div class="mb-6 space-y-3">
             @if (auth()->user()->status == 'inactive')
-                <div class="alert alert-warning">
+                <div class="alert alert-error">
                     <i class="ti ti-alert-triangle"></i>
                     <span>Akun Anda ditangguhkan. Hubungi admin untuk bantuan.</span>
                 </div>
             @endif
 
             @if (!auth()->user()->hasVerifiedEmail())
-                <div class="alert alert-info">
+                <div class="alert alert-warning">
                     <i class="ti ti-mail"></i>
                     <div class="flex-1">
                         <span>Email belum terverifikasi</span>

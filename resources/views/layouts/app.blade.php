@@ -15,7 +15,18 @@
     <tallstackui:script />
 </head>
 
-<body>
+<body style="background: 
+    radial-gradient(ellipse at 50% 0%, oklch(74% 0.20 232.661 / 0.12) 0%, transparent 50%),
+    radial-gradient(ellipse at 0% 100%, oklch(70% 0.22 232.661 / 0.18) 0%, transparent 60%),
+    radial-gradient(ellipse at 20% 80%, oklch(78% 0.18 232.661 / 0.14) 0%, transparent 50%),
+    radial-gradient(ellipse at 0% 60%, oklch(68% 0.16 232.661 / 0.10) 0%, transparent 45%),
+    linear-gradient(
+        160deg,
+        transparent 40%,
+        oklch(74% 0.20 232.661 / 0.08) 70%,
+        oklch(70% 0.22 232.661 / 0.12) 100%
+    );
+">
     <x-toast />
     <x-dialog />
 
@@ -23,18 +34,11 @@
         <!-- Sidebar -->
         @if (Auth::check())
             <aside
-                class="top-18 fixed bottom-3 left-0 z-30 h-[90vh] w-60 -translate-x-full transform flex-col overflow-hidden rounded-3xl border border-white/30 bg-white/20 p-4 pr-0 shadow-[0_4px_24px_rgba(99,102,241,0.10),0_8px_40px_rgba(0,0,0,0.08)] backdrop-blur-xl transition-transform duration-300 ease-in-out lg:sticky lg:left-3 lg:top-3 lg:flex lg:h-[96vh] lg:translate-x-0 lg:border-white/40 lg:bg-white/25"
+                class="top-18 fixed bottom-3 left-0 z-30 h-[90vh] w-60 -translate-x-full transform flex-col overflow-hidden rounded-3xl border border-white/30 bg-white/20 p-4 pr-0 backdrop-blur-3xl transition-transform duration-300 ease-in-out lg:sticky lg:left-3 lg:top-3 lg:flex lg:h-[96vh] lg:translate-x-0 lg:border-white/40 lg:bg-white/25 lg:shadow-[0_2px_12px_rgba(99,102,241,0.08),0_4px_20px_rgba(0,0,0,0.06)]"
                 id="sidebar"
             >
                 {{-- Glass gradient overlay --}}
-                <div class="pointer-events-none absolute inset-0 rounded-3xl"
-                    style="background: 
-                        radial-gradient(ellipse at 50% 0%, rgba(99,102,241,0.10) 0%, transparent 50%),
-                        radial-gradient(ellipse at 0% 100%, rgba(99,102,241,0.15) 0%, transparent 60%),
-                        radial-gradient(ellipse at 20% 80%, rgba(59,130,246,0.12) 0%, transparent 50%),
-                        radial-gradient(ellipse at 0% 60%, rgba(139,92,246,0.08) 0%, transparent 45%),
-                        linear-gradient(160deg, transparent 40%, rgba(99,102,241,0.06) 70%, rgba(59,130,246,0.1) 100%);"
-                ></div>
+                <div class="pointer-events-none absolute inset-0 rounded-3xl"></div>
                 <div
                     class="bg-linear-to-r pointer-events-none absolute left-0 top-0 h-px w-full from-transparent via-white/60 to-transparent">
                 </div>
@@ -126,7 +130,7 @@
         <div class="flex flex-1 flex-col">
             <!-- Mobile Header -->
             <header
-                class="sticky left-0 right-0 top-2 z-20 m-2 flex items-center justify-between rounded-3xl border-slate-200/50 bg-blue-100/30 p-2 shadow-[0_4px_24px_rgba(99,102,241,0.10),0_8px_40px_rgba(0,0,0,0.08)] backdrop-blur-md lg:hidden"
+                class="sticky left-0 right-0 top-2 z-20 m-2 flex items-center justify-between rounded-3xl border-slate-200/50 bg-blue-100/30 p-2 shadow-[0_2px_12px_rgba(99,102,241,0.08),0_4px_20px_rgba(0,0,0,0.06)] backdrop-blur-2xl lg:hidden"
             >
                 <button class="btn btn-ghost btn-circle" id="hamburger-btn">
                     <svg
@@ -176,7 +180,7 @@
             </header>
 
             <!-- Main Content -->
-            <main class="w-full flex-1 overflow-y-auto p-8 lg:px-[64px]">
+            <main class="w-full flex-1 overflow-y-auto p-6 lg:px-[64px]">
 
                 {{ $slot }}
 
