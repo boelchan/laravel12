@@ -91,39 +91,39 @@
                                 <h3 class="mb-4 text-xl font-semibold">Informasi Profil</h3>
 
                                 <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
-                                    <div class="stat bg-base-200 border-primary-200 rounded-lg border">
+                                    <div class="stat bg-base-200 rounded-lg">
                                         <div class="stat-figure text-primary">
                                             <i class="ti ti-user-circle text-2xl"></i>
                                         </div>
                                         <div class="stat-title">Nama Lengkap</div>
-                                        <div class="stat-value text-lg">{{ auth()->user()->name }}</div>
+                                        <div class="font-bold">{{ auth()->user()->name }}</div>
                                     </div>
 
-                                    <div class="stat bg-base-200 rounded-lg border border-cyan-200">
+                                    <div class="stat bg-base-200 rounded-lg">
                                         <div class="stat-figure text-info">
                                             <i class="ti ti-mail text-2xl"></i>
                                         </div>
                                         <div class="stat-title">Email</div>
-                                        <div class="stat-value text-lg">{{ auth()->user()->email }}</div>
+                                        <div class="font-bold">{{ auth()->user()->email }}</div>
                                         <div class="stat-desc">
                                             {{ auth()->user()->hasVerifiedEmail() ? 'Terverifikasi' : 'Belum verifikasi' }}</div>
                                     </div>
 
-                                    <div class="stat bg-base-200 rounded-lg border border-green-200">
+                                    <div class="stat bg-base-200 rounded-lg">
                                         <div class="stat-figure text-success">
                                             <i class="ti ti-shield-check text-2xl"></i>
                                         </div>
                                         <div class="stat-title">Status Akun</div>
-                                        <div class="stat-value text-lg">{{ auth()->user()->status == 'active' ? 'Aktif' : 'Tidak Aktif' }}
+                                        <div class="font-bold">{{ auth()->user()->status == 'active' ? 'Aktif' : 'Tidak Aktif' }}
                                         </div>
                                     </div>
 
-                                    <div class="stat bg-base-200 rounded-lg border border-yellow-200">
+                                    <div class="stat bg-base-200 rounded-lg">
                                         <div class="stat-figure text-warning">
                                             <i class="ti ti-calendar text-2xl"></i>
                                         </div>
                                         <div class="stat-title">Bergabung</div>
-                                        <div class="stat-value text-lg">{{ auth()->user()->created_at->format('d M Y h:i') }}</div>
+                                        <div class="font-bold">{{ auth()->user()->created_at->format('d M Y h:i') }}</div>
                                     </div>
                                 </div>
 

@@ -15,20 +15,7 @@
     <tallstackui:script />
 </head>
 
-<body
-    style="background: 
-    radial-gradient(ellipse at 50% 0%, oklch(74% 0.20 232.661 / 0.12) 0%, transparent 50%),
-    radial-gradient(ellipse at 0% 100%, oklch(70% 0.22 232.661 / 0.18) 0%, transparent 60%),
-    radial-gradient(ellipse at 20% 80%, oklch(78% 0.18 232.661 / 0.14) 0%, transparent 50%),
-    radial-gradient(ellipse at 0% 60%, oklch(68% 0.16 232.661 / 0.10) 0%, transparent 45%),
-    linear-gradient(
-        160deg,
-        transparent 40%,
-        oklch(74% 0.20 232.661 / 0.08) 70%,
-        oklch(70% 0.22 232.661 / 0.12) 100%
-    );
-"
->
+<body>
     <x-toast />
     <x-dialog />
 
@@ -36,7 +23,7 @@
         <!-- Sidebar -->
         @if (Auth::check())
             <aside
-                class="top-18 fixed bottom-3 left-0 z-30 h-[90vh] w-60 -translate-x-full transform flex-col overflow-hidden rounded-3xl border border-white/30 bg-white/20 p-4 pr-0 backdrop-blur-3xl transition-transform duration-300 ease-in-out lg:sticky lg:left-3 lg:top-3 lg:flex lg:h-[96vh] lg:translate-x-0 lg:border-slate-200 lg:bg-white/25 lg:shadow-[0_2px_12px_rgba(99,102,241,0.08),0_4px_20px_rgba(0,0,0,0.06)]"
+                class="top-18 bg-white-100/30 fixed bottom-3 left-0 z-30 h-[90vh] w-60 -translate-x-full transform flex-col overflow-hidden rounded-3xl border border-white p-4 backdrop-blur-3xl transition-transform duration-300 ease-in-out lg:sticky lg:left-3 lg:top-3 lg:flex lg:h-[96vh] lg:translate-x-0 lg:border-blue-300 lg:bg-blue-50"
                 id="sidebar"
             >
                 {{-- Glass gradient overlay --}}
@@ -84,14 +71,14 @@
                         </ul>
                     </nav>
 
-                    <div class="mt-auto hidden pr-4 pt-4 lg:block">
+                    <div class="mt-auto hidden pt-4 lg:block">
                         <div class="dropdown dropdown-top w-full rounded-lg border border-slate-300">
                             <div class="flex w-full cursor-pointer items-center justify-between rounded-lg hover:bg-slate-200"
                                 role="button" tabindex="0"
                             >
                                 <div class="flex items-center gap-2">
                                     <div class="bg-base-600 flex h-8 w-8 items-center justify-center">
-                                        <i class="ti ti-user text-xl"></i>
+                                        <x-icon class="h-5 w-5" name="user" outline />
                                     </div>
                                     <div>
                                         <p class="text-sm font-semibold text-slate-800">{{ Auth::user()?->name }}</p>
@@ -134,7 +121,7 @@
         <div class="flex flex-1 flex-col">
             <!-- Mobile Header -->
             <header
-                class="sticky left-0 right-0 top-2 z-20 m-2 flex items-center justify-between rounded-3xl border-slate-200/50 bg-blue-100/30 p-2 shadow-[0_2px_12px_rgba(99,102,241,0.08),0_4px_20px_rgba(0,0,0,0.06)] backdrop-blur-2xl lg:hidden"
+                class="sticky left-0 right-0 top-2 z-20 m-2 flex items-center justify-between rounded-3xl border-slate-200/50 bg-white/30 p-2 shadow-[0_1px_6px_rgba(99,102,241,0.08),0_2px_10px_rgba(0,0,0,0.06)] backdrop-blur-2xl lg:hidden"
             >
                 <button class="btn btn-ghost btn-circle" id="hamburger-btn">
                     <svg
@@ -156,7 +143,7 @@
                 </div>
                 <div class="dropdown dropdown-end z-50">
                     <div class="btn btn-ghost btn-circle border-0" role="button" tabindex="0">
-                        <i class="ti ti-user text-xl"></i>
+                        <x-icon class="h-5 w-5" name="user" outline />
                     </div>
                     @auth
                         <ul class="z-100 menu dropdown-content menu-sm rounded-box bg-base-100 my-3 w-48 border border-slate-200 p-2"
