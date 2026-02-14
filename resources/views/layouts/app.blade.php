@@ -9,7 +9,7 @@
     <link href="{{ asset('favicon/favicon.ico') }}" rel="shortcut icon" />
     <link href="{{ asset('favicon/apple-touch-icon.png') }}" rel="apple-touch-icon" sizes="180x180" />
     <meta name="apple-mobile-web-app-title" content="MyWebSite" />
-    <link href="{{ asset('favicon/site.webmanifest') }}" rel="manifest" />
+    <link href="{{ asset('favicon/manifest.json') }}" rel="manifest" />
 
     <title>{{ $title ?? config('app.name') }}</title>
 
