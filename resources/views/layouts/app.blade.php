@@ -4,6 +4,12 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link type="image/png" href="{{ asset('favicon/favicon-96x96.png') }}" rel="icon" sizes="96x96" />
+    <link type="image/svg+xml" href="{{ asset('favicon/favicon.svg') }}" rel="icon" />
+    <link href="{{ asset('favicon/favicon.ico') }}" rel="shortcut icon" />
+    <link href="{{ asset('favicon/apple-touch-icon.png') }}" rel="apple-touch-icon" sizes="180x180" />
+    <meta name="apple-mobile-web-app-title" content="MyWebSite" />
+    <link href="{{ asset('favicon/site.webmanifest') }}" rel="manifest" />
 
     <title>{{ $title ?? config('app.name') }}</title>
 
@@ -33,8 +39,8 @@
                 </div>
                 {{-- Scrollable content wrapper --}}
                 <div class="relative z-10 flex h-full flex-col overflow-y-auto">
-                    <div class="mb-4 hidden sm:block">
-                        <img class="h-10" src="{{ asset('icon/icon-long.png') }}" alt="logo">
+                    <div class="mb-4 hidden sm:block justify-center">
+                        <img class="h-10" src="{{ asset('logo/rme-logo.png') }}" alt="logo">
                     </div>
 
                     <nav class="flex-1 overflow-y-auto">
@@ -137,7 +143,7 @@
                 <div class="flex items-center gap-2 text-xl font-bold text-slate-900">
                     <a href="{{ route('dashboard') }}">
                         <div class="flex items-center justify-center">
-                            <img class="h-8" src="{{ asset('icon/icon-long.png') }}" alt="logo">
+                            <img class="h-8" src="{{ asset('logo/rme-logo.png') }}" alt="logo">
                         </div>
                     </a>
                 </div>
