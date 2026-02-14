@@ -1,11 +1,18 @@
 <div>
-    <h1 class="text-2xl font-medium text-slate-900">User</h1>
-    <div class="breadcrumbs p-0 text-xs text-slate-500">
-        <ul>
-            <li><a href="{{ route('dashboard') }}"><i class="ti ti-home"></i></a></li>
-            <li>User</li>
-            <li>Data</li>
-        </ul>
+    <div class="flex justify-between align-middle">
+        <div>
+            <h1 class="text-2xl font-medium text-slate-900">User</h1>
+            <div class="breadcrumbs p-0 text-xs text-slate-500">
+                <ul>
+                    <li><a href="{{ route('dashboard') }}"><i class="ti ti-home"></i></a></li>
+                    <li>User</li>
+                    <li>Data</li>
+                </ul>
+            </div>
+        </div>
+        <a class="btn btn-soft btn-primary btn-sm" href="{{ route('user.create') }}" wire:navigate>
+            <i class="ti ti-plus text-lg"></i> Tambah
+        </a>
     </div>
 
     <div class="mt-6">
@@ -13,17 +20,10 @@
         <div>
             <div class="flex justify-between">
                 <div class="flex items-center gap-2">
-                    <span class="text-lg font-semibold text-slate-800">Pencarian</span>
-                    <button class="btn btn-soft btn-primary btn-sm w-8 lg:w-auto" type="button" wire:click="resetFilters">
-                        <i class="ti ti-filter-2-x text-lg"></i>
-                        <span class="hidden lg:inline">Reset</span>
+                    <span class="font-semibold text-slate-800">Pencarian</span>
+                    <button class="btn btn-soft btn-error btn-xs w-6" type="button" wire:click="resetFilters">
+                        <i class="ti ti-filter-x text-md"></i>
                     </button>
-                </div>
-
-                <div class="flex gap-2">
-                    <a class="btn btn-soft btn-primary btn-sm w-8 lg:w-auto" href="{{ route('user.create') }}" wire:navigate>
-                        <i class="ti ti-plus text-lg"></i> <span class="hidden lg:inline">Tambah</span>
-                    </a>
                 </div>
             </div>
             <div>
