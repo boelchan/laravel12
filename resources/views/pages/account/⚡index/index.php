@@ -13,6 +13,7 @@ new class extends Component
     // Profile Properties
     public $name = '';
     public $email = '';
+    public $nik = '';
 
     // Password Properties
     public $current_password = '';
@@ -27,6 +28,7 @@ new class extends Component
         $user = Auth::user();
         $this->name = $user->name;
         $this->email = $user->email;
+        $this->nik = $user->nik;
     }
 
     public function setTab($tab)
@@ -39,19 +41,22 @@ new class extends Component
         $user = Auth::user();
         $this->name = $user->name;
         $this->email = $user->email;
+        $this->nik = $user->nik;
     }
 
     public function updateName()
     {
         $this->validate([
             'name' => 'required|string|max:255',
+            'nik' => 'nullable|string|size:16|unique:users,nik,' . Auth::id(),
         ]);
 
         Auth::user()->update([
             'name' => $this->name,
+            'nik' => $this->nik,
         ]);
 
-        $this->toast()->success('Berhasil', 'Nama berhasil diubah.')->send();
+        $this->toast()->success('Berhasil', 'Profil berhasil diubah.')->send();
     }
 
     public function updateEmail()

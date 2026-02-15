@@ -60,7 +60,7 @@
                             @php
                                 $navs = [
                                     ['id' => 'summary', 'icon' => 'ti-user', 'label' => 'Profil'],
-                                    ['id' => 'edit_name', 'icon' => 'ti-edit', 'label' => 'Ubah Nama'],
+                                    ['id' => 'edit_name', 'icon' => 'ti-edit', 'label' => 'Ubah Profil'],
                                     ['id' => 'edit_email', 'icon' => 'ti-mail', 'label' => 'Email'],
                                     ['id' => 'edit_password', 'icon' => 'ti-lock', 'label' => 'Password'],
                                 ];
@@ -97,6 +97,14 @@
                                         </div>
                                         <div class="stat-title">Nama Lengkap</div>
                                         <div class="font-bold">{{ auth()->user()->name }}</div>
+                                    </div>
+
+                                    <div class="stat bg-base-200 rounded-lg">
+                                        <div class="stat-figure text-primary">
+                                            <i class="ti ti-id text-2xl"></i>
+                                        </div>
+                                        <div class="stat-title">NIK</div>
+                                        <div class="font-bold">{{ auth()->user()->nik ?? '-' }}</div>
                                     </div>
 
                                     <div class="stat bg-base-200 rounded-lg">
@@ -147,11 +155,12 @@
                                     <i class="ti ti-arrow-left mr-2"></i>Kembali
                                 </button>
 
-                                <h3 class="mb-2 text-xl font-semibold">Ubah Nama</h3>
-                                <p class="text-base-content/60 mb-6">Perbarui nama lengkap profil Anda</p>
+                                <h3 class="mb-2 text-xl font-semibold">Ubah Profil</h3>
+                                <p class="text-base-content/60 mb-6">Perbarui informasi profil Anda</p>
 
                                 <form class="space-y-4" wire:submit="updateName">
                                     <x-input wire:model="name" label="Nama" />
+                                    <x-input wire:model="nik" label="NIK" />
 
                                     <div class="flex gap-3 pt-4">
                                         <button class="btn btn-primary" type="submit">

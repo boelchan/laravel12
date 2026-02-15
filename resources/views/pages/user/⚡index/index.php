@@ -15,6 +15,7 @@ new class extends Component
     public $sortDirectionDefault = 'asc';
 
     public $search_name = '';
+    public $search_nik = '';
     public $search_email = '';
     public $search_role = '';
     public $search_status = '';
@@ -33,6 +34,7 @@ new class extends Component
     {
         return User::with('roles')
             ->when($this->search_name, fn($q) => $q->where('name', 'like', '%' . $this->search_name . '%'))
+            ->when($this->search_nik, fn($q) => $q->where('nik', 'like', '%' . $this->search_nik . '%'))
             ->when($this->search_email, fn($q) => $q->where('email', 'like', '%' . $this->search_email . '%'))
             ->when($this->search_role, fn($q) => $q->whereHas('roles', fn($q) => $q->where('name', $this->search_role)))
             ->when($this->search_status, fn($q) => $q->where('status', $this->search_status))

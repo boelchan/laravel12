@@ -15,6 +15,7 @@ new class extends Component
     public $email;
     public $password;
     public $password_confirmation;
+    public $nik;
     public $role;
 
     public $roles;
@@ -31,6 +32,7 @@ new class extends Component
             'name' => 'required',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|confirmed',
+            'nik' => 'nullable|string|size:16|unique:users,nik',
             'role' => 'required',
             'status' => 'required',
         ]);
@@ -39,6 +41,7 @@ new class extends Component
             'name' => $this->name,
             'email' => $this->email,
             'password' => Hash::make($this->password),
+            'nik' => $this->nik,
             'status' => $this->status,
         ]);
 

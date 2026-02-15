@@ -11,7 +11,7 @@
                 <h2 class="card-title mb-3">Login</h2>
                 <form class="grid gap-4" wire:submit="authenticate">
 
-                    <x-input label="Email" wire:model="email" />
+                    <x-input type="email" label="Email" wire:model="email" />
                     <x-password label="Password" wire:model="password" />
                     <x-checkbox label="Remember me" wire:model="remember" />
                     <button class="btn btn-primary btn-block btn-circle">

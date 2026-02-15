@@ -14,6 +14,7 @@ new class extends Component
     use PasswordValidationRules, Interactions;
 
     public $name = '';
+    public $nik = '';
 
     public $email = '';
 
@@ -28,6 +29,7 @@ new class extends Component
     {
         return [
             'name' => ['required', 'string', 'max:255'],
+            'nik' => ['required', 'string', 'size:16', 'unique:users'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => $this->passwordRules(),
         ];
@@ -46,6 +48,7 @@ new class extends Component
             $creator = app(CreateNewUser::class);
             $user = $creator->create([
                 'name' => $this->name,
+                'nik' => $this->nik,
                 'email' => $this->email,
                 'password' => $this->password,
                 'password_confirmation' => $this->password_confirmation,

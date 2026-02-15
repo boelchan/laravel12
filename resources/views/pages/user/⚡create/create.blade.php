@@ -12,10 +12,11 @@
         <x-card class="w-full border border-slate-200 lg:w-96" title="Tambah User">
             <form class="grid gap-4" wire:submit="store" method="post">
                 @csrf
-                <x-input wire:model="name" label="Nama" />
-                <x-input wire:model="email" label="Email" />
-                <x-password wire:model="password" label="Password" />
-                <x-password wire:model="password_confirmation" label="Konfirmasi Password" />
+                <x-input wire:model="name" label="Nama *" />
+                <x-input wire:model="nik" label="NIK" />
+                <x-input type="email" wire:model="email" label="Email *" />
+                <x-password wire:model="password" label="Password *" />
+                <x-password wire:model="password_confirmation" label="Konfirmasi Password *" />
                 <x-select.styled
                     wire:model="role"
                     label="Role"

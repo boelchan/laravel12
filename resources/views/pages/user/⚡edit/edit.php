@@ -14,6 +14,7 @@ new class extends Component
     public $email;
     public $password;
     public $password_confirmation;
+    public $nik;
     public $role;
     public $id;
     public $status;
@@ -25,6 +26,7 @@ new class extends Component
         $this->id = $user->id;
         $this->name = $user->name;
         $this->email = $user->email;
+        $this->nik = $user->nik;
         $this->status = $user->status;
 
         $this->role = $user->roles->pluck('name')->toArray();
@@ -38,6 +40,7 @@ new class extends Component
             'name' => 'required',
             'email' => 'required|email|unique:users,email,' . $this->id,
             'password' => 'confirmed',
+            'nik' => 'nullable|string|size:16|unique:users,nik,' . $this->id,
             'role' => 'required',
             'status' => 'required',
         ]);
@@ -46,6 +49,7 @@ new class extends Component
         $user->update([
             'name' => $this->name,
             'email' => $this->email,
+            'nik' => $this->nik,
             'status' => $this->status,
         ]);
         if ($this->password) {

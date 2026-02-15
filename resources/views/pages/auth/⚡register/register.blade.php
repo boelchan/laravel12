@@ -5,7 +5,8 @@
                 <h2 class="card-title mb-3">Daftar Akun</h2>
                 <form class="grid gap-4" wire:submit="cekregister">
                     <x-input label="Nama" wire:model="name" />
-                    <x-input label="Email" wire:model="email" />
+                    <x-input label="NIK" wire:model="nik" />
+                    <x-input type="email" label="Email" wire:model="email" />
                     <x-password label="Password" wire:model="password" />
                     <x-password label="Confirm Password" wire:model="password_confirmation" />
 
