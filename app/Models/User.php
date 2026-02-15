@@ -22,6 +22,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'name',
         'email',
         'password',
+        'nik',
+        'ihs_number',
         'status',
         'email_verified_at',
     ];
