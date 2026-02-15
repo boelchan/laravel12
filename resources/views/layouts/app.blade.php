@@ -128,7 +128,7 @@
             <!-- Mobile Header -->
             @auth()
                 <header
-                    class="sticky left-0 right-0 top-0 z-20 m-2 flex items-center justify-between rounded-3xl bg-white/30 p-2 shadow-[0_2px_6px_rgba(99,102,241,0.08),0_4px_10px_rgba(0,0,0,0.06)] backdrop-blur-2xl lg:hidden"
+                    class="sticky left-0 right-0 top-0 z-20 m-2 flex items-center justify-between rounded-3xl bg-white/10 p-2 shadow-[0_2px_6px_rgba(99,102,241,0.08),0_4px_10px_rgba(0,0,0,0.06)] backdrop-blur-2xl lg:hidden"
                 >
                     <button class="btn btn-ghost btn-circle" id="hamburger-btn">
                         <svg
