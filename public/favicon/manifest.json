@@ -1,8 +1,8 @@
 {
-  "name": "dr. Wongso Suhendro, Sp.OG",
+  "name": "RME",
   "short_name": "RME",
   "start_url": "/",
-  "description": "Rekam Medis Elektronik",
+  "description": "RME dr. Wongso Suhendro, Sp.OG",
   "icons": [
     {
       "src": "/web-app-manifest-192x192.png",
