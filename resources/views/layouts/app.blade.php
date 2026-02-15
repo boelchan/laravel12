@@ -39,7 +39,7 @@
                 </div>
                 {{-- Scrollable content wrapper --}}
                 <div class="relative z-10 flex h-full flex-col overflow-y-auto">
-                    <div class="mb-4 hidden sm:block justify-center">
+                    <div class="mb-4 hidden justify-center sm:block">
                         <img class="h-10" src="{{ asset('logo/rme-logo.png') }}" alt="logo">
                     </div>
 
@@ -126,55 +126,57 @@
 
         <div class="flex flex-1 flex-col">
             <!-- Mobile Header -->
-            <header
-                class="sticky left-0 right-0 top-2 z-20 m-2 flex items-center justify-between rounded-3xl bg-white/30 p-2 shadow-[0_2px_6px_rgba(99,102,241,0.08),0_4px_10px_rgba(0,0,0,0.06)] backdrop-blur-2xl lg:hidden"
-            >
-                <button class="btn btn-ghost btn-circle" id="hamburger-btn">
-                    <svg
-                        class="h-5 w-5"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                    >
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7" />
-                    </svg>
-                </button>
-                <div class="flex items-center gap-2 text-xl font-bold text-slate-900">
-                    <a href="{{ route('dashboard') }}">
-                        <div class="flex items-center justify-center">
-                            <img class="h-8" src="{{ asset('logo/rme-logo.png') }}" alt="logo">
-                        </div>
-                    </a>
-                </div>
-                <div class="dropdown dropdown-end z-50">
-                    <div class="btn btn-ghost btn-circle border-0" role="button" tabindex="0">
-                        <x-icon class="h-5 w-5" name="user" outline />
-                    </div>
-                    @auth
-                        <ul class="z-100 menu dropdown-content menu-sm rounded-box bg-base-100 my-3 w-48 border border-slate-200 p-2"
-                            tabindex="0"
+            @auth()
+                <header
+                    class="sticky left-0 right-0 top-0 z-20 m-2 flex items-center justify-between rounded-3xl bg-white/30 p-2 shadow-[0_2px_6px_rgba(99,102,241,0.08),0_4px_10px_rgba(0,0,0,0.06)] backdrop-blur-2xl lg:hidden"
+                >
+                    <button class="btn btn-ghost btn-circle" id="hamburger-btn">
+                        <svg
+                            class="h-5 w-5"
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
                         >
-                            <!-- User Info -->
-                            <li class="py-1">
-                                <span class="my-0 font-semibold uppercase">{{ Auth::user()?->name }}</span>
-                                <span class="text-xs text-slate-500">{{ Auth::user()?->email }}</span>
-                            </li>
-                            <div class="divider m-0"></div>
-                            <li>
-                                <a href="{{ route('account') }}" wire:navigate> <i class="ti ti-user-edit text-lg"></i> Pengaturan Akun </a>
-                            </li>
-                            <li>
-                                <a class="text-red-500 hover:bg-red-50 hover:text-red-600" href="#"
-                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
-                                >
-                                    <i class="ti ti-logout text-lg"></i> Log out
-                                </a>
-                            </li>
-                        </ul>
-                    @endauth
-                </div>
-            </header>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7" />
+                        </svg>
+                    </button>
+                    <div class="flex items-center gap-2 text-xl font-bold text-slate-900">
+                        <a href="{{ route('dashboard') }}">
+                            <div class="flex items-center justify-center">
+                                <img class="h-8" src="{{ asset('logo/rme-logo.png') }}" alt="logo">
+                            </div>
+                        </a>
+                    </div>
+                    <div class="dropdown dropdown-end z-50">
+                        <div class="btn btn-ghost btn-circle border-0" role="button" tabindex="0">
+                            <x-icon class="h-5 w-5" name="user" outline />
+                        </div>
+                        @auth
+                            <ul class="z-100 menu dropdown-content menu-sm rounded-box bg-base-100 my-3 w-48 border border-slate-200 p-2"
+                                tabindex="0"
+                            >
+                                <!-- User Info -->
+                                <li class="py-1">
+                                    <span class="my-0 font-semibold uppercase">{{ Auth::user()?->name }}</span>
+                                    <span class="text-xs text-slate-500">{{ Auth::user()?->email }}</span>
+                                </li>
+                                <div class="divider m-0"></div>
+                                <li>
+                                    <a href="{{ route('account') }}" wire:navigate> <i class="ti ti-user-edit text-lg"></i> Pengaturan Akun </a>
+                                </li>
+                                <li>
+                                    <a class="text-red-500 hover:bg-red-50 hover:text-red-600" href="#"
+                                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
+                                    >
+                                        <i class="ti ti-logout text-lg"></i> Log out
+                                    </a>
+                                </li>
+                            </ul>
+                        @endauth
+                    </div>
+                </header>
+            @endauth
 
             <!-- Main Content -->
             <main class="w-full flex-1 overflow-y-auto p-6 lg:px-[64px]">
