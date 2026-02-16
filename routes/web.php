@@ -28,4 +28,6 @@ Route::middleware('active')->group(function () {
         Route::livewire('/role-permission', 'pages::user.role_permission')->name('user.role_permission');
     });
     Route::livewire('/patient', 'pages::patient.index')->name('patient');
+    Route::livewire('/patient/create', 'pages::patient.create')->name('patient.create');
+    Route::livewire('/patient/{patient}/edit', 'pages::patient.edit')->name('patient.edit');
 });

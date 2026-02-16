@@ -1,0 +1,141 @@
+<?php
+
+use App\Enums\GenderEnum;
+use App\Enums\ReligionEnum;
+use App\Enums\EducationEnum;
+use App\Enums\MaritalStatusEnum;
+use App\Enums\NationalityEnum;
+use App\Models\Patient;
+use Aliziodev\IndonesiaRegions\Models\IndonesiaRegion;
+use Livewire\Component;
+use TallStackUi\Traits\Interactions;
+
+new class extends Component
+{
+    use Interactions;
+
+    // Identitas Utama
+    public $medical_record_number;
+    public $nik;
+    public $ihs_number;
+    public $passport_kitas;
+
+    // Data Personal
+    public $full_name;
+    public $mother_name;
+    public $birth_date;
+    public $birth_place;
+    public $gender = 0;
+
+    // Kontak
+    public $phone;
+    public $mobile_phone;
+    public $email;
+
+    // Alamat
+    public $address;
+    public $province_code;
+    public $regency_code;
+    public $district_code;
+    public $village_code;
+    public $postal_code;
+
+    // Data Kependudukan
+    public $nationality = 'WNI';
+    public $religion;
+    public $education;
+    public $occupation;
+    public $marital_status;
+
+    // Cara Pembayaran
+    public $insurance_number;
+    public $insurance_name;
+
+    // Penanggung Jawab
+    public $emergency_contact_name;
+    public $emergency_contact_relation;
+    public $emergency_contact_phone;
+
+    public $is_active = true;
+
+    // Options
+    public $provinces = [];
+    public $regencies = [];
+    public $districts = [];
+    public $villages = [];
+
+    public function mount()
+    {
+        $this->medical_record_number = Patient::generateMedicalRecordNumber();
+        $this->provinces = IndonesiaRegion::whereRaw('LENGTH(code) = 2')->orderBy('name')->get()->map(fn($item) => ['label' => $item->name, 'value' => $item->code])->toArray();
+    }
+
+    public function updatedProvinceCode($value)
+    {
+        $this->regency_code = null;
+        $this->district_code = null;
+        $this->village_code = null;
+        $this->regencies = $value ? IndonesiaRegion::whereRaw('LENGTH(code) = 5')->where('code', 'like', $value . '.%')->orderBy('name')->get()->map(fn($item) => ['label' => $item->name, 'value' => $item->code])->toArray() : [];
+    }
+
+    public function updatedRegencyCode($value)
+    {
+        $this->district_code = null;
+        $this->village_code = null;
+        $this->districts = $value ? IndonesiaRegion::whereRaw('LENGTH(code) = 8')->where('code', 'like', $value . '.%')->orderBy('name')->get()->map(fn($item) => ['label' => $item->name, 'value' => $item->code])->toArray() : [];
+    }
+
+    public function updatedDistrictCode($value)
+    {
+        $this->village_code = null;
+        $this->villages = $value ? IndonesiaRegion::whereRaw('LENGTH(code) = 13')->where('code', 'like', $value . '.%')->orderBy('name')->get()->map(fn($item) => ['label' => $item->name, 'value' => $item->code])->toArray() : [];
+    }
+
+    public function store()
+    {
+        $this->validate([
+            'medical_record_number' => 'required|unique:patients,medical_record_number',
+            'full_name' => 'required|string|max:100',
+            'birth_date' => 'required|date',
+            'gender' => 'required',
+            'nik' => 'nullable|string|size:16|unique:patients,nik',
+            'mobile_phone' => 'nullable|string|max:20',
+        ]);
+
+        Patient::create([
+            'medical_record_number' => $this->medical_record_number,
+            'nik' => $this->nik,
+            'ihs_number' => $this->ihs_number,
+            'passport_kitas' => $this->passport_kitas,
+            'full_name' => $this->full_name,
+            'mother_name' => $this->mother_name,
+            'birth_date' => $this->birth_date,
+            'birth_place' => $this->birth_place,
+            'gender' => $this->gender,
+            'phone' => $this->phone,
+            'mobile_phone' => $this->mobile_phone,
+            'email' => $this->email,
+            'address' => $this->address,
+            'province_code' => $this->province_code,
+            'regency_code' => $this->regency_code,
+            'district_code' => $this->district_code,
+            'village_code' => $this->village_code,
+            'postal_code' => $this->postal_code,
+            'nationality' => $this->nationality,
+            'religion' => $this->religion,
+            'education' => $this->education,
+            'occupation' => $this->occupation,
+            'marital_status' => $this->marital_status,
+            'insurance_number' => $this->insurance_number,
+            'insurance_name' => $this->insurance_name,
+            'emergency_contact_name' => $this->emergency_contact_name,
+            'emergency_contact_relation' => $this->emergency_contact_relation,
+            'emergency_contact_phone' => $this->emergency_contact_phone,
+            'is_active' => $this->is_active,
+        ]);
+
+        $this->toast()->success('Pasien berhasil ditambahkan')->send();
+
+        return to_route('patient');
+    }
+};

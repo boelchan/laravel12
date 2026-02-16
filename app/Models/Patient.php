@@ -2,12 +2,37 @@
 
 namespace App\Models;
 
+use App\Enums\GenderEnum;
+use App\Enums\ReligionEnum;
+use App\Enums\EducationEnum;
+use App\Enums\MaritalStatusEnum;
+use App\Enums\NationalityEnum;
 use Aliziodev\IndonesiaRegions\Models\IndonesiaRegion;
 use Illuminate\Database\Eloquent\Model;
 
 class Patient extends Model
 {
     protected $guarded = ['id'];
+
+    protected $casts = [
+        'gender' => GenderEnum::class,
+        'religion' => ReligionEnum::class,
+        'education' => EducationEnum::class,
+        'marital_status' => MaritalStatusEnum::class,
+        'nationality' => NationalityEnum::class,
+        'birth_date' => 'date',
+        'is_active' => 'boolean',
+    ];
+
+    public static function generateMedicalRecordNumber()
+    {
+        $latest = static::orderBy('id', 'desc')->first();
+        if (!$latest) {
+            return 'RM-000001';
+        }
+        $number = (int) str_replace('RM-', '', $latest->medical_record_number);
+        return 'RM-' . str_pad($number + 1, 6, '0', STR_PAD_LEFT);
+    }
 
     public function province()
     {
