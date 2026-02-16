@@ -68,9 +68,9 @@ new class extends Component
     {
         $this->medical_record_number = Patient::generateMedicalRecordNumber();
         $this->provinces = IndonesiaRegion::where('type', 'provinsi')->get()->map(fn($item) => ['label' => $item->name, 'value' => $item->code])->toArray();
-        $this->regencies = IndonesiaRegion::where('parent', $this->province_code)->get()->map(fn($item) => ['label' => $item->name, 'value' => $item->code])->toArray();
-        $this->districts = IndonesiaRegion::where('parent', $this->regency_code)->get()->map(fn($item) => ['label' => $item->name, 'value' => $item->code])->toArray();
-        $this->villages = IndonesiaRegion::where('parent', $this->district_code)->get()->map(fn($item) => ['label' => $item->name, 'value' => $item->code])->toArray();
+        $this->regencies = IndonesiaRegion::where('parent', $this->province_code)->orderBy('name', 'ASC')->get()->map(fn($item) => ['label' => $item->name, 'value' => $item->code])->toArray();
+        $this->districts = IndonesiaRegion::where('parent', $this->regency_code)->orderBy('name', 'ASC')->get()->map(fn($item) => ['label' => $item->name, 'value' => $item->code])->toArray();
+        $this->villages = IndonesiaRegion::where('parent', $this->district_code)->orderBy('name', 'ASC')->get()->map(fn($item) => ['label' => $item->name, 'value' => $item->code])->toArray();
     }
 
     public function updatedProvinceCode($value)
@@ -79,7 +79,7 @@ new class extends Component
         $this->district_code = null;
         $this->village_code = null;
         $this->regencies = $value
-            ? IndonesiaRegion::where('parent', $value)->get()->map(fn($item) => ['label' => $item->name, 'value' => $item->code])->toArray()
+            ? IndonesiaRegion::where('parent', $value)->orderBy('name', 'ASC')->get()->map(fn($item) => ['label' => $item->name, 'value' => $item->code])->toArray()
             : [];
         $this->districts = [];
         $this->villages = [];
@@ -90,7 +90,7 @@ new class extends Component
         $this->district_code = null;
         $this->village_code = null;
         $this->districts = $value
-            ? IndonesiaRegion::where('parent', $value)->get()->map(fn($item) => ['label' => $item->name, 'value' => $item->code])->toArray()
+            ? IndonesiaRegion::where('parent', $value)->orderBy('name', 'ASC')->get()->map(fn($item) => ['label' => $item->name, 'value' => $item->code])->toArray()
             : [];
         $this->villages = [];
     }
@@ -99,7 +99,7 @@ new class extends Component
     {
         $this->village_code = null;
         $this->villages = $value
-            ? IndonesiaRegion::where('parent', $value)->get()->map(fn($item) => ['label' => $item->name, 'value' => $item->code])->toArray()
+            ? IndonesiaRegion::where('parent', $value)->orderBy('name', 'ASC')->get()->map(fn($item) => ['label' => $item->name, 'value' => $item->code])->toArray()
             : [];
     }
 
