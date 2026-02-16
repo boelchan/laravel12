@@ -54,40 +54,63 @@
                                 <x-textarea wire:model="address" label="Alamat Lengkap" />
                             </div>
 
-                            <x-select.native
+                            {{-- PROVINSI --}}
+                            <x-select.styled
+                                id="province-select"
                                 wire:model.live="province_code"
                                 label="Provinsi"
                                 placeholder="Pilih Provinsi"
                                 :options="$provinces"
-                                select="label:label|value:value"
+                                searchable
                             />
 
-                            <x-select.native
-                                wire:model.live="regency_code"
-                                label="Kota / Kabupaten"
-                                placeholder="Pilih Kota/Kabupaten"
-                                :options="$regencies"
-                                select="label:label|value:value"
-                                :disabled="count($regencies) === 0"
-                            />
+                            {{-- KOTA / KABUPATEN --}}
+                            <div wire:key="wrapper-regency-{{ $province_code }}-{{ count($regencies) }}">
+                                @if ($province_code && count($regencies) > 0)
+                                    <x-select.styled
+                                        id="regency-select-{{ $province_code }}"
+                                        wire:model.live="regency_code"
+                                        label="Kota / Kabupaten"
+                                        placeholder="Pilih Kota/Kabupaten"
+                                        :options="$regencies"
+                                        searchable
+                                    />
+                                @else
+                                    <x-select.styled label="Kota / Kabupaten" placeholder="Pilih Provinsi terlebih dahulu" disabled />
+                                @endif
+                            </div>
 
-                            <x-select.native
-                                wire:model.live="district_code"
-                                label="Kecamatan"
-                                placeholder="Pilih Kecamatan"
-                                :options="$districts"
-                                select="label:label|value:value"
-                                :disabled="count($districts) === 0"
-                            />
+                            {{-- KECAMATAN --}}
+                            <div wire:key="wrapper-district-{{ $regency_code }}-{{ count($districts) }}">
+                                @if ($regency_code && count($districts) > 0)
+                                    <x-select.styled
+                                        id="district-select-{{ $regency_code }}"
+                                        wire:model.live="district_code"
+                                        label="Kecamatan"
+                                        placeholder="Pilih Kecamatan"
+                                        :options="$districts"
+                                        searchable
+                                    />
+                                @else
+                                    <x-select.styled label="Kecamatan" placeholder="Pilih Kota/Kabupaten terlebih dahulu" disabled />
+                                @endif
+                            </div>
 
-                            <x-select.native
-                                wire:model.live="village_code"
-                                label="Kelurahan / Desa"
-                                placeholder="Pilih Kelurahan/Desa"
-                                :options="$villages"
-                                select="label:label|value:value"
-                                :disabled="count($villages) === 0"
-                            />
+                            {{-- KELURAHAN / DESA --}}
+                            <div wire:key="wrapper-village-{{ $district_code }}-{{ count($villages) }}">
+                                @if ($district_code && count($villages) > 0)
+                                    <x-select.styled
+                                        id="village-select-{{ $district_code }}"
+                                        wire:model.live="village_code"
+                                        label="Kelurahan / Desa"
+                                        placeholder="Pilih Kelurahan/Desa"
+                                        :options="$villages"
+                                        searchable
+                                    />
+                                @else
+                                    <x-select.styled label="Kelurahan / Desa" placeholder="Pilih Kecamatan terlebih dahulu" disabled />
+                                @endif
+                            </div>
                         </div>
                     </div>
                 </div>
