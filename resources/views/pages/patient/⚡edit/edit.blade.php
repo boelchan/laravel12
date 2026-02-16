@@ -51,37 +51,45 @@
                         <div class="md:col-span-2">
                             <x-textarea wire:model="address" label="Alamat Lengkap" />
                         </div>
-                        <x-select.styled
-                            wire:model.live="province_code"
-                            label="Provinsi"
-                            placeholder="Pilih Provinsi"
-                            :options="$provinces"
-                            searchable
-                        />
-                        <x-select.styled
-                            wire:model.live="regency_code"
-                            label="Kota / Kabupaten"
-                            placeholder="Pilih Kota/Kabupaten"
-                            :options="$regencies"
-                            searchable
-                            :disabled="!$province_code"
-                        />
-                        <x-select.styled
-                            wire:model.live="district_code"
-                            label="Kecamatan"
-                            placeholder="Pilih Kecamatan"
-                            :options="$districts"
-                            searchable
-                            :disabled="!$regency_code"
-                        />
-                        <x-select.styled
-                            wire:model.live="village_code"
-                            label="Kelurahan / Desa"
-                            placeholder="Pilih Kelurahan/Desa"
-                            :options="$villages"
-                            searchable
-                            :disabled="!$district_code"
-                        />
+                        <div>
+                            <label class="label"><span class="label-text">Provinsi</span></label>
+                            <select wire:model.live="province_code" class="select select-bordered w-full">
+                                <option value="">Pilih Provinsi</option>
+                                @foreach ($provinces as $prov)
+                                    <option value="{{ $prov['value'] }}">{{ $prov['label'] }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="label"><span class="label-text">Kota / Kabupaten</span></label>
+                            <select wire:model.live="regency_code" class="select select-bordered w-full" @disabled(!$province_code)>
+                                <option value="">Pilih Kota/Kabupaten</option>
+                                @foreach ($regencies as $reg)
+                                    <option value="{{ $reg['value'] }}">{{ $reg['label'] }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="label"><span class="label-text">Kecamatan</span></label>
+                            <select wire:model.live="district_code" class="select select-bordered w-full" @disabled(!$regency_code)>
+                                <option value="">Pilih Kecamatan</option>
+                                @foreach ($districts as $dist)
+                                    <option value="{{ $dist['value'] }}">{{ $dist['label'] }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="label"><span class="label-text">Kelurahan / Desa</span></label>
+                            <select wire:model.live="village_code" class="select select-bordered w-full" @disabled(!$district_code)>
+                                <option value="">Pilih Kelurahan/Desa</option>
+                                @foreach ($villages as $vil)
+                                    <option value="{{ $vil['value'] }}">{{ $vil['label'] }}</option>
+                                @endforeach
+                            </select>
+                        </div>
                         <x-input wire:model="postal_code" label="Kode Pos" />
                     </div>
                 </x-card>

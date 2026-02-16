@@ -75,20 +75,29 @@ new class extends Component
         $this->regency_code = null;
         $this->district_code = null;
         $this->village_code = null;
-        $this->regencies = $value ? IndonesiaRegion::where('parent', $this->province_code)->get()->map(fn($item) => ['label' => $item->name, 'value' => $item->code])->toArray() : [];
+        $this->regencies = $value 
+            ? IndonesiaRegion::where('parent', $value)->get()->map(fn($item) => ['label' => $item->name, 'value' => $item->code])->toArray()
+            : [];
+        $this->districts = [];
+        $this->villages = [];
     }
 
     public function updatedRegencyCode($value)
     {
         $this->district_code = null;
         $this->village_code = null;
-        $this->districts = $value ? IndonesiaRegion::where('parent', $this->regency_code)->get()->map(fn($item) => ['label' => $item->name, 'value' => $item->code])->toArray() : [];
+        $this->districts = $value 
+            ? IndonesiaRegion::where('parent', $value)->get()->map(fn($item) => ['label' => $item->name, 'value' => $item->code])->toArray()
+            : [];
+        $this->villages = [];
     }
 
     public function updatedDistrictCode($value)
     {
         $this->village_code = null;
-        $this->villages = $value ? IndonesiaRegion::where('parent', $this->district_code)->get()->map(fn($item) => ['label' => $item->name, 'value' => $item->code])->toArray() : [];
+        $this->villages = $value 
+            ? IndonesiaRegion::where('parent', $value)->get()->map(fn($item) => ['label' => $item->name, 'value' => $item->code])->toArray()
+            : [];
     }
 
     public function store()

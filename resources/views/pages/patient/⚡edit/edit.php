@@ -6,7 +6,7 @@ use App\Enums\EducationEnum;
 use App\Enums\MaritalStatusEnum;
 use App\Enums\NationalityEnum;
 use App\Models\Patient;
-use Aliziodev\IndonesiaRegions\Models\IndonesiaRegion;
+use App\Models\IndonesiaRegion;
 use Livewire\Component;
 use TallStackUi\Traits\Interactions;
 
@@ -118,6 +118,8 @@ new class extends Component
         $this->regency_code = null;
         $this->district_code = null;
         $this->village_code = null;
+        $this->districts = [];
+        $this->villages = [];
         $this->regencies = $value ? IndonesiaRegion::whereRaw('LENGTH(code) = 5')->where('code', 'like', $value . '.%')->orderBy('name')->get()->map(fn($item) => ['label' => $item->name, 'value' => $item->code])->toArray() : [];
     }
 
@@ -125,6 +127,7 @@ new class extends Component
     {
         $this->district_code = null;
         $this->village_code = null;
+        $this->villages = [];
         $this->districts = $value ? IndonesiaRegion::whereRaw('LENGTH(code) = 8')->where('code', 'like', $value . '.%')->orderBy('name')->get()->map(fn($item) => ['label' => $item->name, 'value' => $item->code])->toArray() : [];
     }
 
