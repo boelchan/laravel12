@@ -82,7 +82,6 @@
                             searchable
                             :disabled="!$district_code"
                         />
-                        <x-input wire:model="postal_code" label="Kode Pos" />
                     </div>
                 </x-card>
 

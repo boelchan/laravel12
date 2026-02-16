@@ -33,10 +33,10 @@ return new class extends Migration
 
             // === ALAMAT ===
             $table->text('address')->nullable();                   // Alamat lengkap
-            $table->string('province_code', 10)->nullable();
-            $table->string('regency_code', 10)->nullable();
-            $table->string('district_code', 10)->nullable();
-            $table->string('village_code', 15)->nullable();
+            $table->integer('province_code', 10)->nullable();
+            $table->integer('regency_code', 10)->nullable();
+            $table->integer('district_code', 10)->nullable();
+            $table->integer('village_code', 15)->nullable();
             $table->string('postal_code', 10)->nullable();
 
             $table->foreign('province_code')->references('code')->on('indonesia_regions')->onDelete('set null');
