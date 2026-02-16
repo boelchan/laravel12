@@ -43,5 +43,9 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('123'),
         ]);
         $user->assignRole('administrator');
+
+        $this->call([
+            IndonesiaRegionSeeder::class
+        ]);
     }
 }

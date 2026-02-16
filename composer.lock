@@ -4,79 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "90fedfdaf3706a749f877ce3ecadfbb0",
+    "content-hash": "a1c30800e79abf07f635abb9d749f524",
     "packages": [
-        {
-            "name": "aliziodev/laravel-indonesia-regions",
-            "version": "v1.0.9",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/aliziodev/laravel-indonesia-regions.git",
-                "reference": "3f0f24c7cb37b01aaf9dcfd6bca072b5d2066d93"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/aliziodev/laravel-indonesia-regions/zipball/3f0f24c7cb37b01aaf9dcfd6bca072b5d2066d93",
-                "reference": "3f0f24c7cb37b01aaf9dcfd6bca072b5d2066d93",
-                "shasum": ""
-            },
-            "require": {
-                "illuminate/support": "^11.0|^12.0",
-                "php": "^8.2"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "aliases": {
-                        "Indonesia": "Aliziodev\\IndonesiaRegions\\Facades\\Indonesia"
-                    },
-                    "providers": [
-                        "Aliziodev\\IndonesiaRegions\\IndonesiaRegionsServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Aliziodev\\IndonesiaRegions\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Aliziodev",
-                    "email": "aliziodev@gmail.com"
-                }
-            ],
-            "description": "Laravel package for Indonesia regions selection with postal codes | Package Laravel untuk pemilihan wilayah Indonesia lengkap dengan kode pos",
-            "keywords": [
-                "desa",
-                "indonesia",
-                "indonesia-regions",
-                "kabupaten",
-                "kecamatan",
-                "kelurahan",
-                "kodepos",
-                "laravel",
-                "postal-code",
-                "provinsi",
-                "regions",
-                "wilayah"
-            ],
-            "support": {
-                "issues": "https://github.com/aliziodev/laravel-indonesia-regions/issues",
-                "source": "https://github.com/aliziodev/laravel-indonesia-regions"
-            },
-            "funding": [
-                {
-                    "url": "https://github.com/sponsors/aliziodev",
-                    "type": "github"
-                }
-            ],
-            "time": "2025-05-25T23:58:50+00:00"
-        },
         {
             "name": "archtechx/enums",
             "version": "v1.1.2",
