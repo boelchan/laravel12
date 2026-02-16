@@ -6,7 +6,7 @@ use App\Enums\EducationEnum;
 use App\Enums\MaritalStatusEnum;
 use App\Enums\NationalityEnum;
 use App\Models\Patient;
-use Aliziodev\IndonesiaRegions\Models\IndonesiaRegion;
+use App\Models\IndonesiaRegion;
 use Livewire\Component;
 use TallStackUi\Traits\Interactions;
 
@@ -67,7 +67,7 @@ new class extends Component
     public function mount()
     {
         $this->medical_record_number = Patient::generateMedicalRecordNumber();
-        $this->provinces = IndonesiaRegion::whereRaw('LENGTH(code) = 2')->orderBy('name')->get()->map(fn($item) => ['label' => $item->name, 'value' => $item->code])->toArray();
+        $this->provinces = IndonesiaRegion::where('type', 'provinsi')->get()->map(fn($item) => ['label' => $item->name, 'value' => $item->code])->toArray();
     }
 
     public function updatedProvinceCode($value)
@@ -75,20 +75,20 @@ new class extends Component
         $this->regency_code = null;
         $this->district_code = null;
         $this->village_code = null;
-        $this->regencies = $value ? IndonesiaRegion::whereRaw('LENGTH(code) = 5')->where('code', 'like', $value . '.%')->orderBy('name')->get()->map(fn($item) => ['label' => $item->name, 'value' => $item->code])->toArray() : [];
+        $this->regencies = $value ? IndonesiaRegion::where('parent', $this->province_code)->get()->map(fn($item) => ['label' => $item->name, 'value' => $item->code])->toArray() : [];
     }
 
     public function updatedRegencyCode($value)
     {
         $this->district_code = null;
         $this->village_code = null;
-        $this->districts = $value ? IndonesiaRegion::whereRaw('LENGTH(code) = 8')->where('code', 'like', $value . '.%')->orderBy('name')->get()->map(fn($item) => ['label' => $item->name, 'value' => $item->code])->toArray() : [];
+        $this->districts = $value ? IndonesiaRegion::where('parent', $this->regency_code)->get()->map(fn($item) => ['label' => $item->name, 'value' => $item->code])->toArray() : [];
     }
 
     public function updatedDistrictCode($value)
     {
         $this->village_code = null;
-        $this->villages = $value ? IndonesiaRegion::whereRaw('LENGTH(code) = 13')->where('code', 'like', $value . '.%')->orderBy('name')->get()->map(fn($item) => ['label' => $item->name, 'value' => $item->code])->toArray() : [];
+        $this->villages = $value ? IndonesiaRegion::where('parent', $this->district_code)->get()->map(fn($item) => ['label' => $item->name, 'value' => $item->code])->toArray() : [];
     }
 
     public function store()
