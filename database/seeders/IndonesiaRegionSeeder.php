@@ -11,7 +11,7 @@ class IndonesiaRegionSeeder extends Seeder
     public function run(): void
     {
         // Define the path to the SQL file
-        $sqlPath = dirname(__DIR__) . DIRECTORY_SEPARATOR . 'sql' . DIRECTORY_SEPARATOR . 'indonesia_regions.sql';
+        $sqlPath = dirname(__DIR__) . DIRECTORY_SEPARATOR . 'sql' . DIRECTORY_SEPARATOR . 'indonesia_regions_jatim.sql';
 
         // Increase memory limit for large SQL file
         // ini_set('memory_limit', '512M');
