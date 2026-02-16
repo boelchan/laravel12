@@ -34,9 +34,9 @@ new class extends Component
 
     // Alamat
     public $address;
-    public $province_code;
-    public $regency_code;
-    public $district_code;
+    public $province_code = 35;
+    public $regency_code = 3529;
+    public $district_code = 352901;
     public $village_code;
     public $postal_code;
 
@@ -68,6 +68,9 @@ new class extends Component
     {
         $this->medical_record_number = Patient::generateMedicalRecordNumber();
         $this->provinces = IndonesiaRegion::where('type', 'provinsi')->get()->map(fn($item) => ['label' => $item->name, 'value' => $item->code])->toArray();
+        $this->regencies = IndonesiaRegion::where('parent', $this->province_code)->get()->map(fn($item) => ['label' => $item->name, 'value' => $item->code])->toArray();
+        $this->districts = IndonesiaRegion::where('parent', $this->regency_code)->get()->map(fn($item) => ['label' => $item->name, 'value' => $item->code])->toArray();
+        $this->villages = IndonesiaRegion::where('parent', $this->district_code)->get()->map(fn($item) => ['label' => $item->name, 'value' => $item->code])->toArray();
     }
 
     public function updatedProvinceCode($value)
@@ -75,7 +78,7 @@ new class extends Component
         $this->regency_code = null;
         $this->district_code = null;
         $this->village_code = null;
-        $this->regencies = $value 
+        $this->regencies = $value
             ? IndonesiaRegion::where('parent', $value)->get()->map(fn($item) => ['label' => $item->name, 'value' => $item->code])->toArray()
             : [];
         $this->districts = [];
@@ -86,7 +89,7 @@ new class extends Component
     {
         $this->district_code = null;
         $this->village_code = null;
-        $this->districts = $value 
+        $this->districts = $value
             ? IndonesiaRegion::where('parent', $value)->get()->map(fn($item) => ['label' => $item->name, 'value' => $item->code])->toArray()
             : [];
         $this->villages = [];
@@ -95,7 +98,7 @@ new class extends Component
     public function updatedDistrictCode($value)
     {
         $this->village_code = null;
-        $this->villages = $value 
+        $this->villages = $value
             ? IndonesiaRegion::where('parent', $value)->get()->map(fn($item) => ['label' => $item->name, 'value' => $item->code])->toArray()
             : [];
     }

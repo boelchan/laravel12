@@ -54,45 +54,40 @@
                                 <x-textarea wire:model="address" label="Alamat Lengkap" />
                             </div>
 
-                            <div>
-                                <label class="label"><span class="label-text">Provinsi</span></label>
-                                <select wire:model.live="province_code" class="select select-bordered w-full">
-                                    <option value="">Pilih Provinsi</option>
-                                    @foreach ($provinces as $prov)
-                                        <option value="{{ $prov['value'] }}">{{ $prov['label'] }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
+                            <x-select.native
+                                wire:model.live="province_code"
+                                label="Provinsi"
+                                placeholder="Pilih Provinsi"
+                                :options="$provinces"
+                                select="label:label|value:value"
+                            />
 
-                            <div>
-                                <label class="label"><span class="label-text">Kota / Kabupaten</span></label>
-                                <select wire:model.live="regency_code" class="select select-bordered w-full" @disabled(count($regencies) === 0)>
-                                    <option value="">Pilih Kota/Kabupaten</option>
-                                    @foreach ($regencies as $reg)
-                                        <option value="{{ $reg['value'] }}">{{ $reg['label'] }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
+                            <x-select.native
+                                wire:model.live="regency_code"
+                                label="Kota / Kabupaten"
+                                placeholder="Pilih Kota/Kabupaten"
+                                :options="$regencies"
+                                select="label:label|value:value"
+                                :disabled="count($regencies) === 0"
+                            />
 
-                            <div>
-                                <label class="label"><span class="label-text">Kecamatan</span></label>
-                                <select wire:model.live="district_code" class="select select-bordered w-full" @disabled(count($districts) === 0)>
-                                    <option value="">Pilih Kecamatan</option>
-                                    @foreach ($districts as $dist)
-                                        <option value="{{ $dist['value'] }}">{{ $dist['label'] }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
+                            <x-select.native
+                                wire:model.live="district_code"
+                                label="Kecamatan"
+                                placeholder="Pilih Kecamatan"
+                                :options="$districts"
+                                select="label:label|value:value"
+                                :disabled="count($districts) === 0"
+                            />
 
-                            <div>
-                                <label class="label"><span class="label-text">Kelurahan / Desa</span></label>
-                                <select wire:model.live="village_code" class="select select-bordered w-full" @disabled(count($villages) === 0)>
-                                    <option value="">Pilih Kelurahan/Desa</option>
-                                    @foreach ($villages as $vil)
-                                        <option value="{{ $vil['value'] }}">{{ $vil['label'] }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
+                            <x-select.native
+                                wire:model.live="village_code"
+                                label="Kelurahan / Desa"
+                                placeholder="Pilih Kelurahan/Desa"
+                                :options="$villages"
+                                select="label:label|value:value"
+                                :disabled="count($villages) === 0"
+                            />
                         </div>
                     </div>
                 </div>
