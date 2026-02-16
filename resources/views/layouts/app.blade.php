@@ -52,6 +52,12 @@
                                     <i class="ti ti-home text-lg"></i>Dashboard</a>
                             </li>
                             <li>
+                                <a class="{{ Str::startsWith(url()->current(), url('patient')) ? 'menu-active' : '' }}"
+                                    href={{ route('patient') }} wire:navigate
+                                >
+                                    <i class="ti ti-user-plus text-lg"></i>Pasien</a>
+                            </li>
+                            <li>
                                 <a><i class="ti ti-user-plus"></i>Parent</a>
                                 <ul>
                                     <li><a>Submenu 1</a></li>
