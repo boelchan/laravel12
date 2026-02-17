@@ -9,11 +9,11 @@
 
     <div class="mt-6">
         <div class="grid gap-4 lg:grid-cols-3">
-            <div class="card bg-base-100 col-span-3 shadow-sm lg:col-span-1">
+            <div class="card col-span-3 border border-slate-200 lg:col-span-1">
                 <div class="card-body">
                     <h2 class="card-title">Role</h2>
                     @foreach ($roles as $role)
-                        <div class="flex items-center gap-2 rounded-lg border border-white p-1 hover:border-slate-300">
+                        <div class="flex items-center gap-2 rounded-lg border border-slate-100  p-1 hover:border-slate-300">
                             <div class="flex gap-1">
                                 <button class="btn btn-success btn-soft btn-xs btn-square tooltip tooltip-top" data-tip="Edit Permission"
                                     wire:click="dispatch('role-permission-edit', { role_id: {{ $role->id }} })"
@@ -45,7 +45,7 @@
                 </div>
             </div>
 
-            <div class="card bg-base-100 col-span-3 shadow-sm lg:col-span-2">
+            <div class="card border border-slate-200 col-span-3 lg:col-span-2">
                 <div class="card-body">
                     <h2 class="card-title">Permission</h2>
                     <div class="grid grid-cols-1 gap-2 md:grid-flow-col md:grid-rows-10">
