@@ -7,7 +7,6 @@ use App\Enums\ReligionEnum;
 use App\Enums\EducationEnum;
 use App\Enums\MaritalStatusEnum;
 use App\Enums\NationalityEnum;
-use Aliziodev\IndonesiaRegions\Models\IndonesiaRegion;
 use Illuminate\Database\Eloquent\Model;
 
 class Patient extends Model

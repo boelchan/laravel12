@@ -25,7 +25,7 @@ new class extends Component
     public $mother_name;
     public $birth_date;
     public $birth_place;
-    public $gender = 0;
+    public $gender = 2;
 
     // Kontak
     public $phone;
@@ -45,7 +45,7 @@ new class extends Component
     public $religion;
     public $education;
     public $occupation;
-    public $marital_status;
+    public $marital_status = 'Kawin';
 
     // Cara Pembayaran
     public $insurance_number;
