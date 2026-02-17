@@ -84,20 +84,19 @@
                     </nav>
 
                     <div class="mt-auto hidden pt-4 lg:block">
-                        <div class="dropdown dropdown-top w-full rounded-lg border border-slate-300">
-                            <div class="flex w-full cursor-pointer items-center justify-between rounded-lg hover:bg-slate-200"
+                        <div class="dropdown dropdown-top w-full rounded-lg ">
+                            <div class="flex w-full cursor-pointer items-center justify-between rounded-lg bg-slate-200 hover:bg-slate-300"
                                 role="button" tabindex="0"
                             >
                                 <div class="flex items-center gap-2">
-                                    <div class="bg-base-600 flex h-8 w-8 items-center justify-center">
-                                        <x-icon class="h-5 w-5" name="user" outline />
+                                    <div class="bg-slate-300 flex h-8 w-8 items-center justify-center rounded-lg">
+                                        <span class="text-black text-md font-bold uppercase">
+                                            {{ substr(auth()->user()->name, 0, 2) }}
+                                        </span>
                                     </div>
                                     <div>
                                         <p class="text-sm font-semibold text-slate-800">{{ Auth::user()?->name }}</p>
                                     </div>
-                                </div>
-                                <div class="pr-2">
-                                    <i class="ti ti-chevron-up"></i>
                                 </div>
                             </div>
 
@@ -105,7 +104,7 @@
                                 tabindex="0"
                             >
                                 <li>
-                                    <a href="{{ route('account') }}" wire:navigate> <i class="ti ti-user-edit text-lg"></i> Pengaturan Akun
+                                    <a href="{{ route('account') }}" wire:navigate> <i class="ti ti-user-edit text-lg"></i> Akun
                                     </a>
                                 </li>
                                 <li>
@@ -134,11 +133,11 @@
             <!-- Mobile Header -->
             @auth()
                 <header
-                    class="sticky left-0 right-0 top-0 z-20 m-2 flex items-center justify-between rounded-3xl bg-white/10 p-2 shadow-[0_2px_6px_rgba(99,102,241,0.08),0_4px_10px_rgba(0,0,0,0.06)] backdrop-blur-2xl lg:hidden"
+                    class="sticky left-0 right-0 top-0 z-20 m-2 flex items-center justify-between rounded-3xl bg-white/10 p-1 shadow-[0_2px_6px_rgba(99,102,241,0.08),0_4px_10px_rgba(0,0,0,0.06)] backdrop-blur-2xl lg:hidden"
                 >
                     <button class="btn btn-ghost btn-circle" id="hamburger-btn">
                         <svg
-                            class="h-5 w-5"
+                            class="h-6 w-6"
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"
                             viewBox="0 0 24 24"
@@ -156,7 +155,7 @@
                     </div>
                     <div class="dropdown dropdown-end z-50">
                         <div class="btn btn-ghost btn-circle border-0" role="button" tabindex="0">
-                            <x-icon class="h-5 w-5" name="user" outline />
+                            <x-icon class="h-6 w-6" name="user-circle" outline />
                         </div>
                         @auth
                             <ul class="z-100 menu dropdown-content menu-sm rounded-box bg-base-100 my-3 w-48 border border-slate-200 p-2"
@@ -169,7 +168,7 @@
                                 </li>
                                 <div class="divider m-0"></div>
                                 <li>
-                                    <a href="{{ route('account') }}" wire:navigate> <i class="ti ti-user-edit text-lg"></i> Pengaturan Akun </a>
+                                    <a href="{{ route('account') }}" wire:navigate> <i class="ti ti-user-edit text-lg"></i> Akun </a>
                                 </li>
                                 <li>
                                     <a class="text-red-500 hover:bg-red-50 hover:text-red-600" href="#"
