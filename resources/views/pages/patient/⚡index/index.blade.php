@@ -73,6 +73,12 @@
                             @endif
                         </td>
                         <td class="flex gap-2 p-2">
+                            <button class="btn btn-xs btn-success btn-square btn-soft">
+                                <i class="ti ti-calendar text-lg"></i></button>
+
+                            <button class="btn btn-xs btn-warning btn-square btn-soft">
+                                <i class="ti ti-history text-lg"></i></button>
+
                             <a class="btn btn-xs btn-primary btn-square btn-soft" href="{{ route('patient.edit', $d->id) }}" wire:navigate>
                                 <i class="ti ti-edit text-lg"></i></a>
 
