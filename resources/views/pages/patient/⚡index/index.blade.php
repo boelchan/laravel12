@@ -62,7 +62,7 @@
                         <td class="p-2"> {{ $d->gender?->label() ?? '-' }} </td>
                         <td class="p-2 text-xs">
                             {{ $d->birth_date?->format('d-m-Y') }}
-                            <div class="text-[10px] text-slate-400">{{ $d->birth_place }}</div>
+                            <div class="text-[10px] text-slate-400">{{ $d->umur_sekarang }}</div>
                         </td>
                         <td class="p-2 text-xs"> {{ $d->mobile_phone ?? ($d->phone ?? '-') }} </td>
                         <td class="p-2 text-center">

@@ -23,6 +23,16 @@ class Patient extends Model
         'is_active' => 'boolean',
     ];
 
+    public function getUmurSekarangAttribute()
+    {
+        $birth_date = $this->birth_date;
+        $today = now();
+        $age = $today->diff($birth_date)->y;
+        $month = $today->diff($birth_date)->m;
+        $day = $today->diff($birth_date)->d;
+        return $age . ' tahun ' . $month . ' bulan ' . $day . ' hari';
+    }
+
     public static function generateMedicalRecordNumber()
     {
         $latest = static::orderBy('id', 'desc')->first();
