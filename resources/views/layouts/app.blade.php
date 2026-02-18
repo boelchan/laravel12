@@ -184,7 +184,7 @@
             @endauth
 
             <!-- Main Content -->
-            <main class="w-full flex-1 overflow-y-auto p-6 lg:px-[64px]">
+            <main class="w-full flex-1 overflow-y-auto p-6 lg:ps-[64px]">
 
                 {{ $slot }}
 

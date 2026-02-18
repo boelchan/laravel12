@@ -109,6 +109,7 @@ new class extends Component
             'medical_record_number' => 'required|unique:patients,medical_record_number',
             'full_name' => 'required|string|max:100',
             'birth_date' => 'required|date',
+            'address' => 'required',
             'gender' => 'required',
             'nik' => 'nullable|string|size:16|unique:patients,nik',
             'mobile_phone' => 'nullable|string|max:20',
