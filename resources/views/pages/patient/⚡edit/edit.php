@@ -7,15 +7,13 @@ use App\Enums\MaritalStatusEnum;
 use App\Enums\NationalityEnum;
 use App\Models\Patient;
 use App\Models\IndonesiaRegion;
+use Illuminate\Http\Request;
 use Livewire\Component;
 use TallStackUi\Traits\Interactions;
 
 new class extends Component
 {
     use Interactions;
-
-    public Patient $patient;
-
     // Identitas Utama
     public $medical_record_number;
     public $nik;
@@ -66,10 +64,12 @@ new class extends Component
     public $districts = [];
     public $villages = [];
 
-    public function mount(Patient $patient)
+    public function mount(Patient $patient, String $uuid)
     {
-        $this->patient = $patient;
-
+        if ($uuid != $patient->uuid) {
+            return to_route('patient.index');
+        }
+        
         $this->medical_record_number = $patient->medical_record_number;
         $this->nik = $patient->nik;
         $this->ihs_number = $patient->ihs_number;
@@ -182,6 +182,6 @@ new class extends Component
 
         $this->toast()->success('Pasien berhasil diupdate')->send();
 
-        return to_route('patient');
+        return to_route('patient.index');
     }
 };

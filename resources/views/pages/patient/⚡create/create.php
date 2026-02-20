@@ -1,12 +1,8 @@
 <?php
 
-use App\Enums\GenderEnum;
-use App\Enums\ReligionEnum;
-use App\Enums\EducationEnum;
-use App\Enums\MaritalStatusEnum;
-use App\Enums\NationalityEnum;
 use App\Models\Patient;
 use App\Models\IndonesiaRegion;
+use Illuminate\Support\Str;
 use Livewire\Component;
 use TallStackUi\Traits\Interactions;
 
@@ -116,6 +112,7 @@ new class extends Component
         ]);
 
         Patient::create([
+            'uuid' => Str::uuid(),
             'medical_record_number' => $this->medical_record_number,
             'nik' => $this->nik,
             'ihs_number' => $this->ihs_number,
@@ -149,6 +146,6 @@ new class extends Component
 
         $this->toast()->success('Pasien berhasil ditambahkan')->send();
 
-        return to_route('patient');
+        return to_route('patient.index');
     }
 };

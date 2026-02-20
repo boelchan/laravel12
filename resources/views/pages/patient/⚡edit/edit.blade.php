@@ -3,7 +3,7 @@
     <div class="breadcrumbs p-0 text-xs text-slate-500">
         <ul>
             <li><a href="{{ route('dashboard') }}"><i class="ti ti-home"></i></a></li>
-            <li><a href="{{ route('patient') }}">Pasien</a></li>
+            <li><a href="{{ route('patient.index') }}">Pasien</a></li>
             <li>Edit data</li>
         </ul>
     </div>
@@ -130,7 +130,7 @@
             </div>
 
             <div class="mt-6 flex justify-end gap-2">
-                <a class="btn btn-soft btn-secondary" href="{{ route('patient') }}" wire:navigate>Batal</a>
+                <a class="btn btn-soft btn-secondary" href="{{ route('patient.index') }}" wire:navigate>Batal</a>
                 <button class="btn btn-primary" type="submit">Update Data Pasien</button>
             </div>
         </form>

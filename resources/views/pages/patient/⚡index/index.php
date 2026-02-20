@@ -10,8 +10,8 @@ new class extends Component
 {
     use WithTableX, Interactions;
 
-    public $sortFieldDefault = 'full_name';
-    public $sortDirectionDefault = 'asc';
+    public $sortFieldDefault = 'medical_record_number';
+    public $sortDirectionDefault = 'desc';
 
     public $search_full_name = '';
     public $search_medical_record_number = '';

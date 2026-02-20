@@ -27,7 +27,11 @@ Route::middleware('active')->group(function () {
         Route::livewire('/user/{user}/edit', 'pages::user.edit')->name('user.edit');
         Route::livewire('/role-permission', 'pages::user.role_permission')->name('user.role_permission');
     });
-    Route::livewire('/patient', 'pages::patient.index')->name('patient');
+    Route::livewire('/patient', 'pages::patient.index')->name('patient.index');
     Route::livewire('/patient/create', 'pages::patient.create')->name('patient.create');
-    Route::livewire('/patient/{patient}/edit', 'pages::patient.edit')->name('patient.edit');
+    Route::livewire('/patient/{patient}/edit/{uuid}', 'pages::patient.edit')->name('patient.edit');
+
+    Route::livewire('/encounter', 'pages::encounter.index')->name('encounter.index');
+    Route::livewire('/encounter/create', 'pages::encounter.create')->name('encounter.create');
+    Route::livewire('/encounter/{encounter}/edit/{uuid}', 'pages::encounter.edit')->name('encounter.edit');
 });

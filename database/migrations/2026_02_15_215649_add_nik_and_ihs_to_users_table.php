@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->string('nik', 16)->unique()->nullable()->after('password');
             $table->string('ihs_number', 20)->unique()->nullable()->after('nik');
+            $table->string('jabatan', 50)->nullable()->after('nik');
         });
     }
 
@@ -23,7 +24,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn(['nik', 'ihs_number']);
+            $table->dropColumn(['nik', 'ihs_number', 'jabatan']);
         });
     }
 };

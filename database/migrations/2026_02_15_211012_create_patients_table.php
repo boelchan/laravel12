@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('patients', function (Blueprint $table) {
             // === IDENTITAS UTAMA ===
             $table->id();
+            $table->uuid();
             $table->string('medical_record_number', 20)->unique(); // Nomor Rekam Medis
             $table->char('nik', 16)->unique()->nullable();         // NIK (16 digit)
             $table->string('ihs_number', 20)->unique()->nullable(); // Nomor IHS
@@ -69,7 +70,6 @@ return new class extends Migration
             $table->index('medical_record_number');
             $table->index('full_name');
             $table->index('birth_date');
-            $table->index('ihs_number');
             $table->index('province_code');
             $table->index('regency_code');
             $table->index('district_code');

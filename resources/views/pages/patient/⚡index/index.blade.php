@@ -79,7 +79,7 @@
                             <button class="btn btn-xs btn-warning btn-square btn-soft">
                                 <i class="ti ti-history text-lg"></i></button>
 
-                            <a class="btn btn-xs btn-primary btn-square btn-soft" href="{{ route('patient.edit', $d->id) }}" wire:navigate>
+                            <a class="btn btn-xs btn-primary btn-square btn-soft" href="{{ route('patient.edit', [$d->id, $d->uuid]) }}" wire:navigate>
                                 <i class="ti ti-edit text-lg"></i></a>
 
                             <button class="btn btn-xs btn-square btn-error btn-soft"
