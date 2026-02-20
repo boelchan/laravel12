@@ -30,7 +30,7 @@ class Patient extends Model
         $age = $today->diff($birth_date)->y;
         $month = $today->diff($birth_date)->m;
         $day = $today->diff($birth_date)->d;
-        return $age . ' tahun ' . $month . ' bulan ' . $day . ' hari';
+        return $age . ' th ' . $month . ' bln ' . $day . ' hr';
     }
 
     public static function generateMedicalRecordNumber()
