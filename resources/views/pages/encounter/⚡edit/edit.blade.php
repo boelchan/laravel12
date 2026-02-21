@@ -82,26 +82,27 @@
 
                             <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
                                 <div class="space-y-2">
+                                    <label class="block text-sm font-medium text-slate-700">Signature 1</label>
                                     <div class="signature-container relative" wire:ignore>
                                         <div class="drawpad-dashed h-52 w-full rounded-xl border-2 border-dashed border-slate-300 bg-slate-50 shadow-inner"
-                                            id="pad-hasil-dokter"
+                                            id="hasil_signature_1"
                                         ></div>
                                         <div class="absolute bottom-3 right-3 flex gap-2">
                                             <button
                                                 class="btn btn-xs h-8 border-slate-200 bg-white/90 px-2 text-slate-700 shadow-sm backdrop-blur hover:bg-white"
-                                                type="button" title="Undo" onclick="undoPad('pad-hasil-dokter')"
+                                                type="button" title="Undo" onclick="undoPad('hasil_signature_1')"
                                             >
                                                 <i class="ti ti-arrow-back-up text-base"></i> <span class="hidden sm:inline">Undo</span>
                                             </button>
                                             <button
                                                 class="btn btn-xs h-8 border-slate-200 bg-white/90 px-2 text-slate-700 shadow-sm backdrop-blur hover:bg-white"
-                                                type="button" title="Redo" onclick="redoPad('pad-hasil-dokter')"
+                                                type="button" title="Redo" onclick="redoPad('hasil_signature_1')"
                                             >
                                                 <i class="ti ti-arrow-forward-up text-base"></i> <span class="hidden sm:inline">Redo</span>
                                             </button>
                                             <button
                                                 class="btn btn-xs h-8 border-red-100 bg-red-50/90 px-2 text-red-600 shadow-sm backdrop-blur hover:bg-red-100"
-                                                type="button" title="Bersihkan" onclick="clearPad('pad-hasil-dokter')"
+                                                type="button" title="Bersihkan" onclick="clearPad('hasil_signature_1')"
                                             >
                                                 <i class="ti ti-trash text-base"></i> <span class="hidden sm:inline">Bersihkan</span>
                                             </button>
@@ -109,26 +110,27 @@
                                     </div>
                                 </div>
                                 <div class="space-y-2">
+                                    <label class="block text-sm font-medium text-slate-700">Signature 2</label>
                                     <div class="signature-container relative" wire:ignore>
                                         <div class="drawpad-dashed h-52 w-full rounded-xl border-2 border-dashed border-slate-300 bg-slate-50 shadow-inner"
-                                            id="pad-hasil-pasien"
+                                            id="hasil_signature_2"
                                         ></div>
                                         <div class="absolute bottom-3 right-3 flex gap-2">
                                             <button
                                                 class="btn btn-xs h-8 border-slate-200 bg-white/90 px-2 text-slate-700 shadow-sm backdrop-blur hover:bg-white"
-                                                type="button" title="Undo" onclick="undoPad('pad-hasil-pasien')"
+                                                type="button" title="Undo" onclick="undoPad('hasil_signature_2')"
                                             >
                                                 <i class="ti ti-arrow-back-up text-base"></i> <span class="hidden sm:inline">Undo</span>
                                             </button>
                                             <button
                                                 class="btn btn-xs h-8 border-slate-200 bg-white/90 px-2 text-slate-700 shadow-sm backdrop-blur hover:bg-white"
-                                                type="button" title="Redo" onclick="redoPad('pad-hasil-pasien')"
+                                                type="button" title="Redo" onclick="redoPad('hasil_signature_2')"
                                             >
                                                 <i class="ti ti-arrow-forward-up text-base"></i> <span class="hidden sm:inline">Redo</span>
                                             </button>
                                             <button
                                                 class="btn btn-xs h-8 border-red-100 bg-red-50/90 px-2 text-red-600 shadow-sm backdrop-blur hover:bg-red-100"
-                                                type="button" title="Bersihkan" onclick="clearPad('pad-hasil-pasien')"
+                                                type="button" title="Bersihkan" onclick="clearPad('hasil_signature_2')"
                                             >
                                                 <i class="ti ti-trash text-base"></i> <span class="hidden sm:inline">Bersihkan</span>
                                             </button>
@@ -151,27 +153,28 @@
 
                             <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
                                 <div class="space-y-2">
+                                    <label class="block text-sm font-medium text-slate-700">Signature 1</label>
                                     <div class="signature-container relative" wire:ignore>
                                         <div class="drawpad-dashed h-52 w-full rounded-xl border-2 border-dashed border-slate-300 bg-slate-50 shadow-inner"
-                                            id="pad-resep-dokter"
+                                            id="resep_signature_1"
                                         ></div>
                                         <div class="absolute bottom-3 right-3 flex gap-2">
                                             <button
                                                 class="btn btn-xs h-8 border-slate-200 bg-white/90 px-2 text-slate-700 shadow-sm backdrop-blur hover:bg-white"
-                                                type="button" title="Undo" onclick="undoPad('pad-resep-dokter')"
+                                                type="button" title="Undo" onclick="undoPad('resep_signature_1')"
                                             >
                                                 <i class="ti ti-arrow-back-up text-base"></i> <span class="hidden sm:inline">Undo</span>
                                             </button>
                                             <button
                                                 class="btn btn-xs h-8 border-slate-200 bg-white/90 px-2 text-slate-700 shadow-sm backdrop-blur hover:bg-white"
-                                                type="button" title="Redo" onclick="redoPad('pad-resep-dokter')"
+                                                type="button" title="Redo" onclick="redoPad('resep_signature_1')"
                                             >
                                                 <i class="ti ti-arrow-forward-up text-base"></i> <span
                                                     class="hidden sm:inline">Redo</span>
                                             </button>
                                             <button
                                                 class="btn btn-xs h-8 border-red-100 bg-red-50/90 px-2 text-red-600 shadow-sm backdrop-blur hover:bg-red-100"
-                                                type="button" title="Bersihkan" onclick="clearPad('pad-resep-dokter')"
+                                                type="button" title="Bersihkan" onclick="clearPad('resep_signature_1')"
                                             >
                                                 <i class="ti ti-trash text-base"></i> <span class="hidden sm:inline">Bersihkan</span>
                                             </button>
@@ -179,27 +182,28 @@
                                     </div>
                                 </div>
                                 <div class="space-y-2">
+                                    <label class="block text-sm font-medium text-slate-700">Signature 2</label>
                                     <div class="signature-container relative" wire:ignore>
                                         <div class="drawpad-dashed h-52 w-full rounded-xl border-2 border-dashed border-slate-300 bg-slate-50 shadow-inner"
-                                            id="pad-resep-apoteker"
+                                            id="resep_signature_2"
                                         ></div>
                                         <div class="absolute bottom-3 right-3 flex gap-2">
                                             <button
                                                 class="btn btn-xs h-8 border-slate-200 bg-white/90 px-2 text-slate-700 shadow-sm backdrop-blur hover:bg-white"
-                                                type="button" title="Undo" onclick="undoPad('pad-resep-apoteker')"
+                                                type="button" title="Undo" onclick="undoPad('resep_signature_2')"
                                             >
                                                 <i class="ti ti-arrow-back-up text-base"></i> <span class="hidden sm:inline">Undo</span>
                                             </button>
                                             <button
                                                 class="btn btn-xs h-8 border-slate-200 bg-white/90 px-2 text-slate-700 shadow-sm backdrop-blur hover:bg-white"
-                                                type="button" title="Redo" onclick="redoPad('pad-resep-apoteker')"
+                                                type="button" title="Redo" onclick="redoPad('resep_signature_2')"
                                             >
                                                 <i class="ti ti-arrow-forward-up text-base"></i> <span
                                                     class="hidden sm:inline">Redo</span>
                                             </button>
                                             <button
                                                 class="btn btn-xs h-8 border-red-100 bg-red-50/90 px-2 text-red-600 shadow-sm backdrop-blur hover:bg-red-100"
-                                                type="button" title="Bersihkan" onclick="clearPad('pad-resep-apoteker')"
+                                                type="button" title="Bersihkan" onclick="clearPad('resep_signature_2')"
                                             >
                                                 <i class="ti ti-trash text-base"></i> <span class="hidden sm:inline">Bersihkan</span>
                                             </button>
@@ -405,7 +409,11 @@
                     if (tempState) {
                         const img = new Image();
                         img.onload = () => {
-                            plugin.context.drawImage(img, 0, 0, rect.width, rect.height);
+                            // Reset transform before drawing to match actual pixels
+                            plugin.context.setTransform(1, 0, 0, 1, 0, 0);
+                            plugin.context.drawImage(img, 0, 0, plugin.canvas.width, plugin.canvas.height);
+                            // Restore transform for subsequent drawing
+                            plugin.context.setTransform(ratio, 0, 0, ratio, 0, 0);
                         };
                         img.src = tempState;
                     }
@@ -498,8 +506,16 @@
                 plugin.load = function(base64) {
                     const img = new Image();
                     img.onload = function() {
+                        const rect = $element[0].getBoundingClientRect();
                         plugin.context.clearRect(0, 0, plugin.canvas.width, plugin.canvas.height);
-                        plugin.context.drawImage(img, 0, 0);
+                        
+                        // Reset transform to draw the high-res image 1:1 to canvas pixels
+                        plugin.context.setTransform(1, 0, 0, 1, 0, 0);
+                        plugin.context.drawImage(img, 0, 0, plugin.canvas.width, plugin.canvas.height);
+                        
+                        // Restore scaling transform (ratio = 3 as defined in resizeCanvas)
+                        plugin.context.setTransform(3, 0, 0, 3, 0, 0);
+                        
                         saveState();
                     };
                     img.src = base64;
@@ -522,17 +538,17 @@
 
         // Initialize Pads
         $(function() {
-            $('#pad-hasil-dokter').drawpad();
-            $('#pad-hasil-pasien').drawpad();
-            $('#pad-resep-dokter').drawpad();
-            $('#pad-resep-apoteker').drawpad();
+            $('#hasil_signature_1').drawpad();
+            $('#hasil_signature_2').drawpad();
+            $('#resep_signature_1').drawpad();
+            $('#resep_signature_2').drawpad();
 
             // Give it a moment to initialize and resize
             setTimeout(() => {
-                loadSignature('pad-hasil-dokter', @js($sig_hasil_dokter));
-                loadSignature('pad-hasil-pasien', @js($sig_hasil_pasien));
-                loadSignature('pad-resep-dokter', @js($sig_resep_dokter));
-                loadSignature('pad-resep-apoteker', @js($sig_resep_apoteker));
+                loadSignature('hasil_signature_1', @js($hasil_signature_1));
+                loadSignature('hasil_signature_2', @js($hasil_signature_2));
+                loadSignature('resep_signature_1', @js($resep_signature_1));
+                loadSignature('resep_signature_2', @js($resep_signature_2));
             }, 500);
         });
 
@@ -552,10 +568,10 @@
         document.addEventListener('livewire:initialized', () => {
             window.addEventListener('capture-signatures', () => {
                 const signatures = {
-                    'sig_hasil_dokter': $('#pad-hasil-dokter canvas')[0].toDataURL(),
-                    'sig_hasil_pasien': $('#pad-hasil-pasien canvas')[0].toDataURL(),
-                    'sig_resep_dokter': $('#pad-resep-dokter canvas')[0].toDataURL(),
-                    'sig_resep_apoteker': $('#pad-resep-apoteker canvas')[0].toDataURL()
+                    'hasil_signature_1': $('#hasil_signature_1 canvas')[0].toDataURL(),
+                    'hasil_signature_2': $('#hasil_signature_2 canvas')[0].toDataURL(),
+                    'resep_signature_1': $('#resep_signature_1 canvas')[0].toDataURL(),
+                    'resep_signature_2': $('#resep_signature_2 canvas')[0].toDataURL()
                 };
 
                 @this.setSignatures(signatures);
