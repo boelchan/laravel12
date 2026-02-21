@@ -41,11 +41,27 @@ new class extends Component
         }
         
         // Load Hasil & Resep (Tipe Text)
-        $hasilTable = Hasil::where('encounter_id', $this->encounter->id)->where('tipe', 'text')->first();
+        // We look for 'text' or NULL (as fallback for old data)
+        $hasilTable = Hasil::where('encounter_id', $this->encounter->id)
+            ->where(function($q) {
+                $q->where('tipe', 'text')->orWhereNull('tipe');
+            })->first();
         $this->hasil_text = $hasilTable->hasil ?? '';
         
-        $resepTable = Resep::where('encounter_id', $this->encounter->id)->where('tipe', 'text')->first();
+        $resepTable = Resep::where('encounter_id', $this->encounter->id)
+            ->where(function($q) {
+                $q->where('tipe', 'text')->orWhereNull('tipe');
+            })->first();
         $this->resep_text = $resepTable->resep ?? '';
+
+        // Load Signatures (Tipe Draw)
+        $hasilDraw = Hasil::where('encounter_id', $this->encounter->id)->where('tipe', 'draw')->first();
+        $this->sig_hasil_dokter = $hasilDraw->signature_1 ?? '';
+        $this->sig_hasil_pasien = $hasilDraw->signature_2 ?? '';
+
+        $resepDraw = Resep::where('encounter_id', $this->encounter->id)->where('tipe', 'draw')->first();
+        $this->sig_resep_dokter = $resepDraw->signature_1 ?? '';
+        $this->sig_resep_apoteker = $resepDraw->signature_2 ?? '';
     }
 
     public function setSignatures($data)

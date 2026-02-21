@@ -84,20 +84,36 @@
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div class="space-y-2">
                                     <label class="block text-sm font-medium text-slate-700">Tanda Tangan Dokter</label>
-                                    <div wire:ignore class="signature-container relative">
+                                    <div wire:ignore class="signature-container relative group">
                                         <div id="pad-hasil-dokter" class="drawpad-dashed h-40 w-full rounded-lg border-2 border-dashed border-slate-300 bg-slate-50"></div>
-                                        <button type="button" onclick="clearPad('pad-hasil-dokter')" class="btn btn-xs btn-ghost absolute right-2 bottom-2 text-slate-500">
-                                            <i class="ti ti-eraser mr-1"></i> Bersihkan
-                                        </button>
+                                        <div class="absolute right-2 bottom-2 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                                            <button type="button" title="Undo" onclick="undoPad('pad-hasil-dokter')" class="btn btn-xs btn-secondary btn-square">
+                                                <i class="ti ti-arrow-back-up"></i>
+                                            </button>
+                                            <button type="button" title="Redo" onclick="redoPad('pad-hasil-dokter')" class="btn btn-xs btn-secondary btn-square">
+                                                <i class="ti ti-arrow-forward-up"></i>
+                                            </button>
+                                            <button type="button" title="Clear" onclick="clearPad('pad-hasil-dokter')" class="btn btn-xs btn-danger btn-square">
+                                                <i class="ti ti-trash"></i>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="space-y-2">
                                     <label class="block text-sm font-medium text-slate-700">Tanda Tangan Pasien</label>
-                                    <div wire:ignore class="signature-container relative">
+                                    <div wire:ignore class="signature-container relative group">
                                         <div id="pad-hasil-pasien" class="drawpad-dashed h-40 w-full rounded-lg border-2 border-dashed border-slate-300 bg-slate-50"></div>
-                                        <button type="button" onclick="clearPad('pad-hasil-pasien')" class="btn btn-xs btn-ghost absolute right-2 bottom-2 text-slate-500">
-                                            <i class="ti ti-eraser mr-1"></i> Bersihkan
-                                        </button>
+                                        <div class="absolute right-2 bottom-2 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                                            <button type="button" title="Undo" onclick="undoPad('pad-hasil-pasien')" class="btn btn-xs btn-secondary btn-square">
+                                                <i class="ti ti-arrow-back-up"></i>
+                                            </button>
+                                            <button type="button" title="Redo" onclick="redoPad('pad-hasil-pasien')" class="btn btn-xs btn-secondary btn-square">
+                                                <i class="ti ti-arrow-forward-up"></i>
+                                            </button>
+                                            <button type="button" title="Clear" onclick="clearPad('pad-hasil-pasien')" class="btn btn-xs btn-danger btn-square">
+                                                <i class="ti ti-trash"></i>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -117,20 +133,36 @@
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div class="space-y-2">
                                     <label class="block text-sm font-medium text-slate-700">Validasi Dokter</label>
-                                    <div wire:ignore class="signature-container relative">
+                                    <div wire:ignore class="signature-container relative group">
                                         <div id="pad-resep-dokter" class="drawpad-dashed h-40 w-full rounded-lg border-2 border-dashed border-slate-300 bg-slate-50"></div>
-                                        <button type="button" onclick="clearPad('pad-resep-dokter')" class="btn btn-xs btn-ghost absolute right-2 bottom-2 text-slate-500">
-                                            <i class="ti ti-eraser mr-1"></i> Bersihkan
-                                        </button>
+                                        <div class="absolute right-2 bottom-2 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                                            <button type="button" title="Undo" onclick="undoPad('pad-resep-dokter')" class="btn btn-xs btn-secondary btn-square">
+                                                <i class="ti ti-arrow-back-up"></i>
+                                            </button>
+                                            <button type="button" title="Redo" onclick="redoPad('pad-resep-dokter')" class="btn btn-xs btn-secondary btn-square">
+                                                <i class="ti ti-arrow-forward-up"></i>
+                                            </button>
+                                            <button type="button" title="Clear" onclick="clearPad('pad-resep-dokter')" class="btn btn-xs btn-danger btn-square">
+                                                <i class="ti ti-trash"></i>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="space-y-2">
                                     <label class="block text-sm font-medium text-slate-700">Validasi Apoteker / Pasien</label>
-                                    <div wire:ignore class="signature-container relative">
+                                    <div wire:ignore class="signature-container relative group">
                                         <div id="pad-resep-apoteker" class="drawpad-dashed h-40 w-full rounded-lg border-2 border-dashed border-slate-300 bg-slate-50"></div>
-                                        <button type="button" onclick="clearPad('pad-resep-apoteker')" class="btn btn-xs btn-ghost absolute right-2 bottom-2 text-slate-500">
-                                            <i class="ti ti-eraser mr-1"></i> Bersihkan
-                                        </button>
+                                        <div class="absolute right-2 bottom-2 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                                            <button type="button" title="Undo" onclick="undoPad('pad-resep-apoteker')" class="btn btn-xs btn-secondary btn-square">
+                                                <i class="ti ti-arrow-back-up"></i>
+                                            </button>
+                                            <button type="button" title="Redo" onclick="redoPad('pad-resep-apoteker')" class="btn btn-xs btn-secondary btn-square">
+                                                <i class="ti ti-arrow-forward-up"></i>
+                                            </button>
+                                            <button type="button" title="Clear" onclick="clearPad('pad-resep-apoteker')" class="btn btn-xs btn-danger btn-square">
+                                                <i class="ti ti-trash"></i>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -160,17 +192,27 @@
     .drawpad.drawpad-dashed { border: 2px dashed #cbd5e1; background-color: #f8fafc; overflow: hidden; border-radius: 0.5rem; }
     .drawpad > canvas { width: 100%; height: 100%; touch-action: none; }
     .drawpad .drawpad-toolbox {
-        width: 32px; right: 8px; top: 8px; position: absolute; z-index: 10;
+        width: 32px; right: 8px; top: 8px; position: absolute; z-index: 20;
         display: flex; height: calc(100% - 16px); flex-direction: column;
-        opacity: 0.1; pointer-events: none; transition: opacity 0.2s;
+        transition: all 0.2s;
     }
-    .drawpad:hover .drawpad-toolbox { opacity: 1; pointer-events: all; }
-    .drawpad .drawpad-colors { pointer-events: all; display: flex; flex-direction: column; gap: 4px; }
-    .drawpad .drawpad-colorbox { width: 24px; height: 24px; border: 2px solid #fff; cursor: pointer; border-radius: 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.1); }
-    .drawpad .drawpad-colorbox:hover { transform: scale(1.1); }
-    .drawpad .drawpad-colorbox.drawpad-colorbox-active { border-color: #3b82f6; ring: 2px; }
-    .drawpad .drawpad-eraser { background-color: #fff; border: 1px dashed #94a3b8; display: flex; align-items: center; justify-content: center; position: relative; }
-    .drawpad .drawpad-eraser::after { content: 'E'; font-size: 10px; font-weight: bold; color: #64748b; }
+    .drawpad .drawpad-colors { display: flex; flex-direction: column; gap: 6px; }
+    .drawpad .drawpad-colorbox { 
+        width: 24px; height: 24px; border: 2px solid #fff; cursor: pointer; 
+        border-radius: 50%; box-shadow: 0 2px 4px rgba(0,0,0,0.2); 
+        transition: transform 0.1s;
+    }
+    .drawpad .drawpad-colorbox:hover { transform: scale(1.2); }
+    .drawpad .drawpad-colorbox.drawpad-colorbox-active { 
+        border: 2px solid #3b82f6;
+        box-shadow: 0 0 0 2px #fff, 0 0 0 4px #3b82f6;
+    }
+    .drawpad .drawpad-eraser { 
+        background-color: #fff; border: 1px dashed #94a3b8; 
+        display: flex; align-items: center; justify-content: center; 
+        position: relative; font-size: 12px; font-weight: bold; color: #64748b;
+    }
+    .drawpad .drawpad-eraser::after { content: 'E'; }
     
     .signature-container canvas {
         display: block;
@@ -199,7 +241,35 @@
             const coordinate = { x: 0, y: 0 };
             let drawing = false;
             let drawingType = "pen";
-            const lineStyle = { width: 2, color: "black", type: "round" };
+            let lineStyle = { width: 2, color: "#000000", type: "round" };
+            
+            // Undo/Redo states
+            let history = [];
+            let historyIndex = -1;
+
+            const saveState = () => {
+                const state = plugin.canvas.toDataURL();
+                // If we're not at the end of history, discard future states
+                if (historyIndex < history.length - 1) {
+                    history = history.slice(0, historyIndex + 1);
+                }
+                history.push(state);
+                historyIndex++;
+                // Limit history size to 20 steps
+                if (history.length > 20) {
+                    history.shift();
+                    historyIndex--;
+                }
+            };
+
+            const loadState = (index) => {
+                const img = new Image();
+                img.onload = function() {
+                    plugin.context.clearRect(0, 0, plugin.canvas.width, plugin.canvas.height);
+                    plugin.context.drawImage(img, 0, 0);
+                };
+                img.src = history[index];
+            };
 
             const createCanvas = () => {
                 plugin.$canvas = $("<canvas></canvas>");
@@ -209,8 +279,13 @@
             };
             const resizeCanvas = () => {
                 const rect = $element[0].getBoundingClientRect();
+                const tempState = plugin.canvas.toDataURL();
                 plugin.canvas.width = rect.width;
                 plugin.canvas.height = rect.height;
+                // Redraw after resize if there was content
+                const img = new Image();
+                img.onload = () => plugin.context.drawImage(img, 0, 0);
+                img.src = tempState;
             };
             const createToolbox = () => {
                 const $toolbox = $(`<div class="${pluginSuffix}-toolbox"></div>`);
@@ -248,7 +323,12 @@
                 plugin.context.moveTo(coordinate.x, coordinate.y);
                 event.preventDefault();
             };
-            const handleStopDraw = () => { drawing = false; };
+            const handleStopDraw = () => { 
+                if (drawing) {
+                    drawing = false; 
+                    saveState();
+                }
+            };
             const handleDraw = (event) => {
                 if (!drawing) return;
                 const ctx = plugin.context;
@@ -256,6 +336,7 @@
                 ctx.lineWidth = drawingType === "pen" ? lineStyle.width : plugin.settings.eraserSize;
                 ctx.lineCap = lineStyle.type;
                 ctx.lineJoin = lineStyle.type;
+                ctx.strokeStyle = lineStyle.color;
                 updateCoordinate(event);
                 ctx.lineTo(coordinate.x, coordinate.y);
                 ctx.stroke();
@@ -264,8 +345,10 @@
 
             plugin.init = function () {
                 plugin.settings = $.extend({}, defaults, options);
+                lineStyle.color = plugin.settings.defaultColor;
                 $element.addClass(pluginSuffix).append(createCanvas()).append(createToolbox());
                 resizeCanvas();
+                saveState(); // Initial empty state
                 plugin.$canvas.on("mousedown touchstart", handleStartDraw);
                 $(window).on("mouseup touchend", handleStopDraw);
                 plugin.$canvas.on("mousemove touchmove", handleDraw);
@@ -273,6 +356,28 @@
             };
             plugin.clear = function () {
                 plugin.context.clearRect(0, 0, plugin.canvas.width, plugin.canvas.height);
+                saveState();
+            };
+            plugin.undo = function () {
+                if (historyIndex > 0) {
+                    historyIndex--;
+                    loadState(historyIndex);
+                }
+            };
+            plugin.redo = function () {
+                if (historyIndex < history.length - 1) {
+                    historyIndex++;
+                    loadState(historyIndex);
+                }
+            };
+            plugin.load = function (base64) {
+                const img = new Image();
+                img.onload = function() {
+                    plugin.context.clearRect(0, 0, plugin.canvas.width, plugin.canvas.height);
+                    plugin.context.drawImage(img, 0, 0);
+                    saveState();
+                };
+                img.src = base64;
             };
             plugin.init();
         };
@@ -285,16 +390,37 @@
         };
     })(jQuery);
 
+    function loadSignature(padId, base64) {
+        if (!base64 || base64.length < 100) return;
+        $(`#${padId}`).data('drawpad').load(base64);
+    }
+
     // Initialize Pads
     $(function() {
         $('#pad-hasil-dokter').drawpad();
         $('#pad-hasil-pasien').drawpad();
         $('#pad-resep-dokter').drawpad();
         $('#pad-resep-apoteker').drawpad();
+
+        // Give it a moment to initialize and resize
+        setTimeout(() => {
+            loadSignature('pad-hasil-dokter', @js($sig_hasil_dokter));
+            loadSignature('pad-hasil-pasien', @js($sig_hasil_pasien));
+            loadSignature('pad-resep-dokter', @js($sig_resep_dokter));
+            loadSignature('pad-resep-apoteker', @js($sig_resep_apoteker));
+        }, 500);
     });
 
     window.clearPad = function(id) {
         $(`#${id}`).data('drawpad').clear();
+    };
+
+    window.undoPad = function(id) {
+        $(`#${id}`).data('drawpad').undo();
+    };
+
+    window.redoPad = function(id) {
+        $(`#${id}`).data('drawpad').redo();
     };
 
     // Capture signatures before submit
