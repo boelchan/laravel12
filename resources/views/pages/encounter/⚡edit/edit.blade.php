@@ -81,62 +81,43 @@
                             />
 
                             <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
-                                <div class="space-y-2">
-                                    <label class="block text-sm font-medium text-slate-700">Signature 1</label>
-                                    <div class="signature-container relative" wire:ignore>
-                                        <div class="drawpad-dashed h-52 w-full rounded-xl border-2 border-dashed border-slate-300 bg-slate-50 shadow-inner"
-                                            id="hasil_signature_1"
-                                        ></div>
-                                        <div class="absolute bottom-3 right-3 flex gap-2">
-                                            <button
-                                                class="btn btn-xs h-8 border-slate-200 bg-white/90 px-2 text-slate-700 shadow-sm backdrop-blur hover:bg-white"
-                                                type="button" title="Undo" onclick="undoPad('hasil_signature_1')"
-                                            >
-                                                <i class="ti ti-arrow-back-up text-base"></i> <span class="hidden sm:inline">Undo</span>
-                                            </button>
-                                            <button
-                                                class="btn btn-xs h-8 border-slate-200 bg-white/90 px-2 text-slate-700 shadow-sm backdrop-blur hover:bg-white"
-                                                type="button" title="Redo" onclick="redoPad('hasil_signature_1')"
-                                            >
-                                                <i class="ti ti-arrow-forward-up text-base"></i> <span class="hidden sm:inline">Redo</span>
-                                            </button>
-                                            <button
-                                                class="btn btn-xs h-8 border-red-100 bg-red-50/90 px-2 text-red-600 shadow-sm backdrop-blur hover:bg-red-100"
-                                                type="button" title="Bersihkan" onclick="clearPad('hasil_signature_1')"
-                                            >
-                                                <i class="ti ti-trash text-base"></i> <span class="hidden sm:inline">Bersihkan</span>
-                                            </button>
+                                @foreach($hasil_signatures as $index => $sig)
+                                    <div class="space-y-2" wire:key="hasil-sig-{{ $index }}">
+                                        <label class="block text-sm font-medium text-slate-700">Signature {{ $index + 1 }}</label>
+                                        <div class="signature-container relative" wire:ignore>
+                                            <div class="drawpad-dashed h-52 w-full rounded-xl border-2 border-dashed border-slate-300 bg-slate-50 shadow-inner signature-pad"
+                                                id="hasil_signature_{{ $index + 1 }}"
+                                                data-type="hasil"
+                                                data-index="{{ $index }}"
+                                            ></div>
+                                            <div class="absolute bottom-3 right-3 flex gap-2">
+                                                <button
+                                                    class="btn btn-xs h-8 border-slate-200 bg-white/90 px-2 text-slate-700 shadow-sm backdrop-blur hover:bg-white"
+                                                    type="button" title="Undo" onclick="undoPad('hasil_signature_{{ $index + 1 }}')"
+                                                >
+                                                    <i class="ti ti-arrow-back-up text-base"></i> <span class="hidden sm:inline">Undo</span>
+                                                </button>
+                                                <button
+                                                    class="btn btn-xs h-8 border-slate-200 bg-white/90 px-2 text-slate-700 shadow-sm backdrop-blur hover:bg-white"
+                                                    type="button" title="Redo" onclick="redoPad('hasil_signature_{{ $index + 1 }}')"
+                                                >
+                                                    <i class="ti ti-arrow-forward-up text-base"></i> <span class="hidden sm:inline">Redo</span>
+                                                </button>
+                                                <button
+                                                    class="btn btn-xs h-8 border-red-100 bg-red-50/90 px-2 text-red-600 shadow-sm backdrop-blur hover:bg-red-100"
+                                                    type="button" title="Bersihkan" onclick="clearPad('hasil_signature_{{ $index + 1 }}')"
+                                                >
+                                                    <i class="ti ti-trash text-base"></i> <span class="hidden sm:inline">Bersihkan</span>
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="space-y-2">
-                                    <label class="block text-sm font-medium text-slate-700">Signature 2</label>
-                                    <div class="signature-container relative" wire:ignore>
-                                        <div class="drawpad-dashed h-52 w-full rounded-xl border-2 border-dashed border-slate-300 bg-slate-50 shadow-inner"
-                                            id="hasil_signature_2"
-                                        ></div>
-                                        <div class="absolute bottom-3 right-3 flex gap-2">
-                                            <button
-                                                class="btn btn-xs h-8 border-slate-200 bg-white/90 px-2 text-slate-700 shadow-sm backdrop-blur hover:bg-white"
-                                                type="button" title="Undo" onclick="undoPad('hasil_signature_2')"
-                                            >
-                                                <i class="ti ti-arrow-back-up text-base"></i> <span class="hidden sm:inline">Undo</span>
-                                            </button>
-                                            <button
-                                                class="btn btn-xs h-8 border-slate-200 bg-white/90 px-2 text-slate-700 shadow-sm backdrop-blur hover:bg-white"
-                                                type="button" title="Redo" onclick="redoPad('hasil_signature_2')"
-                                            >
-                                                <i class="ti ti-arrow-forward-up text-base"></i> <span class="hidden sm:inline">Redo</span>
-                                            </button>
-                                            <button
-                                                class="btn btn-xs h-8 border-red-100 bg-red-50/90 px-2 text-red-600 shadow-sm backdrop-blur hover:bg-red-100"
-                                                type="button" title="Bersihkan" onclick="clearPad('hasil_signature_2')"
-                                            >
-                                                <i class="ti ti-trash text-base"></i> <span class="hidden sm:inline">Bersihkan</span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
+                                @endforeach
+                            </div>
+                            <div class="mt-4 flex justify-end">
+                                <button type="button" class="btn btn-sm btn-outline btn-primary" wire:click="addSignature('hasil')">
+                                    <i class="ti ti-plus"></i> Tambah Signature
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -152,64 +133,43 @@
                             <x-textarea wire:model="resep_text" label="Daftar Terapi / Obat" rows="4" placeholder="R/ ..." />
 
                             <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
-                                <div class="space-y-2">
-                                    <label class="block text-sm font-medium text-slate-700">Signature 1</label>
-                                    <div class="signature-container relative" wire:ignore>
-                                        <div class="drawpad-dashed h-52 w-full rounded-xl border-2 border-dashed border-slate-300 bg-slate-50 shadow-inner"
-                                            id="resep_signature_1"
-                                        ></div>
-                                        <div class="absolute bottom-3 right-3 flex gap-2">
-                                            <button
-                                                class="btn btn-xs h-8 border-slate-200 bg-white/90 px-2 text-slate-700 shadow-sm backdrop-blur hover:bg-white"
-                                                type="button" title="Undo" onclick="undoPad('resep_signature_1')"
-                                            >
-                                                <i class="ti ti-arrow-back-up text-base"></i> <span class="hidden sm:inline">Undo</span>
-                                            </button>
-                                            <button
-                                                class="btn btn-xs h-8 border-slate-200 bg-white/90 px-2 text-slate-700 shadow-sm backdrop-blur hover:bg-white"
-                                                type="button" title="Redo" onclick="redoPad('resep_signature_1')"
-                                            >
-                                                <i class="ti ti-arrow-forward-up text-base"></i> <span
-                                                    class="hidden sm:inline">Redo</span>
-                                            </button>
-                                            <button
-                                                class="btn btn-xs h-8 border-red-100 bg-red-50/90 px-2 text-red-600 shadow-sm backdrop-blur hover:bg-red-100"
-                                                type="button" title="Bersihkan" onclick="clearPad('resep_signature_1')"
-                                            >
-                                                <i class="ti ti-trash text-base"></i> <span class="hidden sm:inline">Bersihkan</span>
-                                            </button>
+                                @foreach($resep_signatures as $index => $sig)
+                                    <div class="space-y-2" wire:key="resep-sig-{{ $index }}">
+                                        <label class="block text-sm font-medium text-slate-700">Signature {{ $index + 1 }}</label>
+                                        <div class="signature-container relative" wire:ignore>
+                                            <div class="drawpad-dashed h-52 w-full rounded-xl border-2 border-dashed border-slate-300 bg-slate-50 shadow-inner signature-pad"
+                                                id="resep_signature_{{ $index + 1 }}"
+                                                data-type="resep"
+                                                data-index="{{ $index }}"
+                                            ></div>
+                                            <div class="absolute bottom-3 right-3 flex gap-2">
+                                                <button
+                                                    class="btn btn-xs h-8 border-slate-200 bg-white/90 px-2 text-slate-700 shadow-sm backdrop-blur hover:bg-white"
+                                                    type="button" title="Undo" onclick="undoPad('resep_signature_{{ $index + 1 }}')"
+                                                >
+                                                    <i class="ti ti-arrow-back-up text-base"></i> <span class="hidden sm:inline">Undo</span>
+                                                </button>
+                                                <button
+                                                    class="btn btn-xs h-8 border-slate-200 bg-white/90 px-2 text-slate-700 shadow-sm backdrop-blur hover:bg-white"
+                                                    type="button" title="Redo" onclick="redoPad('resep_signature_{{ $index + 1 }}')"
+                                                >
+                                                    <i class="ti ti-arrow-forward-up text-base"></i> <span class="hidden sm:inline">Redo</span>
+                                                </button>
+                                                <button
+                                                    class="btn btn-xs h-8 border-red-100 bg-red-50/90 px-2 text-red-600 shadow-sm backdrop-blur hover:bg-red-100"
+                                                    type="button" title="Bersihkan" onclick="clearPad('resep_signature_{{ $index + 1 }}')"
+                                                >
+                                                    <i class="ti ti-trash text-base"></i> <span class="hidden sm:inline">Bersihkan</span>
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="space-y-2">
-                                    <label class="block text-sm font-medium text-slate-700">Signature 2</label>
-                                    <div class="signature-container relative" wire:ignore>
-                                        <div class="drawpad-dashed h-52 w-full rounded-xl border-2 border-dashed border-slate-300 bg-slate-50 shadow-inner"
-                                            id="resep_signature_2"
-                                        ></div>
-                                        <div class="absolute bottom-3 right-3 flex gap-2">
-                                            <button
-                                                class="btn btn-xs h-8 border-slate-200 bg-white/90 px-2 text-slate-700 shadow-sm backdrop-blur hover:bg-white"
-                                                type="button" title="Undo" onclick="undoPad('resep_signature_2')"
-                                            >
-                                                <i class="ti ti-arrow-back-up text-base"></i> <span class="hidden sm:inline">Undo</span>
-                                            </button>
-                                            <button
-                                                class="btn btn-xs h-8 border-slate-200 bg-white/90 px-2 text-slate-700 shadow-sm backdrop-blur hover:bg-white"
-                                                type="button" title="Redo" onclick="redoPad('resep_signature_2')"
-                                            >
-                                                <i class="ti ti-arrow-forward-up text-base"></i> <span
-                                                    class="hidden sm:inline">Redo</span>
-                                            </button>
-                                            <button
-                                                class="btn btn-xs h-8 border-red-100 bg-red-50/90 px-2 text-red-600 shadow-sm backdrop-blur hover:bg-red-100"
-                                                type="button" title="Bersihkan" onclick="clearPad('resep_signature_2')"
-                                            >
-                                                <i class="ti ti-trash text-base"></i> <span class="hidden sm:inline">Bersihkan</span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
+                                @endforeach
+                            </div>
+                            <div class="mt-4 flex justify-end">
+                                <button type="button" class="btn btn-sm btn-outline btn-primary" wire:click="addSignature('resep')">
+                                    <i class="ti ti-plus"></i> Tambah Signature
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -445,8 +405,10 @@
 
                 const updateCoordinate = (event) => {
                     const rect = plugin.canvas.getBoundingClientRect();
-                    coordinate.x = (event.clientX || event.touches[0].clientX) - rect.left;
-                    coordinate.y = (event.clientY || event.touches[0].clientY) - rect.top;
+                    const clientX = (event.clientX !== undefined) ? event.clientX : (event.touches ? event.touches[0].clientX : 0);
+                    const clientY = (event.clientY !== undefined) ? event.clientY : (event.touches ? event.touches[0].clientY : 0);
+                    coordinate.x = clientX - rect.left;
+                    coordinate.y = clientY - rect.top;
                 };
 
                 const handleStartDraw = (event) => {
@@ -454,7 +416,7 @@
                     updateCoordinate(event);
                     plugin.context.beginPath();
                     plugin.context.moveTo(coordinate.x, coordinate.y);
-                    event.preventDefault();
+                    // No event.preventDefault() here to allow scrolling if needed, or keep it for better drawing
                 };
                 const handleStopDraw = () => {
                     if (drawing) {
@@ -473,19 +435,26 @@
                     updateCoordinate(event);
                     ctx.lineTo(coordinate.x, coordinate.y);
                     ctx.stroke();
-                    event.preventDefault();
+                    event.preventDefault(); // Prevent scrolling while drawing
                 };
 
                 plugin.init = function() {
                     plugin.settings = $.extend({}, defaults, options);
                     lineStyle.color = plugin.settings.defaultColor;
                     $element.addClass(pluginSuffix).append(createCanvas()).append(createToolbox());
-                    resizeCanvas();
+                    
+                    // Use ResizeObserver for more robust sizing
+                    setTimeout(resizeCanvas, 50); // Initial resize
+                    
+                    const ro = new ResizeObserver(() => {
+                        resizeCanvas();
+                    });
+                    ro.observe($element[0]);
+
                     saveState(); // Initial empty state
                     plugin.$canvas.on("mousedown touchstart", handleStartDraw);
                     $(window).on("mouseup touchend", handleStopDraw);
                     plugin.$canvas.on("mousemove touchmove", handleDraw);
-                    $(window).on('resize', resizeCanvas);
                 };
                 plugin.clear = function() {
                     plugin.context.clearRect(0, 0, plugin.canvas.width, plugin.canvas.height);
@@ -536,20 +505,65 @@
             $(`#${padId}`).data('drawpad').load(base64);
         }
 
-        // Initialize Pads
-        $(function() {
-            $('#hasil_signature_1').drawpad();
-            $('#hasil_signature_2').drawpad();
-            $('#resep_signature_1').drawpad();
-            $('#resep_signature_2').drawpad();
+        function initAllPads() {
+            $('.signature-pad').each(function() {
+                const $pad = $(this);
+                const id = $pad.attr('id');
+                const type = $pad.data('type');
+                const index = $pad.data('index');
+                
+                // Only init if not already initialized
+                if (!$pad.data('drawpad')) {
+                    $pad.drawpad();
+                    
+                    // Load initial data from Livewire if available
+                    const sigData = type === 'hasil' ? 
+                        @js($hasil_signatures)[index] : 
+                        @js($resep_signatures)[index];
+                        
+                    if (sigData) {
+                        setTimeout(() => loadSignature(id, sigData), 100);
+                    }
+                }
+            });
+        }
 
-            // Give it a moment to initialize and resize
+        function initAllPads() {
+            // Slight delay to ensure DOM is settled
             setTimeout(() => {
-                loadSignature('hasil_signature_1', @js($hasil_signature_1));
-                loadSignature('hasil_signature_2', @js($hasil_signature_2));
-                loadSignature('resep_signature_1', @js($resep_signature_1));
-                loadSignature('resep_signature_2', @js($resep_signature_2));
-            }, 500);
+                $('.signature-pad').each(function() {
+                    const $pad = $(this);
+                    const id = $pad.attr('id');
+                    const type = $pad.data('type');
+                    const index = $pad.data('index');
+                    
+                    if (!$pad.data('drawpad')) {
+                        console.log('Initializing pad:', id);
+                        $pad.drawpad();
+                        
+                        // Access the current signatures from JS arrays (updated on render)
+                        const sigData = type === 'hasil' ? 
+                            @js($hasil_signatures)[index] : 
+                            @js($resep_signatures)[index];
+                            
+                        if (sigData && sigData.length > 100) {
+                            setTimeout(() => loadSignature(id, sigData), 150);
+                        }
+                    }
+                });
+            }, 50);
+        }
+
+        // Initialize Pads on load
+        $(function() {
+            initAllPads();
+        });
+
+        // Use standard Livewire hooks if available
+        document.addEventListener('livewire:initialized', () => {
+            Livewire.hook('morph.updated', (el, component) => {
+                initAllPads();
+            });
         });
 
         window.clearPad = function(id) {
@@ -567,14 +581,26 @@
         // Capture signatures before submit
         document.addEventListener('livewire:initialized', () => {
             window.addEventListener('capture-signatures', () => {
-                const signatures = {
-                    'hasil_signature_1': $('#hasil_signature_1 canvas')[0].toDataURL(),
-                    'hasil_signature_2': $('#hasil_signature_2 canvas')[0].toDataURL(),
-                    'resep_signature_1': $('#resep_signature_1 canvas')[0].toDataURL(),
-                    'resep_signature_2': $('#resep_signature_2 canvas')[0].toDataURL()
-                };
+                const hasilSigs = [];
+                const resepSigs = [];
 
-                @this.setSignatures(signatures);
+                $('.signature-pad').each(function() {
+                    const $pad = $(this);
+                    const type = $pad.data('type');
+                    const canvas = $pad.find('canvas')[0];
+                    const dataUrl = canvas.toDataURL();
+
+                    if (type === 'hasil') {
+                        hasilSigs.push(dataUrl);
+                    } else {
+                        resepSigs.push(dataUrl);
+                    }
+                });
+
+                @this.setSignatures({
+                    'hasil': hasilSigs,
+                    'resep': resepSigs
+                });
             });
         });
     </script>

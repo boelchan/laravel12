@@ -19,8 +19,8 @@ new class extends Component
     public $body_weight, $body_height;
     public $hasil_text, $resep_text;
     
-    public $hasil_signature_1, $hasil_signature_2;
-    public $resep_signature_1, $resep_signature_2;
+    public $hasil_signatures = [];
+    public $resep_signatures = [];
 
     public function mount(Encounter $encounter)
     {
@@ -55,20 +55,29 @@ new class extends Component
 
         // Load Signatures (Tipe Draw)
         $hasilDraw = Hasil::where('encounter_id', $this->encounter->id)->where('tipe', 'draw')->first();
-        $this->hasil_signature_1 = $hasilDraw->signature_1 ?? '';
-        $this->hasil_signature_2 = $hasilDraw->signature_2 ?? '';
+        $this->hasil_signatures = $hasilDraw->signatures ?? [''];
 
         $resepDraw = Resep::where('encounter_id', $this->encounter->id)->where('tipe', 'draw')->first();
-        $this->resep_signature_1 = $resepDraw->signature_1 ?? '';
-        $this->resep_signature_2 = $resepDraw->signature_2 ?? '';
+        $this->resep_signatures = $resepDraw->signatures ?? [''];
+    }
+
+    public function addSignature($type)
+    {
+        if ($type === 'hasil') {
+            $this->hasil_signatures[] = '';
+        } else {
+            $this->resep_signatures[] = '';
+        }
     }
 
     public function setSignatures($data)
     {
-        $this->hasil_signature_1 = $data['hasil_signature_1'];
-        $this->hasil_signature_2 = $data['hasil_signature_2'];
-        $this->resep_signature_1 = $data['resep_signature_1'];
-        $this->resep_signature_2 = $data['resep_signature_2'];
+        if (isset($data['hasil'])) {
+            $this->hasil_signatures = $data['hasil'];
+        }
+        if (isset($data['resep'])) {
+            $this->resep_signatures = $data['resep'];
+        }
         
         $this->update();
     }
@@ -109,8 +118,7 @@ new class extends Component
         Hasil::updateOrCreate(
             ['encounter_id' => $this->encounter->id, 'tipe' => 'draw'],
             [
-                'signature_1' => $this->hasil_signature_1,
-                'signature_2' => $this->hasil_signature_2,
+                'signatures' => $this->hasil_signatures,
                 'created_by' => Auth::id(),
             ]
         );
@@ -128,8 +136,7 @@ new class extends Component
         Resep::updateOrCreate(
             ['encounter_id' => $this->encounter->id, 'tipe' => 'draw'],
             [
-                'signature_1' => $this->resep_signature_1,
-                'signature_2' => $this->resep_signature_2,
+                'signatures' => $this->resep_signatures,
                 'created_by' => Auth::id(),
             ]
         );
