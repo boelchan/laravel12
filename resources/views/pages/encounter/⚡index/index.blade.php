@@ -64,6 +64,13 @@
                         </td>
                         <td class="p-2">
                             {{ $d->vitalSign->systolic ?? '-' }} / {{ $d->vitalSign->diastolic ?? '-' }}
+                            @if ($d->status == 'arrived' || $d->status == 'inprogress')
+                                <button class="btn btn-xs btn-square btn-primary btn-ghost"
+                                    wire:click="openModalObservation({{ $d->id }})"
+                                >
+                                    <i class="ti ti-pencil text-lg"></i>
+                                </button>
+                            @endif
                         </td>
                         <td class="p-2">
                             TB : {{ $d->anthropometry->body_height ?? '-' }}<br>
@@ -71,36 +78,49 @@
                         </td>
                         <td class="p-2">
                             @if ($d->status == 'registered')
-                                <div class="badge badge-success badge-soft">Baru</div>
+                                <div class="badge badge-success">Baru</div>
                             @elseif ($d->status == 'arrived')
-                                <div class="badge badge-warning badge-soft">Datang</div>
+                                <div class="badge badge-warning">Datang</div>
                             @elseif ($d->status == 'inprogress')
-                                <div class="badge badge-info badge-soft">Dalam Proses</div>
+                                <div class="badge badge-info">Pemeriksaan</div>
                             @elseif ($d->status == 'finished')
-                                <div class="badge badge-info badge-soft">Selesai</div>
+                                <div class="badge badge-info">Selesai</div>
                             @elseif ($d->status == 'cancelled')
-                                <div class="badge badge-error badge-soft">Batal</div>
+                                <div class="badge badge-error">Batal</div>
                             @endif
                         </td>
-                        <td class="flex gap-2 p-2">
-                            <a class="btn btn-xs btn-primary btn-square btn-soft" href="{{ route('encounter.edit', [$d->id, $d->uuid]) }}"
-                                wire:navigate
-                            >
-                                <i class="ti ti-edit text-lg"></i></a>
+                        <td class="p-2">
+                            <div class="flex gap-2">
 
-                            @if ($d->status == 'registered')
-                                <button class="btn btn-xs btn-square btn-success btn-soft" title="Pasien Datang"
-                                    wire:click="arrived({{ $d->id }})"
+                                @if ($d->status == 'registered')
+                                    <button class="btn btn-xs btn-square btn-warning btn-soft" title="Pasien Datang"
+                                        wire:click="setArrived({{ $d->id }})"
+                                    >
+                                        <i class="ti ti-check text-lg"></i>
+                                    </button>
+                                @endif
+
+                                @if ($d->status == 'arrived')
+                                    <button class="btn btn-xs btn-square btn-info btn-soft" title="Mulai Pemeriksaan"
+                                        wire:click="setInprogress({{ $d->id }})"
+                                    >
+                                        <i class="ti ti-send text-lg"></i>
+                                    </button>
+                                @endif
+
+                                <a class="btn btn-xs btn-primary btn-square btn-soft"
+                                    href="{{ route('encounter.edit', [$d->id, $d->uuid]) }}" wire:navigate
                                 >
-                                    <i class="ti ti-check text-lg"></i>
-                                </button>
-                            @endif
+                                    <i class="ti ti-edit text-lg"></i></a>
 
-                            <button class="btn btn-xs btn-square btn-error btn-soft"
-                                wire:click="$js.confirmDelete({{ $d->id }}, '{{ $d->full_name }}')"
-                            >
-                                <i class="ti ti-trash text-lg"></i>
-                            </button>
+                                @if ($d->status == 'registered')
+                                    <button class="btn btn-xs btn-square btn-error btn-soft"
+                                        wire:click="$js.confirmBatal({{ $d->id }}, '{{ $d->full_name }}')"
+                                    >
+                                        <i class="ti ti-x text-lg"></i>
+                                    </button>
+                                @endif
+                            </div>
                         </td>
                     </tr>
                 @empty
@@ -114,24 +134,20 @@
 
     {{-- Modal Encounter --}}
     <x-modal id="modalEncounter" title="Tambah Kunjungan" wire="modalEncounter">
-            {{-- Pencarian & Pemilihan Pasien --}}
+        <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
             <div>
                 <label class="label"><span class="label-text font-medium">Pasien <span class="text-error">*</span></span></label>
 
                 @if ($selectedPatientName)
-                    <div class="flex items-center gap-2 rounded-lg border border-primary/30 bg-primary/5 p-2.5">
-                        <i class="ti ti-user-check text-lg text-primary"></i>
+                    <div class="border-primary/30 bg-primary/5 flex items-center gap-2 rounded-lg border p-2.5">
+                        <i class="ti ti-user-check text-primary text-lg"></i>
                         <span class="flex-1 text-sm font-medium text-slate-700">{{ $selectedPatientName }}</span>
-                        <button class="btn btn-circle btn-ghost btn-xs" type="button"
-                            wire:click="$set('selectedPatientName', '')"
-                        >
+                        <button class="btn btn-circle btn-ghost btn-xs" type="button" wire:click="$set('selectedPatientName', '')">
                             <i class="ti ti-x text-sm"></i>
                         </button>
                     </div>
                 @else
-                    <x-input
-                        icon="magnifying-glass"
-                        placeholder="Cari nama, alamat, atau No. RM..."
+                    <x-input icon="magnifying-glass" placeholder="Cari nama, alamat, atau No. RM..."
                         wire:model.live.debounce.300ms="searchPatient"
                     />
 
@@ -139,9 +155,8 @@
                         <div class="mt-1 max-h-48 overflow-y-auto rounded-lg border border-slate-200 bg-white">
                             @foreach ($this->patientList as $p)
                                 <button
-                                    class="flex w-full items-start gap-3 border-b border-slate-100 px-3 py-2 text-left transition hover:bg-primary/5 last:border-b-0"
-                                    type="button"
-                                    wire:click="selectPatient({{ $p->id }})"
+                                    class="hover:bg-primary/5 flex w-full items-start gap-3 border-b border-slate-100 px-3 py-2 text-left transition last:border-b-0"
+                                    type="button" wire:click="selectPatient({{ $p->id }})"
                                     wire:key="patient-search-{{ $p->id }}"
                                 >
                                     <i class="ti ti-user mt-0.5 text-lg text-slate-400"></i>
@@ -168,59 +183,41 @@
                 <x-date label="Tanggal Periksa" wire:model.live="visit_date" />
                 @if ($visit_date)
                     <div class="text-sm font-medium text-slate-600">
-                        Jumlah terdaftar pada tanggal ini: <span class="text-primary">{{ $this->encounterCount }}</span>
+                        Pendaftar : <span class="text-primary">{{ $this->encounterCount }}</span>
                     </div>
                 @endif
             </div>
+        </div>
         <x-slot name="footer">
             <button class="btn btn-ghost" type="button" wire:click="$set('modalEncounter', false)">Batal</button>
             <button class="btn btn-primary" type="button" wire:click="saveEncounter">Simpan</button>
         </x-slot>
     </x-modal>
 
-    {{-- Modal Vitals --}}
-    <x-modal id="modalVitals" title="TTV & Antropometri" size="2xl" wire="modalVitals">
-        <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
-            <div class="space-y-4">
-                <h4 class="font-semibold text-slate-700">Vital Signs</h4>
-                <div class="grid grid-cols-2 gap-4">
-                    <div class="form-control">
-                        <label class="label"><span class="label-text text-xs">Systolic</span></label>
-                        <input class="input input-bordered input-sm w-full" type="number" wire:model="systolic" placeholder="mmHg">
-                    </div>
-                    <div class="form-control">
-                        <label class="label"><span class="label-text text-xs">Diastolic</span></label>
-                        <input class="input input-bordered input-sm w-full" type="number" wire:model="diastolic" placeholder="mmHg">
+    {{-- Modal observasi --}}
+    <x-modal id="modalObservation" title="Observasi" wire="modalObservation">
+        <form wire:submit="saveObservation">
+            <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+                <div class="space-y-4">
+                    <h4 class="font-semibold text-slate-700">TTV</h4>
+                    <div class="grid grid-cols-2 gap-4">
+                        <x-input type="number" label="Systolic" wire:model="systolic" suffix="mmHg" />
+                        <x-input type="number" label="Diastolic" wire:model="diastolic" suffix="mmHg" />
+                        <x-input type="number" label="Suhu Tubuh" wire:model="body_temperature" suffix="°C" />
                     </div>
                 </div>
-                <div class="form-control">
-                    <label class="label"><span class="label-text text-xs">Heart Rate</span></label>
-                    <input class="input input-bordered input-sm w-full" type="number" wire:model="heart_rate" placeholder="bpm">
-                </div>
-                <div class="form-control">
-                    <label class="label"><span class="label-text text-xs">Resp. Rate</span></label>
-                    <input class="input input-bordered input-sm w-full" type="number" wire:model="respiratory_rate" placeholder="x/mnt">
-                </div>
-                <div class="form-control">
-                    <label class="label"><span class="label-text text-xs">Suhu Tubuh</span></label>
-                    <input class="input input-bordered input-sm w-full" type="number" wire:model="body_temperature" placeholder="°C">
+                <div class="space-y-4">
+                    <h4 class="font-semibold text-slate-700">Antropometri</h4>
+                    <div class="grid grid-cols-2 gap-4">
+                        <x-input type="number" label="Tinggi Badan" wire:model="body_height" suffix="cm" />
+                        <x-input type="number" label="Berat Badan" wire:model="body_weight" suffix="kg" />
+                    </div>
                 </div>
             </div>
-            <div class="space-y-4">
-                <h4 class="font-semibold text-slate-700">Antropometri</h4>
-                <div class="form-control">
-                    <label class="label"><span class="label-text text-xs">Tinggi Badan</span></label>
-                    <input class="input input-bordered input-sm w-full" type="number" wire:model="body_height" placeholder="cm">
-                </div>
-                <div class="form-control">
-                    <label class="label"><span class="label-text text-xs">Berat Badan</span></label>
-                    <input class="input input-bordered input-sm w-full" type="number" wire:model="body_weight" placeholder="kg">
-                </div>
+            <div class="mt-2 flex justify-end gap-2">
+                <button class="btn btn-ghost" type="button" wire:click="$set('modalObservation', false)">Batal</button>
+                <button class="btn btn-primary" type="submit">Simpan</button>
             </div>
-        </div>
-        <x-slot name="footer">
-            <button class="btn btn-ghost" type="button" wire:click="$set('modalVitals', false)">Batal</button>
-            <button class="btn btn-primary" type="button" wire:click="saveVitals">Simpan</button>
-        </x-slot>
+        </form>
     </x-modal>
 </div>

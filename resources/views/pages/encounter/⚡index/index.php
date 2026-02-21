@@ -31,7 +31,7 @@ new class extends Component
     public $selectedPatientName = '';
 
     // Vitals form
-    public $modalVitals = false;
+    public $modalObservation = false;
     public $encounter_id;
     public $systolic, $diastolic, $heart_rate, $respiratory_rate, $body_temperature;
     public $body_height, $body_weight;
@@ -79,8 +79,8 @@ new class extends Component
         return Patient::query()
             ->where(function ($q) {
                 $q->where('full_name', 'like', '%' . $this->searchPatient . '%')
-                  ->orWhere('address', 'like', '%' . $this->searchPatient . '%')
-                  ->orWhere('medical_record_number', 'like', '%' . $this->searchPatient . '%');
+                    ->orWhere('address', 'like', '%' . $this->searchPatient . '%')
+                    ->orWhere('medical_record_number', 'like', '%' . $this->searchPatient . '%');
             })
             ->orderBy('full_name')
             ->limit(10)
@@ -123,24 +123,40 @@ new class extends Component
         $this->toast()->success('Kunjungan berhasil ditambahkan')->send();
     }
 
-    public function arrived($id)
+    public function setArrived($id)
     {
         $encounter = Encounter::findOrFail($id);
         $encounter->update([
             'status' => 'arrived',
             'arrived_at' => now(),
         ]);
+    }
+
+    public function setInprogress($id)
+    {
+        Encounter::where('status', 'inprogress')->whereNotIn('status', ['finished', 'canceled'])->update([
+            'status' => 'arrived',
+        ]);
+
+        $encounter = Encounter::findOrFail($id);
+        $encounter->update([
+            'status' => 'inprogress',
+            'inprogress_at' => now(),
+        ]);
+    }
+
+    public function openModalObservation($id)
+    {
+        $encounter = Encounter::findOrFail($id);
 
         $this->encounter_id = $id;
-        $this->reset(['systolic', 'diastolic', 'heart_rate', 'respiratory_rate', 'body_temperature', 'body_height', 'body_weight']);
-        
+        $this->reset(['systolic', 'diastolic', 'body_temperature', 'body_height', 'body_weight']);
+
         // Load existing vitals if any
         $vitals = VitalSign::where('encounter_id', $id)->first();
         if ($vitals) {
             $this->systolic = $vitals->systolic;
             $this->diastolic = $vitals->diastolic;
-            $this->heart_rate = $vitals->heart_rate;
-            $this->respiratory_rate = $vitals->respiratory_rate;
             $this->body_temperature = $vitals->body_temperature;
         }
 
@@ -150,16 +166,14 @@ new class extends Component
             $this->body_weight = $anthropometry->body_weight;
         }
 
-        $this->modalVitals = true;
+        $this->modalObservation = true;
     }
 
-    public function saveVitals()
+    public function saveObservation()
     {
         $this->validate([
             'systolic' => 'nullable|integer',
             'diastolic' => 'nullable|integer',
-            'heart_rate' => 'nullable|integer',
-            'respiratory_rate' => 'nullable|integer',
             'body_temperature' => 'nullable|integer',
             'body_height' => 'nullable|integer',
             'body_weight' => 'nullable|integer',
@@ -170,8 +184,6 @@ new class extends Component
             [
                 'systolic' => $this->systolic,
                 'diastolic' => $this->diastolic,
-                'heart_rate' => $this->heart_rate,
-                'respiratory_rate' => $this->respiratory_rate,
                 'body_temperature' => $this->body_temperature,
                 'created_by' => Auth::id(),
             ]
@@ -186,7 +198,7 @@ new class extends Component
             ]
         );
 
-        $this->modalVitals = false;
-        $this->toast()->success('Data TTV dan Antropometri berhasil disimpan')->send();
+        $this->modalObservation = false;
+        $this->toast()->success('Observasi berhasil disimpan')->send();
     }
 };
