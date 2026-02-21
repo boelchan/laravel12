@@ -19,6 +19,7 @@
 
     @livewireStyles
     <tallstackui:script />
+    @stack('styles')
 </head>
 
 <body>
@@ -191,7 +192,7 @@
         </div>
 
         @livewireScripts
-
+        @stack('scripts')
     </div>
 </body>
 

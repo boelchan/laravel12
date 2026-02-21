@@ -109,7 +109,7 @@
                                 @endif
 
                                 <a class="btn btn-xs btn-primary btn-square btn-soft"
-                                    href="{{ route('encounter.edit', [$d->id, $d->uuid]) }}" wire:navigate
+                                    href="{{ route('encounter.edit', [$d->id, $d->uuid]) }}" 
                                 >
                                     <i class="ti ti-edit text-lg"></i></a>
 

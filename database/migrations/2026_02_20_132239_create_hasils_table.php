@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('encounter_id')->constrained('encounters');
             $table->text('hasil')->nullable();
+            $table->longText('signature_1')->nullable();
+            $table->longText('signature_2')->nullable();
             $table->string('tipe', 20)->nullable();
             $table->integer('created_by')->nullable();
             $table->timestamps();
