@@ -84,13 +84,13 @@
                     </nav>
 
                     <div class="mt-auto hidden pt-4 lg:block">
-                        <div class="dropdown dropdown-top w-full rounded-lg ">
-                            <div class="flex w-full cursor-pointer items-center justify-between rounded-lg bg-slate-200 hover:bg-slate-300"
+                        <div class="dropdown dropdown-top w-full rounded-lg">
+                            <div class="flex w-full cursor-pointer items-center justify-between rounded-lg hover:bg-slate-200"
                                 role="button" tabindex="0"
                             >
                                 <div class="flex items-center gap-2">
-                                    <div class="bg-slate-300 flex h-8 w-8 items-center justify-center rounded-lg">
-                                        <span class="text-black text-md font-bold uppercase">
+                                    <div class="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-300">
+                                        <span class="text-md font-bold uppercase text-slate-800">
                                             {{ substr(auth()->user()->name, 0, 2) }}
                                         </span>
                                     </div>
@@ -104,8 +104,7 @@
                                 tabindex="0"
                             >
                                 <li>
-                                    <a href="{{ route('account') }}" wire:navigate> <i class="ti ti-user-edit text-lg"></i> Akun
-                                    </a>
+                                    <a href="{{ route('account') }}" wire:navigate> <i class="ti ti-user-edit text-lg"></i> Akun </a>
                                 </li>
                                 <li>
                                     <a class="text-red-500 hover:bg-red-50 hover:text-red-600" href="#"
