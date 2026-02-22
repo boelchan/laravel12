@@ -63,6 +63,8 @@ return new class extends Migration
 
             // === SISTEM ===
             $table->boolean('is_active')->default(true);
+            $table->integer('created_by')->nullable();
+            $table->integer('updated_by')->nullable();
             $table->timestamps();
 
             // INDEX

@@ -174,7 +174,7 @@ new class extends Component
         $this->validate([
             'systolic' => 'nullable|integer',
             'diastolic' => 'nullable|integer',
-            'body_temperature' => 'nullable|integer',
+            'body_temperature' => 'nullable|numeric',
             'body_height' => 'nullable|integer',
             'body_weight' => 'nullable|integer',
         ]);

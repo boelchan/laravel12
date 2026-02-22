@@ -2,9 +2,11 @@
 
 namespace Database\Seeders;
 
+use App\Models\Patient;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
@@ -43,6 +45,31 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('123'),
         ]);
         $user->assignRole('administrator');
+
+        Patient::create([
+            'uuid' => Str::uuid(),
+            'medical_record_number'=> 'RM-00001',
+            'full_name' => 'Mainuma',
+            'gender'=> '2',
+            'birth_date'=> '2000-01-01',
+            'address'=> 'Jl. Mainuma',
+            'phone'=> '08123456789',
+            'email'=> 'mainuma@app.com',
+            'created_by'=> 1,
+        ]);
+
+        Patient::create([
+            'uuid' => Str::uuid(),
+            'nik' => '1234567890123456',
+            'medical_record_number'=> 'RM-00002',
+            'full_name' => 'Fatima',
+            'gender'=> '2',
+            'birth_date'=> '1992-06-01',
+            'address'=> 'Jl. imam bonjol',
+            'phone'=> '08123456789',
+            'email'=> 'mainuma@app.com',
+            'created_by'=> 1,
+        ]);
 
         $this->call([
             IndonesiaRegionSeeder::class

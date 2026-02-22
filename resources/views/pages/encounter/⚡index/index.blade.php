@@ -44,7 +44,7 @@
                 <x-table.th label="Tanggal" sort="created_at" width="10%" />
                 <x-table.th label="Pasien" sort="full_name" width="20%" />
                 <x-table.th label="Umur" />
-                <x-table.th label="Tekanan Darah" />
+                <x-table.th label="TTV" />
                 <x-table.th label="Antropometri" />
                 <x-table.th label="Status" />
                 <x-table.th />
@@ -63,7 +63,7 @@
                             {{ $d->patient->umur_sekarang }}
                         </td>
                         <td class="p-2">
-                            {{ $d->vitalSign->systolic ?? '-' }} / {{ $d->vitalSign->diastolic ?? '-' }}
+                            {{ $d->vitalSign->systolic ?? '-' }} / {{ $d->vitalSign->diastolic ?? '-' }} <i>mmHg</i>
                             @if ($d->status == 'arrived' || $d->status == 'inprogress')
                                 <button class="btn btn-xs btn-square btn-primary btn-ghost"
                                     wire:click="openModalObservation({{ $d->id }})"
@@ -71,10 +71,20 @@
                                     <i class="ti ti-pencil text-lg"></i>
                                 </button>
                             @endif
+                            <br>
+                            {{ $d->vitalSign->body_temperature  ?? '-'}} <i>°C</i>
                         </td>
                         <td class="p-2">
-                            TB : {{ $d->anthropometry->body_height ?? '-' }}<br>
-                            BB : {{ $d->anthropometry->body_weight ?? '-' }}
+                            BB : {{ $d->anthropometry->body_weight ?? '-' }} <i>kg</i>
+                            @if ($d->status == 'arrived' || $d->status == 'inprogress')
+                                <button class="btn btn-xs btn-square btn-primary btn-ghost"
+                                    wire:click="openModalObservation({{ $d->id }})"
+                                >
+                                    <i class="ti ti-pencil text-lg"></i>
+                                </button>
+                            @endif
+                            <br>
+                            TB : {{ $d->anthropometry->body_height ?? '-' }} <i>cm</i>
                         </td>
                         <td class="p-2">
                             @if ($d->status == 'registered')
@@ -109,7 +119,7 @@
                                 @endif
 
                                 <a class="btn btn-xs btn-primary btn-square btn-soft"
-                                    href="{{ route('encounter.edit', [$d->id, $d->uuid]) }}" 
+                                    href="{{ route('encounter.edit', [$d->id, $d->uuid]) }}"
                                 >
                                     <i class="ti ti-edit text-lg"></i></a>
 
@@ -203,7 +213,13 @@
                     <div class="grid grid-cols-2 gap-4">
                         <x-input type="number" label="Systolic" wire:model="systolic" suffix="mmHg" />
                         <x-input type="number" label="Diastolic" wire:model="diastolic" suffix="mmHg" />
-                        <x-input type="number" label="Suhu Tubuh" wire:model="body_temperature" suffix="°C" />
+                        <x-input
+                            type="number"
+                            step="0.1"
+                            label="Suhu Tubuh"
+                            wire:model="body_temperature"
+                            suffix="°C"
+                        />
                     </div>
                 </div>
                 <div class="space-y-4">

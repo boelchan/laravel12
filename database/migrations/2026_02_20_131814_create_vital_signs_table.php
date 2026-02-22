@@ -16,9 +16,9 @@ return new class extends Migration
             $table->foreignId('encounter_id')->constrained('encounters');
             $table->integer('systolic')->nullable();
             $table->integer('diastolic')->nullable();
-            $table->integer('heart_rate')->nullable();
-            $table->integer('respiratory_rate')->nullable();
-            $table->integer('body_temperature')->nullable();
+            $table->float('heart_rate', 1)->nullable();
+            $table->float('respiratory_rate', 1)->nullable();
+            $table->float('body_temperature', 1)->nullable();
             $table->integer('created_by')->nullable();
             $table->timestamps();
         });

@@ -2,6 +2,7 @@
 
 use App\Models\Patient;
 use App\Models\IndonesiaRegion;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Livewire\Component;
 use TallStackUi\Traits\Interactions;
@@ -142,6 +143,7 @@ new class extends Component
             'emergency_contact_relation' => $this->emergency_contact_relation,
             'emergency_contact_phone' => $this->emergency_contact_phone,
             'is_active' => $this->is_active,
+            'created_by' => Auth::id(),
         ]);
 
         $this->toast()->success('Pasien berhasil ditambahkan')->send();
