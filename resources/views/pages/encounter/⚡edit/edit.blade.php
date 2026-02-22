@@ -14,7 +14,7 @@
             <div class="grid grid-cols-1 gap-8 lg:grid-cols-12">
 
                 {{-- LEFT COLUMN: VITAL SIGNS & ANTHROPOMETRY --}}
-                <div class="space-y-6 lg:col-span-3">
+                <div class="space-y-6 lg:col-span-4">
                     {{-- TTV CARD --}}
                     <div class="card overflow-hidden border border-slate-200 bg-white shadow-sm">
                         <div class="border-b border-slate-200 bg-slate-50 px-6 py-4">
@@ -67,7 +67,7 @@
                 </div>
 
                 {{-- RIGHT COLUMN: HASIL & RESEP --}}
-                <div class="space-y-6 lg:col-span-9">
+                <div class="space-y-6 lg:col-span-8">
                     {{-- HASIL PEMERIKSAAN CARD --}}
                     <div class="card overflow-hidden border border-slate-200 bg-white text-slate-800 shadow-sm">
                         <div class="border-b border-slate-200 bg-slate-50 px-6 py-4">
@@ -80,10 +80,10 @@
                                 placeholder="Masukkan hasil pemeriksaan..."
                             />
 
-                            <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+                            <div class="grid grid-cols-1 gap-6 ">
                                 @foreach($hasil_signatures as $index => $sig)
                                     <div class="space-y-2" wire:key="hasil-sig-{{ $index }}">
-                                        <label class="block text-sm font-medium text-slate-700">Signature {{ $index + 1 }}</label>
+                                        <label class="block text-sm font-medium text-slate-700">Hasil {{ $index + 1 }}</label>
                                         <div class="signature-container relative" wire:ignore>
                                             <div class="drawpad-dashed h-52 w-full rounded-xl border-2 border-dashed border-slate-300 bg-slate-50 shadow-inner signature-pad"
                                                 id="hasil_signature_{{ $index + 1 }}"
@@ -135,7 +135,7 @@
                             <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
                                 @foreach($resep_signatures as $index => $sig)
                                     <div class="space-y-2" wire:key="resep-sig-{{ $index }}">
-                                        <label class="block text-sm font-medium text-slate-700">Signature {{ $index + 1 }}</label>
+                                        <label class="block text-sm font-medium text-slate-700">Resep {{ $index + 1 }}</label>
                                         <div class="signature-container relative" wire:ignore>
                                             <div class="drawpad-dashed h-52 w-full rounded-xl border-2 border-dashed border-slate-300 bg-slate-50 shadow-inner signature-pad"
                                                 id="resep_signature_{{ $index + 1 }}"
@@ -342,8 +342,11 @@
                 const loadState = (index) => {
                     const img = new Image();
                     img.onload = function() {
+                        const ratio = 3; // Match ratio in resizeCanvas
+                        plugin.context.setTransform(1, 0, 0, 1, 0, 0);
                         plugin.context.clearRect(0, 0, plugin.canvas.width, plugin.canvas.height);
-                        plugin.context.drawImage(img, 0, 0);
+                        plugin.context.drawImage(img, 0, 0, plugin.canvas.width, plugin.canvas.height);
+                        plugin.context.setTransform(ratio, 0, 0, ratio, 0, 0);
                     };
                     img.src = history[index];
                 };
@@ -505,28 +508,6 @@
             $(`#${padId}`).data('drawpad').load(base64);
         }
 
-        function initAllPads() {
-            $('.signature-pad').each(function() {
-                const $pad = $(this);
-                const id = $pad.attr('id');
-                const type = $pad.data('type');
-                const index = $pad.data('index');
-                
-                // Only init if not already initialized
-                if (!$pad.data('drawpad')) {
-                    $pad.drawpad();
-                    
-                    // Load initial data from Livewire if available
-                    const sigData = type === 'hasil' ? 
-                        @js($hasil_signatures)[index] : 
-                        @js($resep_signatures)[index];
-                        
-                    if (sigData) {
-                        setTimeout(() => loadSignature(id, sigData), 100);
-                    }
-                }
-            });
-        }
 
         function initAllPads() {
             // Slight delay to ensure DOM is settled
@@ -538,7 +519,6 @@
                     const index = $pad.data('index');
                     
                     if (!$pad.data('drawpad')) {
-                        console.log('Initializing pad:', id);
                         $pad.drawpad();
                         
                         // Access the current signatures from JS arrays (updated on render)
