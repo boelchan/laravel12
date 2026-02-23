@@ -70,6 +70,17 @@ new class extends Component
         }
     }
 
+    public function removeSignature($type, $index)
+    {
+        if ($type === 'hasil') {
+            unset($this->hasil_signatures[$index]);
+            $this->hasil_signatures = array_values($this->hasil_signatures);
+        } else {
+            unset($this->resep_signatures[$index]);
+            $this->resep_signatures = array_values($this->resep_signatures);
+        }
+    }
+
     public function setSignatures($data)
     {
         if (isset($data['hasil'])) {
