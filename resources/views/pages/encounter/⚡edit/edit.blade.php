@@ -21,7 +21,7 @@
                                 Pasien
                             </h2>
                             <button class="btn btn-primary btn-square btn-soft btn-sm" type="button"
-                                wire:click="$dispatch('open-history-modal', {{ $encounter->patient_id }})"
+                                wire:click="$dispatch('open-history-modal', [{{ $encounter->patient_id }}])"
                             ><i class="ti ti-history text-lg"></i> </button>
                         </div>
                         <div class="card-body">
