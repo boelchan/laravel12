@@ -1,5 +1,5 @@
 <div>
-    <h1 class="text-2xl font-medium tracking-tight text-slate-900">Encounter / Kunjungan Pasien</h1>
+    <h1 class="text-2xl font-medium tracking-tight text-slate-900">Kunjungan Pasien</h1>
     <div class="breadcrumbs p-0 text-xs text-slate-500">
         <ul>
             <li><a href="{{ route('dashboard') }}"><i class="ti ti-home"></i></a></li>
@@ -177,7 +177,6 @@
             </div>
 
             <div class="mt-10 flex items-center justify-between border-t border-slate-200 pt-6">
-                <p class="text-sm italic text-slate-500">Pastikan semua data pemeriksaan telah terisi dengan benar.</p>
                 <div class="flex gap-3">
                     <a class="btn btn-soft btn-secondary" href="{{ route('encounter.index') }}" wire:navigate>Batal</a>
                     <button
