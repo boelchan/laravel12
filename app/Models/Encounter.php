@@ -22,4 +22,14 @@ class Encounter extends Model
     {
         return $this->hasOne(Anthropometry::class);
     }
+
+    public function hasils()
+    {
+        return $this->hasMany(Hasil::class);
+    }
+
+    public function reseps()
+    {
+        return $this->hasMany(Resep::class);
+    }
 }

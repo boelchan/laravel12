@@ -1,7 +1,7 @@
 <div>
     <div class="flex justify-between align-middle">
         <div>
-            <h1 class="text-2xl font-medium text-slate-900">Kunjungan</h1>
+            <h1 class="text-2xl font-medium text-slate-900">Kunjungan Pasien</h1>
             <div class="breadcrumbs p-0 text-xs text-slate-500">
                 <ul>
                     <li><a href="{{ route('dashboard') }}"><i class="ti ti-home"></i></a></li>
