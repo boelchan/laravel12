@@ -59,9 +59,16 @@ new class extends Component
 
     public function delete($id)
     {
-        $patient = Encounter::findOrFail($id);
-        $patient->delete();
+        $encounter = Encounter::findOrFail($id);
+        $encounter->delete();
         $this->toast()->success('Kunjungan berhasil dihapus')->send();
+    }
+
+    public function batalkan($id)
+    {
+        $encounter = Encounter::findOrFail($id);
+        $encounter->update(['status' => 'cancelled']);
+        $this->toast()->success('Kunjungan berhasil dibatalkan')->send();
     }
 
     #[Computed]
@@ -111,16 +118,28 @@ new class extends Component
             'visit_date' => 'required|date',
         ]);
 
-        Encounter::create([
-            'uuid' => Str::uuid(),
-            'patient_id' => $this->patient_id,
-            'visit_date' => $this->visit_date,
-            'status' => 'registered',
-            'created_by' => Auth::id(),
-        ]);
+        $countEncounter = Encounter::where('visit_date', $this->visit_date)
+            ->lockForUpdate()
+            ->count();
 
-        $this->modalEncounter = false;
-        $this->toast()->success('Kunjungan berhasil ditambahkan')->send();
+        $nextNoAntrian = $countEncounter + 1;
+
+        try {
+            Encounter::create([
+                'uuid' => Str::uuid(),
+                'patient_id' => $this->patient_id,
+                'visit_date' => $this->visit_date,
+                'no_antrian' => $nextNoAntrian,
+                'status' => 'registered',
+                'created_by' => Auth::id(),
+            ]);
+    
+            $this->modalEncounter = false;
+            $this->toast()->success('Kunjungan berhasil ditambahkan')->send();
+            
+        } catch (\Throwable $th) {
+            $this->toast()->error('Gagal menambahkan kunjungan. Coba lagi')->send();
+        }
     }
 
     public function setArrived($id)
@@ -134,9 +153,8 @@ new class extends Component
 
     public function setInprogress($id)
     {
-        Encounter::where('status', 'inprogress')->whereNotIn('status', ['finished', 'canceled'])->update([
-            'status' => 'arrived',
-        ]);
+        Encounter::where('status', 'inprogress')->whereNotIn('status', ['finished', 'canceled'])
+            ->update(['status' => 'arrived']);
 
         $encounter = Encounter::findOrFail($id);
         $encounter->update([

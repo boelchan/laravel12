@@ -1,11 +1,13 @@
 <?php
 
 use App\Models\Encounter;
+use App\Models\Patient;
 use Livewire\Component;
 use Livewire\Attributes\On;
 
 new class extends Component {
     public $patient_id;
+    public $patient;
     public $showHistoryModal = false;
     public $encounterHistory = [];
 
@@ -13,6 +15,8 @@ new class extends Component {
     public function openHistory($patient_id)
     {
         $this->showHistoryModal = true;
+
+        $this->patient = Patient::find($patient_id);
 
         $this->encounterHistory = Encounter::where('patient_id', $patient_id)
             ->with(['vitalSign', 'anthropometry', 'hasils', 'reseps'])
@@ -25,32 +29,49 @@ new class extends Component {
 <div>
     <x-modal class="h-[90vh]" title="Riwayat Pemeriksaan" wire="showHistoryModal" size="6xl">
         <div class="space-y-4">
+            @if ($patient)
+                <div class="flex gap-4">
+                    <div class="flex items-center gap-2">
+                        <i class="ti ti-user text-lg"></i>
+                        <span> {{ $patient->full_name }} </span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <i class="ti ti-cake text-lg"></i>
+                        <span> {{ $patient->umur_sekarang }} </span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <i class="ti ti-home text-lg"></i>
+                        <span> {{ $patient->address }} </span>
+                    </div>
+                </div>
+            @endif
+
             @forelse ($encounterHistory as $history)
-                <div class="card border border-slate-200 bg-white shadow-sm">
+                <div class="card border border-slate-200 bg-white shadow-md">
 
                     <div class="flex flex-wrap gap-4 border-b border-slate-200 bg-slate-50/30 p-4">
-                        <div class="flex items-center gap-2 border-r border-slate-200 pr-4 last:border-0">
-                            <div class="bg-primary/10 text-primary flex h-8 w-8 items-center justify-center rounded-lg">
+                        <div class="flex items-center gap-2 pr-4">
+                            <div class="bg-primary/10 text-primary flex h-8 w-8 items-center justify-center rounded-full">
                                 <i class="ti ti-calendar-event text-lg"></i>
                             </div>
                             <div>
-                                <div class="text-sm font-bold text-slate-900">
-                                    {{ $history->created_at->format('d M Y H:i') }}
+                                <div class="">
+                                    {{ $history->created_at->format('d M Y') }}
                                 </div>
-                                <div class="text-[10px] font-medium text-slate-500">
-                                    {!! $history->statusBadge !!}
+                                <div class="text-xs text-slate-400">
+                                    {{ $history->created_at->format('H:i') }}
                                 </div>
                             </div>
                         </div>
 
                         @if ($history->vitalSign)
-                            <div class="flex items-center gap-2 border-r border-slate-200 pr-4 last:border-0">
-                                <div class="bg-primary/10 text-primary flex h-8 w-8 items-center justify-center rounded-lg">
+                            <div class="flex items-center gap-2 pr-4">
+                                <div class="flex h-8 w-8 items-center justify-center rounded-full bg-slate-200 text-slate-600">
                                     <i class="ti ti-activity text-lg"></i>
                                 </div>
                                 <div class="flex flex-col">
-                                    <span class="text-[9px] font-bold uppercase tracking-wider text-slate-400">TTV</span>
-                                    <span class="text-xs font-semibold text-slate-700">
+                                    <span class="text-[9px] font-bold uppercase text-slate-400">TTV</span>
+                                    <span class="text-slate-700">
                                         {{ $history->vitalSign->systolic ?? '-' }}/{{ $history->vitalSign->diastolic ?? '-' }} <small
                                             class="text-slate-400"
                                         >mmHg</small>
@@ -62,13 +83,13 @@ new class extends Component {
                         @endif
 
                         @if ($history->anthropometry)
-                            <div class="flex items-center gap-2 border-r border-slate-200 pr-4 last:border-0">
-                                <div class="bg-primary/10 text-primary flex h-8 w-8 items-center justify-center rounded-lg">
+                            <div class="flex items-center gap-2 pr-4">
+                                <div class="flex h-8 w-8 items-center justify-center rounded-full bg-slate-200 text-slate-600">
                                     <i class="ti ti-scale text-lg"></i>
                                 </div>
                                 <div class="flex flex-col">
-                                    <span class="text-[9px] font-bold uppercase tracking-wider text-slate-400">Antropometri</span>
-                                    <span class="text-xs font-semibold text-slate-700">
+                                    <span class="text-[9px] font-bold uppercase text-slate-400">Antropometri</span>
+                                    <span class="text-slate-700">
                                         {{ $history->anthropometry->body_weight ?? '-' }}<small class="text-slate-400">kg</small>
                                         <span class="mx-1 text-slate-300">•</span>
                                         {{ $history->anthropometry->body_height ?? '-' }}<small class="text-slate-400">cm</small>
@@ -84,7 +105,7 @@ new class extends Component {
                             {{-- LEFT COLUMN: Hasil Text --}}
                             <div class="space-y-3 border-slate-200 md:border-r">
                                 <div class="flex items-center gap-2">
-                                    <div class="bg-primary/10 text-primary flex h-8 w-8 items-center justify-center rounded-lg">
+                                    <div class="flex h-8 w-8 items-center justify-center rounded-full bg-slate-200 text-slate-600">
                                         <i class="ti ti-stethoscope text-lg"></i>
                                     </div>
                                     <h5 class="font-bold uppercase">Hasil Pemeriksaan</h5>
@@ -114,10 +135,10 @@ new class extends Component {
                             {{-- RIGHT COLUMN: Drawings & Resep --}}
                             <div class="space-y-3">
                                 <div class="flex items-center gap-2">
-                                    <div class="bg-primary/10 text-primary flex h-8 w-8 items-center justify-center rounded-lg">
+                                    <div class="flex h-8 w-8 items-center justify-center rounded-full bg-slate-200 text-slate-600">
                                         <i class="ti ti-pill text-lg"></i>
                                     </div>
-                                    <h5 class="font-bold uppercase">Resep & Terapi</h5>
+                                    <h5 class="font-bold uppercase">Resep</h5>
                                 </div>
                                 <div>
                                     @php $resepText = $history->reseps->firstWhere('tipe', 'text'); @endphp

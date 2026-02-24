@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('diagnosis', 250)->nullable();
             $table->integer('practitioner_id')->nullable()->index();
             $table->enum('status', ['registered', 'arrived', 'inprogress', 'finished', 'cancelled'])->default('registered');
+            $table->integer('no_antrian');
             $table->integer('created_by');
             $table->timestamps();
         });

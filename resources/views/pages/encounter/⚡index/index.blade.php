@@ -58,6 +58,11 @@
                         <td class="p-2">
                             {{ $d->patient->medical_record_number }}<br>
                             {{ $d->patient->full_name }}
+                            <button class="btn btn-xs btn-square btn-primary btn-ghost" title="Panggil Pasien"
+                                wire:click="$js.speak('Nomor antrian {{ $d->no_antrian }}. atas nama {{ addslashes($d->patient->full_name) }}')"
+                            >
+                                <i class="ti ti-volume text-lg"></i>
+                            </button>
                         </td>
                         <td class="p-2">
                             {{ $d->patient->umur_sekarang }}
@@ -114,8 +119,8 @@
                                     <i class="ti ti-edit text-lg"></i></a>
 
                                 @if ($d->status == 'registered')
-                                    <button class="btn btn-xs btn-square btn-error btn-soft"
-                                        wire:click="$js.confirmBatal({{ $d->id }}, '{{ $d->full_name }}')"
+                                    <button class="btn btn-xs btn-square btn-error btn-soft" title="Batalkan Kunjungan"
+                                        wire:click="$js.confirmBatal({{ $d->id }}, '{{ addslashes($d->patient->full_name) }}')"
                                     >
                                         <i class="ti ti-x text-lg"></i>
                                     </button>

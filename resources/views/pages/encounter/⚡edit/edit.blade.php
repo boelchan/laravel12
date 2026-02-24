@@ -25,9 +25,9 @@
                             ><i class="ti ti-history text-lg"></i> </button>
                         </div>
                         <div class="card-body">
-                            <ul>
+                            <ul class="space-y-1">
                                 <li><i class="ti ti-user text-lg"></i> {{ $encounter->patient->full_name }}</li>
-                                <li><i class="ti ti-calendar text-lg"></i> {{ $encounter->patient->birth_date->format('d-m-Y') }}</li>
+                                <li><i class="ti ti-cake text-lg"></i> {{ $encounter->patient->birth_date->format('d-m-Y') }}</li>
                                 <li><i class="ti ti-clock text-lg"></i> {{ $encounter->patient->umur_sekarang }}</li>
                             </ul>
                         </div>
@@ -88,7 +88,7 @@
                             <h2 class="text-lg font-medium">Hasil Pemeriksaan</h2>
                         </div>
                         <div class="card-body space-y-6 p-6">
-                            <x-textarea wire:model="hasil_text" label="Catatan / Hasil" rows="4"
+                            <x-textarea wire:model="hasil_text" label="Catatan / Hasil" rows="3"
                                 placeholder="Masukkan hasil pemeriksaan..."
                             />
 
@@ -135,7 +135,7 @@
                             </div>
                             <div class="mt-4 flex justify-end">
                                 <button class="btn btn-sm btn-outline btn-primary" type="button" wire:click="addSignature('hasil')">
-                                    <i class="ti ti-plus"></i> Tambah Signature
+                                    <i class="ti ti-plus"></i> Tambah
                                 </button>
                             </div>
                         </div>
@@ -149,7 +149,7 @@
                             </h2>
                         </div>
                         <div class="card-body space-y-6 p-6">
-                            <x-textarea wire:model="resep_text" label="Daftar Terapi / Obat" rows="4" placeholder="R/ ..." />
+                            <x-textarea wire:model="resep_text" label="Daftar Terapi / Obat" rows="3" placeholder="R/ ..." />
 
                             <div class="grid grid-cols-1 gap-6">
                                 @foreach ($resep_signatures as $index => $sig)
@@ -199,7 +199,7 @@
                             </div>
                             <div class="mt-4 flex justify-end">
                                 <button class="btn btn-sm btn-outline btn-primary" type="button" wire:click="addSignature('resep')">
-                                    <i class="ti ti-plus"></i> Tambah Signature
+                                    <i class="ti ti-plus"></i> Tambah
                                 </button>
                             </div>
                         </div>
