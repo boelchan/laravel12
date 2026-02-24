@@ -219,7 +219,7 @@
     </div>
 
     {{-- HISTORY MODAL --}}
-    @livewire('encounter.riwayat_pemeriksaan', ['patient_id' => $encounter->patient_id])
+    <livewire:encounter.riwayat_pemeriksaan />
 </div>
 
 @push('styles')
@@ -322,10 +322,7 @@
 @push('scripts')
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script>
-        /* 
-                        jquery-drawpad.js implementation 
-                        (Inlined to ensure it works without external file management issues)
-                    */
+        /* jquery-drawpad.js implementation (Inlined to ensure it works without external file management issues) */
         (function($) {
             const pluginSuffix = "drawpad";
             $.drawpad = function(element, options) {

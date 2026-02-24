@@ -53,17 +53,18 @@
                                     <i class="ti ti-home text-lg"></i>Dashboard</a>
                             </li>
                             <li>
-                                <a class="{{ Str::startsWith(url()->current(), url('patient')) ? 'menu-active' : '' }}"
-                                    href={{ route('patient.index') }} wire:navigate
-                                >
-                                    <i class="ti ti-user-plus text-lg"></i>Pasien</a>
-                            </li>
-                            <li>
                                 <a class="{{ Str::startsWith(url()->current(), url('encounter')) ? 'menu-active' : '' }}"
                                     href={{ route('encounter.index') }} wire:navigate
                                 >
                                     <i class="ti ti-calendar text-lg"></i>Kunjungan</a>
                             </li>
+                            <li>
+                                <a class="{{ Str::startsWith(url()->current(), url('patient')) ? 'menu-active' : '' }}"
+                                    href={{ route('patient.index') }} wire:navigate
+                                >
+                                    <i class="ti ti-user-plus text-lg"></i>Pasien</a>
+                            </li>
+                            
 
                             @role('administrator')
                                 <h2 class="menu-title mt-4">Administrator</h2>

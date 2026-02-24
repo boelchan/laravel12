@@ -4,24 +4,18 @@ use App\Models\Encounter;
 use Livewire\Component;
 use Livewire\Attributes\On;
 
-new class extends Component
-{
+new class extends Component {
     public $patient_id;
     public $showHistoryModal = false;
     public $encounterHistory = [];
 
-    public function mount($patient_id = null)
-    {
-
-    }
-
-    #[On('open-history-modal')] 
+    #[On('open-history-modal')]
     public function openHistory($patient_id)
     {
         $this->showHistoryModal = true;
-        
+
         $this->encounterHistory = Encounter::where('patient_id', $patient_id)
-            ->with(['vitalSign', 'anthropometry'])
+            ->with(['vitalSign', 'anthropometry', 'hasils', 'reseps'])
             ->orderBy('created_at', 'desc')
             ->get();
     }
@@ -29,55 +23,134 @@ new class extends Component
 ?>
 
 <div>
-    <x-modal wire="showHistoryModal" title="Riwayat Pemeriksaan">
-        <div class="overflow-x-auto">
-            <table class="table-compact table w-full">
-                <thead>
-                    <tr class="bg-slate-50">
-                        <th class="p-2 text-left">Tanggal</th>
-                        <th class="p-2 text-left">TTV</th>
-                        <th class="p-2 text-left">Antropometri</th>
-                        <th class="p-2 text-left">Status</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-slate-100">
-                    @forelse ($encounterHistory as $history)
-                        <tr class="hover:bg-slate-50">
-                            <td class="p-2">
-                                <div class="font-medium text-slate-900">{{ $history->created_at->format('d-m-Y') }}</div>
-                                <div class="text-xs text-slate-500">{{ $history->created_at->format('H:i') }}</div>
-                            </td>
-                            <td class="p-2 text-sm">
-                                @if($history->vitalSign)
-                                    <div>{{ $history->vitalSign->systolic ?? '-' }}/{{ $history->vitalSign->diastolic ?? '-' }} mmHg</div>
-                                    <div class="text-xs text-slate-500">Suhu: {{ $history->vitalSign->body_temperature ?? '-' }}°C</div>
-                                @else
-                                    <span class="text-slate-400">-</span>
-                                @endif
-                            </td>
-                            <td class="p-2 text-sm">
-                                @if($history->anthropometry)
-                                    <div>BB: {{ $history->anthropometry->body_weight ?? '-' }} kg</div>
-                                    <div>TB: {{ $history->anthropometry->body_height ?? '-' }} cm</div>
-                                @else
-                                    <span class="text-slate-400">-</span>
-                                @endif
-                            </td>
-                            <td class="p-2">
-                                @if ($history->status == 'finished')
-                                    <span class="badge badge-info badge-outline badge-xs">Selesai</span>
-                                @else
-                                    <span class="badge badge-ghost badge-xs">{{ $history->status }}</span>
-                                @endif
-                            </td>
-                        </tr>
-                    @empty
-                        <tr>
-                            <td colspan="4" class="p-4 text-center text-slate-500">Tidak ada riwayat pemeriksaan</td>
-                        </tr>
-                    @endforelse
-                </tbody>
-            </table>
+    <x-modal class="h-[90vh]" title="Riwayat Pemeriksaan" wire="showHistoryModal" size="6xl">
+        <div class="space-y-4">
+            @forelse ($encounterHistory as $history)
+                <div class="card border border-slate-200 bg-white shadow-sm">
+
+                    <div class="flex flex-wrap gap-4 border-b border-slate-200 bg-slate-50/30 p-4">
+                        <div class="flex items-center gap-2 border-r border-slate-200 pr-4 last:border-0">
+                            <div class="bg-primary/10 text-primary flex h-8 w-8 items-center justify-center rounded-lg">
+                                <i class="ti ti-calendar-event text-lg"></i>
+                            </div>
+                            <div>
+                                <div class="text-sm font-bold text-slate-900">
+                                    {{ $history->created_at->format('d M Y H:i') }}
+                                </div>
+                                <div class="text-[10px] font-medium text-slate-500">
+                                    {!! $history->statusBadge !!}
+                                </div>
+                            </div>
+                        </div>
+
+                        @if ($history->vitalSign)
+                            <div class="flex items-center gap-2 border-r border-slate-200 pr-4 last:border-0">
+                                <div class="bg-primary/10 text-primary flex h-8 w-8 items-center justify-center rounded-lg">
+                                    <i class="ti ti-activity text-lg"></i>
+                                </div>
+                                <div class="flex flex-col">
+                                    <span class="text-[9px] font-bold uppercase tracking-wider text-slate-400">TTV</span>
+                                    <span class="text-xs font-semibold text-slate-700">
+                                        {{ $history->vitalSign->systolic ?? '-' }}/{{ $history->vitalSign->diastolic ?? '-' }} <small
+                                            class="text-slate-400"
+                                        >mmHg</small>
+                                        <span class="mx-1 text-slate-300">•</span>
+                                        {{ $history->vitalSign->body_temperature ?? '-' }}<span class="text-slate-400">°C</span>
+                                    </span>
+                                </div>
+                            </div>
+                        @endif
+
+                        @if ($history->anthropometry)
+                            <div class="flex items-center gap-2 border-r border-slate-200 pr-4 last:border-0">
+                                <div class="bg-primary/10 text-primary flex h-8 w-8 items-center justify-center rounded-lg">
+                                    <i class="ti ti-scale text-lg"></i>
+                                </div>
+                                <div class="flex flex-col">
+                                    <span class="text-[9px] font-bold uppercase tracking-wider text-slate-400">Antropometri</span>
+                                    <span class="text-xs font-semibold text-slate-700">
+                                        {{ $history->anthropometry->body_weight ?? '-' }}<small class="text-slate-400">kg</small>
+                                        <span class="mx-1 text-slate-300">•</span>
+                                        {{ $history->anthropometry->body_height ?? '-' }}<small class="text-slate-400">cm</small>
+                                    </span>
+                                </div>
+                            </div>
+                        @endif
+                    </div>
+                    <div class="card-body p-4">
+
+                        {{-- Split Content: Hasil (Left) vs Hasil Drawings & Resep (Right) --}}
+                        <div class="grid grid-cols-1 gap-8 md:grid-cols-2">
+                            {{-- LEFT COLUMN: Hasil Text --}}
+                            <div class="space-y-3 border-slate-200 md:border-r">
+                                <div class="flex items-center gap-2">
+                                    <div class="bg-primary/10 text-primary flex h-8 w-8 items-center justify-center rounded-lg">
+                                        <i class="ti ti-stethoscope text-lg"></i>
+                                    </div>
+                                    <h5 class="font-bold uppercase">Hasil Pemeriksaan</h5>
+                                </div>
+                                <div>
+                                    @php $hasilText = $history->hasils->firstWhere('tipe', 'text'); @endphp
+                                    @if ($hasilText && $hasilText->hasil)
+                                        <div class="my-2">
+                                            {{ $hasilText->hasil }}
+                                        </div>
+                                    @else
+                                        <span class="italic text-slate-400">Tidak ada catatan pemeriksaan</span>
+                                    @endif
+                                    @php $hasilDraw = $history->hasils->firstWhere('tipe', 'draw'); @endphp
+                                    @if ($hasilDraw && !empty($hasilDraw->signatures))
+                                        <div class="space-y-2">
+                                            @foreach ($hasilDraw->signatures as $sig)
+                                                @if ($sig && strlen($sig) > 100)
+                                                    <img class="h-full w-full object-contain" src="{{ $sig }}" />
+                                                @endif
+                                            @endforeach
+                                        </div>
+                                    @endif
+                                </div>
+                            </div>
+
+                            {{-- RIGHT COLUMN: Drawings & Resep --}}
+                            <div class="space-y-3">
+                                <div class="flex items-center gap-2">
+                                    <div class="bg-primary/10 text-primary flex h-8 w-8 items-center justify-center rounded-lg">
+                                        <i class="ti ti-pill text-lg"></i>
+                                    </div>
+                                    <h5 class="font-bold uppercase">Resep & Terapi</h5>
+                                </div>
+                                <div>
+                                    @php $resepText = $history->reseps->firstWhere('tipe', 'text'); @endphp
+                                    @if ($resepText && $resepText->resep)
+                                        {!! nl2br(e($resepText->resep)) !!}
+                                    @else
+                                        <span class="italic text-slate-400">Tidak ada resep</span>
+                                    @endif
+
+                                    @php $resepDraw = $history->reseps->firstWhere('tipe', 'draw'); @endphp
+                                    @if ($resepDraw && !empty($resepDraw->signatures))
+                                        <div class="space-y-2">
+                                            @foreach ($resepDraw->signatures as $sig)
+                                                @if ($sig && strlen($sig) > 100)
+                                                    <img class="h-full w-full object-contain" src="{{ $sig }}" />
+                                                @endif
+                                            @endforeach
+                                        </div>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @empty
+                <div class="flex flex-col items-center justify-center py-12 text-slate-500">
+                    <div class="mb-4 rounded-full bg-slate-100 p-4">
+                        <i class="ti ti-clipboard-list text-3xl opacity-20"></i>
+                    </div>
+                    <p class="font-medium">Tidak ada riwayat pemeriksaan</p>
+                    <p class="mt-1 text-xs text-slate-400">Belum ada data kunjungan untuk pasien ini.</p>
+                </div>
+            @endforelse
         </div>
     </x-modal>
 </div>

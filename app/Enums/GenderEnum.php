@@ -19,6 +19,16 @@ enum GenderEnum: int
         };
     }
 
+    public function singkatan(): string
+    {
+        return match ($this) {
+            static::UNKNOWN => 'Tidak diketahui',
+            static::MALE => 'L',
+            static::FEMALE => 'P',
+            static::UNSPECIFIED => 'Tidak ditentukan',
+        };
+    }
+
     public static function choices(): array
     {
         return [

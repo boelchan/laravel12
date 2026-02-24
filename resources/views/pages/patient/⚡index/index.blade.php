@@ -43,9 +43,8 @@
             <x-table.thead class="bg-slate-50" :sortDirection="$sortDirection" :sortField="$sortField">
                 <x-table.th width="5%" />
                 <x-table.th label="No. RM" sort="medical_record_number" width="10%" />
-                <x-table.th label="Nama" sort="full_name" width="20%" />
                 <x-table.th label="NIK" width="15%" />
-                <x-table.th label="Gender" />
+                <x-table.th label="Nama" sort="full_name" width="20%" />
                 <x-table.th label="Tgl Lahir" sort="birth_date" />
                 <x-table.th label="Telepon" />
                 <x-table.th label="Status" />
@@ -57,9 +56,8 @@
                     <tr class="bg-white hover:bg-neutral-50" wire:key="patient-{{ $d->id }}">
                         <td class="p-2 text-center"> {{ $perPage * ($this->dataTable->currentPage() - 1) + $index + 1 }} </td>
                         <td class="p-2 font-medium"> {{ $d->medical_record_number }} </td>
-                        <td class="p-2"> {{ $d->full_name }} </td>
                         <td class="p-2 text-xs"> {{ $d->nik ?? '-' }} </td>
-                        <td class="p-2"> {{ $d->gender?->label() ?? '-' }} </td>
+                        <td class="p-2"> {{ $d->full_name }} ({{ $d->gender?->singkatan() ?? '-' }})</td>
                         <td class="p-2 text-xs">
                             {{ $d->birth_date?->format('d-m-Y') }}
                             <div class="text-[10px] text-slate-400">{{ $d->umur_sekarang }}</div>
@@ -73,16 +71,18 @@
                             @endif
                         </td>
                         <td class="flex gap-2 p-2">
-                            <button class="btn btn-xs btn-success btn-square btn-soft">
-                                <i class="ti ti-calendar text-lg"></i></button>
-
-                            <button class="btn btn-xs btn-warning btn-square btn-soft">
+                            <button class="btn btn-xs btn-primary btn-square btn-soft" title="Riwayat" wire:click="$dispatch('open-history-modal', [{{ $d->id }}])">
                                 <i class="ti ti-history text-lg"></i></button>
 
-                            <a class="btn btn-xs btn-primary btn-square btn-soft" href="{{ route('patient.edit', [$d->id, $d->uuid]) }}" wire:navigate>
+                            <button class="btn btn-xs btn-success btn-square btn-soft" title="Booking">
+                                <i class="ti ti-calendar text-lg"></i></button>
+
+                            <a class="btn btn-xs btn-primary btn-square btn-soft" href="{{ route('patient.edit', [$d->id, $d->uuid]) }}"
+                                title="Ubah"
+                            >
                                 <i class="ti ti-edit text-lg"></i></a>
 
-                            <button class="btn btn-xs btn-square btn-error btn-soft"
+                            <button class="btn btn-xs btn-square btn-error btn-soft" title="Hapus"
                                 wire:click="$js.confirmDelete({{ $d->id }}, '{{ $d->full_name }}')"
                             >
                                 <i class="ti ti-trash text-lg"></i>
@@ -97,5 +97,7 @@
             </tbody>
         </x-table>
     </div>
+
+    <livewire:encounter.riwayat_pemeriksaan />
 
 </div>

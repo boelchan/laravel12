@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Enums\StatusEncounterEnum;
+use Attribute;
 use Illuminate\Database\Eloquent\Model;
 
 class Encounter extends Model
@@ -31,5 +33,10 @@ class Encounter extends Model
     public function reseps()
     {
         return $this->hasMany(Resep::class);
+    }
+
+    public function getStatusBadgeAttribute()
+    {
+        return StatusEncounterEnum::from($this->status)->badge();
     }
 }

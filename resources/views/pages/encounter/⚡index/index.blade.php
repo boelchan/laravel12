@@ -87,17 +87,7 @@
                             TB : {{ $d->anthropometry->body_height ?? '-' }} <i>cm</i>
                         </td>
                         <td class="p-2">
-                            @if ($d->status == 'registered')
-                                <div class="badge badge-success">Baru</div>
-                            @elseif ($d->status == 'arrived')
-                                <div class="badge badge-warning">Datang</div>
-                            @elseif ($d->status == 'inprogress')
-                                <div class="badge badge-info">Pemeriksaan</div>
-                            @elseif ($d->status == 'finished')
-                                <div class="badge badge-info">Selesai</div>
-                            @elseif ($d->status == 'cancelled')
-                                <div class="badge badge-error">Batal</div>
-                            @endif
+                            {!! $d->statusBadge !!}
                         </td>
                         <td class="p-2">
                             <div class="flex gap-2">

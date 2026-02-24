@@ -5,6 +5,7 @@ use App\Models\VitalSign;
 use App\Models\Anthropometry;
 use App\Models\Hasil;
 use App\Models\Resep;
+use App\Enums\StatusEncounterEnum;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use TallStackUi\Traits\Interactions;
@@ -95,6 +96,12 @@ new class extends Component
 
     public function update()
     {
+        $this->encounter->update([
+            'finished_at' => now(),
+            'status' => StatusEncounterEnum::FINISHED,
+            'updated_by' => Auth::id(),
+        ]);
+        
         // 1. Save TTV
         VitalSign::updateOrCreate(
             ['encounter_id' => $this->encounter->id],
