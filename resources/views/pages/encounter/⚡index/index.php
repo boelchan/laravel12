@@ -5,6 +5,7 @@ use App\Models\Encounter;
 use App\Models\Patient;
 use App\Models\VitalSign;
 use App\Models\Anthropometry;
+use App\Models\IndonesiaRegion;
 use Livewire\Component;
 use Livewire\Attributes\Computed;
 use TallStackUi\Traits\Interactions;
@@ -15,7 +16,7 @@ new class extends Component
 {
     use WithTableX, Interactions;
 
-    public $sortFieldDefault = 'visit_date';
+    public $sortFieldDefault = 'no_antrian';
     public $sortDirectionDefault = 'desc';
 
     public $search_full_name = '';
@@ -27,14 +28,23 @@ new class extends Component
     public $modalEncounter = false;
     public $patient_id;
     public $visit_date;
-    public $searchPatient = '';
+    public $searchPatientName = '';
+    public $searchPatientMRN = '';
+    public $searchPatientVillage = '';
     public $selectedPatientName = '';
+    public $villages = [];
 
     // Vitals form
     public $modalObservation = false;
     public $encounter_id;
     public $systolic, $diastolic, $heart_rate, $respiratory_rate, $body_temperature;
     public $body_height, $body_weight;
+
+    public function mount()
+    {
+        $this->search_visit_date = date('Y-m-d');
+        $this->villages = IndonesiaRegion::where('parent', 'like', '3529%')->where('type', 'desa')->orderBy('name', 'ASC')->get()->map(fn($item) => ['label' => $item->name, 'value' => $item->code])->toArray();
+    }
 
     #[Computed]
     public function dataTable()
@@ -50,8 +60,8 @@ new class extends Component
                     $q2->where('medical_record_number', $this->search_medical_record_number);
                 });
             })
-            ->when($this->search_visit_date, fn($q) => $q->where('visit_date', $this->search_visit_date))
             ->when($this->search_status, fn($q) => $q->where('status', $this->search_status))
+            ->where('visit_date', $this->search_visit_date ?? now()->format('Y-m-d'))
             ->orderBy($this->sortField, $this->sortDirection)
             ->paginate($this->perPage)
             ->onEachSide(1);
@@ -72,6 +82,20 @@ new class extends Component
     }
 
     #[Computed]
+    public function stats()
+    {
+        $date = $this->search_visit_date ?: date('Y-m-d');
+        $data = Encounter::where('visit_date', $date)->get();
+        
+        return [
+            'total' => $data->count(),
+            'arrived' => $data->whereIn('status', ['arrived', 'inprogress','finished'])->count(),
+            'finished' => $data->where('status', 'finished')->count(),
+            'cancelled' => $data->where('status', 'cancelled')->count(),
+        ];
+    }
+
+    #[Computed]
     public function encounterCount()
     {
         if (!$this->visit_date) return 0;
@@ -81,14 +105,13 @@ new class extends Component
     #[Computed]
     public function patientList()
     {
-        if (strlen($this->searchPatient) < 1) return collect();
+        if (strlen($this->searchPatientName) < 1 && strlen($this->searchPatientMRN) < 1 && !$this->searchPatientVillage) return collect();
 
         return Patient::query()
-            ->where(function ($q) {
-                $q->where('full_name', 'like', '%' . $this->searchPatient . '%')
-                    ->orWhere('address', 'like', '%' . $this->searchPatient . '%')
-                    ->orWhere('medical_record_number', 'like', '%' . $this->searchPatient . '%');
-            })
+            ->with('village')
+            ->when($this->searchPatientName, fn($q) => $q->where('full_name', 'like', '%' . $this->searchPatientName . '%'))
+            ->when($this->searchPatientMRN, fn($q) => $q->where('medical_record_number', 'like', '%' . $this->searchPatientMRN . '%'))
+            ->when($this->searchPatientVillage, fn($q) => $q->where('village_code', $this->searchPatientVillage))
             ->orderBy('full_name')
             ->limit(10)
             ->get();
@@ -100,13 +123,13 @@ new class extends Component
         if ($patient) {
             $this->patient_id = $patient->id;
             $this->selectedPatientName = $patient->full_name . ' (' . $patient->medical_record_number . ')';
-            $this->searchPatient = '';
+            $this->reset(['searchPatientName', 'searchPatientMRN', 'searchPatientVillage']);
         }
     }
 
     public function openModalEncounter()
     {
-        $this->reset(['patient_id', 'visit_date', 'searchPatient', 'selectedPatientName']);
+        $this->reset(['patient_id', 'visit_date', 'searchPatientName', 'searchPatientMRN', 'searchPatientVillage', 'selectedPatientName']);
         $this->visit_date = date('Y-m-d');
         $this->modalEncounter = true;
     }
@@ -133,10 +156,10 @@ new class extends Component
                 'status' => 'registered',
                 'created_by' => Auth::id(),
             ]);
-    
+
             $this->modalEncounter = false;
+            $this->search_visit_date = $this->visit_date;
             $this->toast()->success('Kunjungan berhasil ditambahkan')->send();
-            
         } catch (\Throwable $th) {
             $this->toast()->error('Gagal menambahkan kunjungan. Coba lagi')->send();
         }

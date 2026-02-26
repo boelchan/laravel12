@@ -19,6 +19,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        
+        $this->call([
+            IndonesiaRegionSeeder::class
+        ]);
+        
         Permission::insert([
             ['name' => 'list user', 'guard_name' => 'web'],
             ['name' => 'tambah user', 'guard_name' => 'web'],
@@ -111,6 +116,7 @@ class DatabaseSeeder extends Seeder
             'gender' => '2',
             'birth_date' => '2000-01-01',
             'address' => 'Jl. Mainuma',
+            'village_code' => '3529012013',
             'phone' => '08123456789',
             'email' => 'mainuma@app.com',
             'created_by' => 1,
@@ -124,13 +130,11 @@ class DatabaseSeeder extends Seeder
             'gender' => '2',
             'birth_date' => '1992-06-01',
             'address' => 'Jl. imam bonjol',
+            'village_code' => '3529012009',
             'phone' => '08123456789',
             'email' => 'mainuma@app.com',
             'created_by' => 1,
         ]);
 
-        $this->call([
-            IndonesiaRegionSeeder::class
-        ]);
     }
 }
