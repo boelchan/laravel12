@@ -19,24 +19,74 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // dummy user
-        User::factory(100)->create();
-
-        // dummy role
-        Role::insert([
-            ['name' => 'administrator', 'guard_name' => 'web'],
-            ['name' => 'dokter', 'guard_name' => 'web'],
-            ['name' => 'perawat', 'guard_name' => 'web'],
-            ['name' => 'pasien', 'guard_name' => 'web'],
-            ['name' => 'operator', 'guard_name' => 'web'],
-        ]);
         Permission::insert([
-            ['name' => 'user.index', 'guard_name' => 'web'],
-            ['name' => 'user.create', 'guard_name' => 'web'],
-            ['name' => 'user.edit', 'guard_name' => 'web'],
-            ['name' => 'user.destroy', 'guard_name' => 'web'],
+            ['name' => 'list user', 'guard_name' => 'web'],
+            ['name' => 'tambah user', 'guard_name' => 'web'],
+            ['name' => 'edit user', 'guard_name' => 'web'],
+            ['name' => 'hapus user', 'guard_name' => 'web'],
+            ['name' => 'list pasien', 'guard_name' => 'web'],
+            ['name' => 'tambah pasien', 'guard_name' => 'web'],
+            ['name' => 'edit pasien', 'guard_name' => 'web'],
+            ['name' => 'hapus pasien', 'guard_name' => 'web'],
+            ['name' => 'list kunjungan', 'guard_name' => 'web'],
+            ['name' => 'tambah kunjungan', 'guard_name' => 'web'],
+            ['name' => 'edit status kunjungan', 'guard_name' => 'web'],
+            ['name' => 'edit observasi', 'guard_name' => 'web'],
+            ['name' => 'edit pemeriksaan', 'guard_name' => 'web'],
+            ['name' => 'lihat observasi', 'guard_name' => 'web'],
+            ['name' => 'lihat hasil', 'guard_name' => 'web'],
+            ['name' => 'lihat resep', 'guard_name' => 'web'],
         ]);
-        Role::first()->givePermissionTo(Permission::all());
+
+        $role = Role::create(
+            ['name' => 'administrator', 'guard_name' => 'web'],
+        );
+        $role->givePermissionTo([
+            'list user',
+            'tambah user',
+            'edit user',
+            'hapus user',
+        ]);
+
+        $user = Role::create(
+            ['name' => 'dokter', 'guard_name' => 'web'],
+        );
+        $user->givePermissionTo([
+            'list pasien',
+            'tambah pasien',
+            'edit pasien',
+            'hapus pasien',
+            'list kunjungan',
+            'tambah kunjungan',
+            'edit status kunjungan',
+            'edit observasi',
+            'edit pemeriksaan',
+            'lihat observasi',
+            'lihat hasil',
+            'lihat resep',
+        ]);
+
+        $user = Role::create(
+            ['name' => 'bidan', 'guard_name' => 'web'],
+        );
+        $user->givePermissionTo([
+            'list pasien',
+            'tambah pasien',
+            'edit pasien',
+            'hapus pasien',
+            'list kunjungan',
+            'tambah kunjungan',
+            'edit status kunjungan',
+            'edit observasi',
+            'lihat observasi',
+        ]);
+
+        $user = Role::create(
+            ['name' => 'apoteker', 'guard_name' => 'web'],
+        );
+        $user->givePermissionTo([
+            'lihat resep',
+        ]);
 
         // dummy admin
         $user = User::create([
@@ -45,30 +95,38 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('123'),
         ]);
         $user->assignRole('administrator');
+        $user->assignRole('dokter');
+
+        $user = User::create([
+            'name' => 'Bidan',
+            'email' => 'bidan@app.com',
+            'password' => bcrypt('123'),
+        ]);
+        $user->assignRole('bidan');
 
         Patient::create([
             'uuid' => Str::uuid(),
-            'medical_record_number'=> 'RM-00001',
+            'medical_record_number' => 'RM-00001',
             'full_name' => 'Mainuma',
-            'gender'=> '2',
-            'birth_date'=> '2000-01-01',
-            'address'=> 'Jl. Mainuma',
-            'phone'=> '08123456789',
-            'email'=> 'mainuma@app.com',
-            'created_by'=> 1,
+            'gender' => '2',
+            'birth_date' => '2000-01-01',
+            'address' => 'Jl. Mainuma',
+            'phone' => '08123456789',
+            'email' => 'mainuma@app.com',
+            'created_by' => 1,
         ]);
 
         Patient::create([
             'uuid' => Str::uuid(),
             'nik' => '1234567890123456',
-            'medical_record_number'=> 'RM-00002',
+            'medical_record_number' => 'RM-00002',
             'full_name' => 'Fatima',
-            'gender'=> '2',
-            'birth_date'=> '1992-06-01',
-            'address'=> 'Jl. imam bonjol',
-            'phone'=> '08123456789',
-            'email'=> 'mainuma@app.com',
-            'created_by'=> 1,
+            'gender' => '2',
+            'birth_date' => '1992-06-01',
+            'address' => 'Jl. imam bonjol',
+            'phone' => '08123456789',
+            'email' => 'mainuma@app.com',
+            'created_by' => 1,
         ]);
 
         $this->call([
