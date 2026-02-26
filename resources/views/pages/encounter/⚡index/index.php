@@ -134,12 +134,38 @@ new class extends Component
         $this->modalEncounter = true;
     }
 
+    #[Computed]
+    public function patientHistory()
+    {
+        if (!$this->patient_id) return collect();
+        return Encounter::where('patient_id', $this->patient_id)
+            ->with(['vitalSign', 'anthropometry'])
+            ->latest('visit_date')
+            ->limit(10)
+            ->get();
+    }
+
+    #[Computed]
+    public function isAlreadyRegistered()
+    {
+        if (!$this->patient_id || !$this->visit_date) return false;
+        return Encounter::where('patient_id', $this->patient_id)
+            ->where('visit_date', $this->visit_date)
+            ->where('status', '!=', 'cancelled')
+            ->exists();
+    }
+
     public function saveEncounter()
     {
         $this->validate([
             'patient_id' => 'required|exists:patients,id',
             'visit_date' => 'required|date',
         ]);
+
+        if ($this->isAlreadyRegistered) {
+            $this->toast()->error('Pasien sudah terdaftar pada tanggal ini!')->send();
+            return;
+        }
 
         $countEncounter = Encounter::where('visit_date', $this->visit_date)
             ->lockForUpdate()
@@ -172,6 +198,9 @@ new class extends Component
             'status' => 'arrived',
             'arrived_at' => now(),
         ]);
+
+        $this->modalEncounter = false;
+        $this->toast()->success('Status kunjungan diperbarui menjadi Datang')->send();
     }
 
     public function setInprogress($id)

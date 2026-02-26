@@ -175,6 +175,14 @@
                                         <i class="ti ti-edit text-lg"></i></a>
                                 @endif
 
+                                @if ($d->status == 'cancelled')
+                                    <button class="btn btn-xs btn-square btn-success btn-soft" title="Pulihkan Kunjungan (Pasien Datang)"
+                                        wire:click="setArrived({{ $d->id }})"
+                                    >
+                                        <i class="ti ti-refresh text-lg"></i>
+                                    </button>
+                                @endif
+
                                 @if ($d->status == 'registered')
                                     <button class="btn btn-xs btn-square btn-error btn-soft" title="Batalkan Kunjungan"
                                         wire:click="$js.confirmBatal({{ $d->id }}, '{{ addslashes($d->patient->full_name) }}')"
@@ -195,32 +203,90 @@
     </div>
 
     {{-- Modal Encounter --}}
-    <x-modal id="modalEncounter" title="Tambah Kunjungan Baru" size="xl" wire="modalEncounter">
+    <x-modal id="modalEncounter" title="Tambah Kunjungan Baru" size="4xl" wire="modalEncounter">
         <div class="space-y-6">
             {{-- Patient Selection Section --}}
             <div class="rounded-xl border border-slate-100 bg-slate-50/50 p-4">
-                <div class="mb-3 flex items-center gap-2">
-                    <div class="bg-primary/10 text-primary flex h-8 w-8 items-center justify-center rounded-lg">
-                        <i class="ti ti-user-search text-lg"></i>
+                <div class="mb-3 flex items-center justify-between">
+                    <div class="flex items-center gap-2">
+                        <div class="bg-primary/10 text-primary flex h-8 w-8 items-center justify-center rounded-lg">
+                            <i class="ti ti-user-search text-lg"></i>
+                        </div>
+                        <h3 class="text-sm font-semibold text-slate-800">Informasi Pasien</h3>
                     </div>
-                    <h3 class="text-sm font-semibold text-slate-800">Informasi Pasien</h3>
+                    @if ($this->isAlreadyRegistered && $selectedPatientName)
+                        <div class="flex items-center gap-2 rounded-lg bg-error/10 px-3 py-1 text-xs font-bold text-error animate-pulse">
+                            <i class="ti ti-alert-triangle"></i>
+                            PASIEN SUDAH TERDAFTAR HARI INI
+                        </div>
+                    @endif
                 </div>
 
                 @if ($selectedPatientName)
-                    <div
-                        class="animate-in fade-in zoom-in border-primary/20 flex items-center gap-4 rounded-xl border bg-white p-4 shadow-sm duration-300">
-                        <div class="bg-primary/10 text-primary flex h-12 w-12 items-center justify-center rounded-full">
-                            <i class="ti ti-user-check text-2xl"></i>
+                    <div class="space-y-4">
+                        <div
+                            class="animate-in fade-in zoom-in border-primary/20 flex items-center gap-4 rounded-xl border bg-white p-4 shadow-sm duration-300">
+                            <div class="bg-primary/10 text-primary flex h-12 w-12 items-center justify-center rounded-full">
+                                <i class="ti ti-user-check text-2xl"></i>
+                            </div>
+                            <div class="flex-1">
+                                <div class="text-xs font-medium uppercase tracking-wider text-slate-500">Pasien Terpilih</div>
+                                <div class="text-lg font-bold text-slate-800">{{ $selectedPatientName }}</div>
+                            </div>
+                            <button class="btn btn-circle btn-ghost btn-sm text-error hover:bg-error/10" type="button" title="Ganti Pasien"
+                                wire:click="$set('selectedPatientName', '')"
+                            >
+                                <i class="ti ti-rotate text-lg"></i>
+                            </button>
                         </div>
-                        <div class="flex-1">
-                            <div class="text-xs font-medium uppercase tracking-wider text-slate-500">Pasien Terpilih</div>
-                            <div class="text-lg font-bold text-slate-800">{{ $selectedPatientName }}</div>
+
+                        {{-- Riwayat Kunjungan singkat --}}
+                        <div class="rounded-xl border border-slate-200 bg-white overflow-hidden shadow-sm">
+                            <div class="bg-slate-50 px-4 py-2 border-b border-slate-200">
+                                <h4 class="text-[10px] font-bold uppercase tracking-widest text-slate-400">10 Kunjungan Terakhir</h4>
+                            </div>
+                            <div class="max-h-40 overflow-y-auto">
+                                <table class="w-full text-left text-xs">
+                                    <thead class="bg-slate-100 text-[10px] uppercase text-slate-500">
+                                        <tr>
+                                            <th class="px-4 py-2 font-bold">Tanggal</th>
+                                            <th class="px-4 py-2 font-bold text-center">No. Antrian</th>
+                                            <th class="px-4 py-2 font-bold">TTV / Status</th>
+                                            <th class="px-4 py-2 font-bold text-right">Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-slate-100">
+                                        @forelse($this->patientHistory as $history)
+                                            <tr class="hover:bg-slate-50 transition-colors">
+                                                <td class="px-4 py-2 font-medium text-slate-700">{{ $history->visit_date }}</td>
+                                                <td class="px-4 py-2 text-center text-slate-500 font-mono">{{ $history->no_antrian }}</td>
+                                                <td class="px-4 py-2 text-slate-500">
+                                                    @if($history->vitalSign)
+                                                        {{ $history->vitalSign->systolic }}/{{ $history->vitalSign->diastolic }} @ {{ $history->vitalSign->body_temperature }}°C
+                                                    @else
+                                                        -
+                                                    @endif
+                                                </td>
+                                                <td class="px-4 py-2 text-right flex items-center justify-end gap-2">
+                                                    {!! $history->statusBadge !!}
+                                                    @if($history->status == 'cancelled' && $history->visit_date == $visit_date)
+                                                        <button class="btn btn-xs btn-success btn-soft" title="Pulihkan ke Pasien Datang"
+                                                            wire:click="setArrived({{ $history->id }})"
+                                                        >
+                                                            <i class="ti ti-refresh"></i> Pulihkan
+                                                        </button>
+                                                    @endif
+                                                </td>
+                                            </tr>
+                                        @empty
+                                            <tr>
+                                                <td colspan="4" class="px-4 py-6 text-center text-slate-400 italic">Belum ada riwayat kunjungan</td>
+                                            </tr>
+                                        @endforelse
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
-                        <button class="btn btn-circle btn-ghost btn-sm text-error hover:bg-error/10" type="button" title="Ganti Pasien"
-                            wire:click="$set('selectedPatientName', '')"
-                        >
-                            <i class="ti ti-rotate text-lg"></i>
-                        </button>
                     </div>
                 @else
                     <div class="space-y-3">
@@ -334,9 +400,15 @@
                 <p class="text-[10px] font-medium uppercase tracking-tighter text-slate-400">* Wajib diisi</p>
                 <div class="flex gap-2">
                     <button class="btn btn-ghost" type="button" wire:click="$set('modalEncounter', false)">Batal</button>
-                    <button class="btn btn-primary px-6" type="button" wire:click="saveEncounter">
-                        <i class="ti ti-device-floppy mr-1.5"></i> Simpan Kunjungan
-                    </button>
+                    @if(!$this->isAlreadyRegistered)
+                        <button class="btn btn-primary px-6 shadow-lg shadow-primary/20" type="button" wire:click="saveEncounter">
+                            <i class="ti ti-device-floppy mr-1.5"></i> Simpan Kunjungan
+                        </button>
+                    @else
+                        <button class="btn btn-outline btn-error opacity-50 cursor-not-allowed" type="button" disabled>
+                            Sudah Terdaftar
+                        </button>
+                    @endif
                 </div>
             </div>
         </x-slot>

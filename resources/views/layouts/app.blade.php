@@ -48,7 +48,7 @@
                         <ul class="menu w-full ps-0">
                             <li>
                                 <a class="{{ Str::startsWith(url()->current(), url('dashboard')) ? 'menu-active' : '' }}"
-                                    href={{ route('dashboard') }} wire:navigate
+                                    href={{ route('dashboard') }}
                                 >
                                     <i class="ti ti-home text-lg"></i>Dashboard</a>
                             </li>
