@@ -64,6 +64,12 @@
                                 >
                                     <i class="ti ti-user-plus text-lg"></i>Pasien</a>
                             </li>
+                            <li>
+                                <a class="{{ Str::startsWith(url()->current(), url('pharmacy')) ? 'menu-active' : '' }}"
+                                    href={{ route('pharmacy.index') }} wire:navigate
+                                >
+                                    <i class="ti ti-pills text-lg"></i>Apotik</a>
+                            </li>
                             
 
                             @role('administrator')

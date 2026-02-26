@@ -34,4 +34,7 @@ Route::middleware('active')->group(function () {
     Route::livewire('/encounter', 'pages::encounter.index')->name('encounter.index');
     Route::livewire('/encounter/create', 'pages::encounter.create')->name('encounter.create');
     Route::livewire('/encounter/{encounter}/edit/{uuid}', 'pages::encounter.edit')->name('encounter.edit');
+
+    Route::livewire('/pharmacy', 'pages::pharmacy.index')->name('pharmacy.index');
+    
 });
