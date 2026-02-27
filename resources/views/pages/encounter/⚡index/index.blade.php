@@ -374,7 +374,7 @@
                 </div>
 
                 <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
-                    <x-date label="Tanggal Periksa" wire:model.live="visit_date" />
+                    <x-input type="date" label="Tanggal Periksa" wire:model.live="visit_date"/>
 
                     @if ($visit_date)
                         <div class="bg-info/5 border-info/10 flex items-center gap-4 rounded-lg border p-3">
