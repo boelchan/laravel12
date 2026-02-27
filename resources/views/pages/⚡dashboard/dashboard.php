@@ -10,10 +10,22 @@ new class extends Component
 {
     public $title = 'Dashboard Ringkasan';
     public $selectedMonth;
+    public $encounterChartData = [];
+    public $patientChartData = [];
 
     public function mount()
     {
         $this->selectedMonth = date('Y-m');
+        $this->updateChartData();
+    }
+
+    public function updatedSelectedMonth()
+    {
+        $this->updateChartData();
+        $this->dispatch('refreshCharts', 
+            encounterData: $this->encounterChartData,
+            patientData: $this->patientChartData
+        );
     }
 
     #[Computed]
@@ -37,8 +49,13 @@ new class extends Component
             ->get();
     }
 
-    #[Computed]
-    public function encounterChartData()
+    protected function updateChartData()
+    {
+        $this->encounterChartData = $this->getEncounterChartData();
+        $this->patientChartData = $this->getPatientChartData();
+    }
+
+    private function getEncounterChartData()
     {
         $daysInMonth = date('t', strtotime($this->selectedMonth . '-01'));
         $yearMonth = $this->selectedMonth;
@@ -64,8 +81,7 @@ new class extends Component
         ];
     }
 
-    #[Computed]
-    public function patientChartData()
+    private function getPatientChartData()
     {
         // Get last 14 days of new patients
         $labels = [];

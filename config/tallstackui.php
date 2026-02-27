@@ -309,7 +309,7 @@ return [
                 | scrollable: when enabled, fixes the title and footer while allowing only the body content to scroll.
                 | scrollbar: controls the type of scrollbar (Allowed: null, thin, thick),
                 */
-                'z-index' => 'z-50',
+                'z-index' => 'z-30',
                 'overflow' => false,
                 'blur' => false,
                 'persistent' => false,
@@ -359,6 +359,7 @@ return [
                 */
                 'unfiltered' => false,
                 'recycle' => false,
+                'z-index' => 'z-[60]',
             ],
         ],
         'signature' => Components\Signature\Component::class,

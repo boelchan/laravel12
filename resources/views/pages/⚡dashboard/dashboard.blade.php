@@ -159,7 +159,9 @@
                     <i class="ti ti-chart-line text-lg"></i>
                 </div>
             </div>
-            <div class="min-h-[300px]" id="dailyEncountersChart" wire:ignore></div>
+            <div class="h-[300px] w-full relative" wire:ignore>
+                <canvas id="dailyEncountersChart"></canvas>
+            </div>
         </div>
 
         {{-- New Patients Chart --}}
@@ -173,118 +175,128 @@
                     <i class="ti ti-chart-bar text-lg"></i>
                 </div>
             </div>
-            <div class="min-h-[300px]" id="newPatientsChart" wire:ignore></div>
+            <div class="h-[300px] w-full relative" wire:ignore>
+                <canvas id="newPatientsChart"></canvas>
+            </div>
         </div>
     </div>
 
+    @push('scripts')
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    @endpush
+
     @script
-        <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
         <script>
-            document.addEventListener('livewire:initialized', () => {
-                const chartOptions = {
-                    fontFamily: 'Inter, sans-serif',
-                    chart: {
-                        toolbar: {
-                            show: false
-                        },
-                        zoom: {
-                            enabled: false
-                        }
-                    },
-                    grid: {
-                        strokeDashArray: 4,
-                        padding: {
-                            left: 0,
-                            right: 0,
-                            top: 0,
-                            bottom: 0
-                        }
-                    },
-                    stroke: {
-                        curve: 'smooth',
-                        width: 3
-                    },
-                    dataLabels: {
-                        enabled: false
-                    },
-                };
+            let encounterChart = null;
+            let patientChart = null;
 
-                // Encounter Chart
-                const encounterChart = new ApexCharts(document.querySelector("#dailyEncountersChart"), {
-                    ...chartOptions,
-                    chart: {
-                        ...chartOptions.chart,
-                        type: 'area',
-                        height: 300
+            const initCharts = (encounterData, patientData) => {
+                const ctxEncounter = document.getElementById('dailyEncountersChart');
+                const ctxPatient = document.getElementById('newPatientsChart');
+
+                if (!ctxEncounter || !ctxPatient) return;
+
+                // Destroy existing charts if they exist
+                if (encounterChart) encounterChart.destroy();
+                if (patientChart) patientChart.destroy();
+
+                const eData = encounterData || $wire.encounterChartData;
+                const pData = patientData || $wire.patientChartData;
+
+                // Encounter Chart (Line/Area)
+                encounterChart = new Chart(ctxEncounter.getContext('2d'), {
+                    type: 'line',
+                    data: {
+                        labels: eData.labels,
+                        datasets: [{
+                            label: 'Kunjungan',
+                            data: eData.data,
+                            borderColor: '#0ea5e9',
+                            backgroundColor: 'rgba(14, 165, 233, 0.1)',
+                            borderWidth: 3,
+                            fill: true,
+                            tension: 0.4,
+                            pointRadius: 0,
+                            pointHoverRadius: 6
+                        }]
                     },
-                    series: [{
-                        name: 'Kunjungan',
-                        data: @json($this->encounterChartData['data'])
-                    }],
-                    colors: ['#0ea5e9'],
-                    fill: {
-                        type: 'gradient',
-                        gradient: {
-                            shadeIntensity: 1,
-                            opacityFrom: 0.45,
-                            opacityTo: 0.05,
-                            stops: [20, 100]
-                        }
-                    },
-                    xaxis: {
-                        categories: @json($this->encounterChartData['labels']),
-                        axisBorder: {
-                            show: false
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { display: false },
+                            tooltip: {
+                                mode: 'index',
+                                intersect: false,
+                            }
                         },
-                        axisTicks: {
-                            show: false
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                grid: {
+                                    display: true,
+                                    drawBorder: false,
+                                    color: 'rgba(0, 0, 0, 0.05)'
+                                },
+                                ticks: { stepSize: 1 }
+                            },
+                            x: {
+                                grid: { display: false }
+                            }
                         }
                     }
                 });
-                encounterChart.render();
 
-                // Patient Chart
-                const patientChart = new ApexCharts(document.querySelector("#newPatientsChart"), {
-                    ...chartOptions,
-                    chart: {
-                        ...chartOptions.chart,
-                        type: 'bar',
-                        height: 300
-                    },
-                    series: [{
-                        name: 'Pasien Baru',
-                        data: @json($this->patientChartData['data'])
-                    }],
-                    colors: ['#10b981'],
-                    plotOptions: {
-                        bar: {
+                // Patient Chart (Bar)
+                patientChart = new Chart(ctxPatient.getContext('2d'), {
+                    type: 'bar',
+                    data: {
+                        labels: pData.labels,
+                        datasets: [{
+                            label: 'Pasien Baru',
+                            data: pData.data,
+                            backgroundColor: '#10b981',
                             borderRadius: 6,
-                            columnWidth: '40%',
-                            distributed: false
-                        }
+                            barThickness: 20
+                        }]
                     },
-                    xaxis: {
-                        categories: @json($this->patientChartData['labels']),
-                        axisBorder: {
-                            show: false
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { display: false }
                         },
-                        axisTicks: {
-                            show: false
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                grid: {
+                                    display: true,
+                                    drawBorder: false,
+                                    color: 'rgba(0, 0, 0, 0.05)'
+                                },
+                                ticks: { stepSize: 1 }
+                            },
+                            x: {
+                                grid: { display: false }
+                            }
                         }
                     }
                 });
-                patientChart.render();
+            };
 
-                // Listen for Livewire updates to refresh charts
-                Livewire.on('refreshCharts', () => {
-                    // For Volt component, we might need a different approach if using refresh, 
-                    // but usually re-rendering or direct data update works.
-                });
+            // Initial load
+            initCharts();
 
-                // Re-render when selectedMonth changes
-                $wire.on('monthUpdated', () => {
-                    // Update implementation if needed
-                });
+            // Refresh on Livewire updates
+            $wire.on('refreshCharts', (data) => {
+                // Livewire v3 passes data payload inside an array, so it sits at data[0] when using named dispatcher arguments
+                const payload = Array.isArray(data) ? data[0] : data;
+                
+                if (payload) {
+                    initCharts(payload.encounterData, payload.patientData);
+                } else {
+                    initCharts();
+                }
             });
         </script>
     @endscript
