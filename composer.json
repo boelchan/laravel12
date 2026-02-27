@@ -17,6 +17,7 @@
         "livewire/blaze": "^1.0",
         "livewire/livewire": "^4.0",
         "spatie/laravel-permission": "^6.24",
+        "spatie/simple-excel": "^3.9",
         "tallstackui/tallstackui": "3.0.0"
     },
     "require-dev": {

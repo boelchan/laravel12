@@ -36,5 +36,6 @@ Route::middleware('active')->group(function () {
     Route::livewire('/encounter/{encounter}/edit/{uuid}', 'pages::encounter.edit')->name('encounter.edit');
 
     Route::livewire('/pharmacy', 'pages::pharmacy.index')->name('pharmacy.index');
-    
+
+    Route::livewire('/report/visit-recap', 'pages::report.visit')->name('report.visit-recap');
 });

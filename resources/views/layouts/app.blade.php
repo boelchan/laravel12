@@ -70,7 +70,14 @@
                                 >
                                     <i class="ti ti-pills text-lg"></i>Apotik</a>
                             </li>
-                            
+
+                            <h2 class="menu-title mt-4">Laporan</h2>
+                            <li>
+                                <a class="{{ Str::startsWith(url()->current(), url('report/visit-recap')) ? 'menu-active' : '' }}"
+                                    href={{ route('report.visit-recap') }} 
+                                >
+                                    <i class="ti ti-report text-lg"></i>Rekap Kunjungan</a>
+                            </li>
 
                             @role('administrator')
                                 <h2 class="menu-title mt-4">Administrator</h2>
