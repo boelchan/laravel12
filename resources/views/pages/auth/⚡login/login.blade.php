@@ -12,7 +12,7 @@
                 <form class="grid gap-4" wire:submit="authenticate">
 
                     <x-input type="email" label="Email" wire:model="email" />
-                    <x-password label="Password" wire:model="password" />
+                    <x-input type="password" label="Password" wire:model="password" />
                     <x-checkbox label="Remember me" wire:model="remember" />
                     <button class="btn btn-primary btn-block btn-circle">
                         Login

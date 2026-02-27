@@ -7,8 +7,8 @@ Route::get('/', function () {
 });
 
 Route::livewire('/login', 'pages::auth.login')->name('login');
-Route::livewire('/register', 'pages::auth.register')->name('register');
-Route::livewire('/email/verify/success', 'pages::auth.verify-success')->name('verification.success');
+// Route::livewire('/register', 'pages::auth.register')->name('register');
+// Route::livewire('/email/verify/success', 'pages::auth.verify-success')->name('verification.success');
 
 // Custom email verification route (auto-login after verify)
 Route::get('/email/verify/{id}/{hash}', [\App\Http\Controllers\EmailVerificationController::class, 'verify'])

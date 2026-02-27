@@ -54,19 +54,19 @@
                             </li>
                             <li>
                                 <a class="{{ Str::startsWith(url()->current(), url('encounter')) ? 'menu-active' : '' }}"
-                                    href={{ route('encounter.index') }} wire:navigate
+                                    href={{ route('encounter.index') }} 
                                 >
                                     <i class="ti ti-calendar text-lg"></i>Kunjungan</a>
                             </li>
                             <li>
                                 <a class="{{ Str::startsWith(url()->current(), url('patient')) ? 'menu-active' : '' }}"
-                                    href={{ route('patient.index') }} wire:navigate
+                                    href={{ route('patient.index') }} 
                                 >
                                     <i class="ti ti-user-plus text-lg"></i>Pasien</a>
                             </li>
                             <li>
                                 <a class="{{ Str::startsWith(url()->current(), url('pharmacy')) ? 'menu-active' : '' }}"
-                                    href={{ route('pharmacy.index') }} wire:navigate
+                                    href={{ route('pharmacy.index') }} 
                                 >
                                     <i class="ti ti-pills text-lg"></i>Apotik</a>
                             </li>
