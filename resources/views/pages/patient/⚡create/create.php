@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Encounter;
 use App\Models\Patient;
 use App\Models\IndonesiaRegion;
 use Illuminate\Support\Facades\Auth;
@@ -61,6 +62,8 @@ new class extends Component
     public $districts = [];
     public $villages = [];
 
+    public $booking_date;
+
     public function mount()
     {
         $this->medical_record_number = Patient::generateMedicalRecordNumber();
@@ -105,14 +108,14 @@ new class extends Component
         $this->validate([
             'medical_record_number' => 'required|unique:patients,medical_record_number',
             'full_name' => 'required|string|max:100',
-            'birth_date' => 'required|date',
-            'address' => 'required',
+            'birth_date' => 'nullable|date',
+            'village_code' => 'required',
             'gender' => 'required',
             'nik' => 'nullable|string|size:16|unique:patients,nik',
             'mobile_phone' => 'nullable|string|max:20',
         ]);
 
-        Patient::create([
+        $user = Patient::create([
             'uuid' => Str::uuid(),
             'medical_record_number' => $this->medical_record_number,
             'nik' => $this->nik,
@@ -143,6 +146,13 @@ new class extends Component
             'emergency_contact_relation' => $this->emergency_contact_relation,
             'emergency_contact_phone' => $this->emergency_contact_phone,
             'is_active' => $this->is_active,
+            'created_by' => Auth::id(),
+        ]);
+
+        Encounter::create([
+            'uuid' => Str::uuid(),
+            'patient_id' => $user->id,
+            'visit_date' => $this->booking_date,
             'created_by' => Auth::id(),
         ]);
 

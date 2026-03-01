@@ -14,6 +14,9 @@ use TallStackUi\Traits\Interactions;
 new class extends Component
 {
     use Interactions;
+
+    public $patient;
+
     // Identitas Utama
     public $medical_record_number;
     public $nik;
@@ -69,7 +72,9 @@ new class extends Component
         if ($uuid != $patient->uuid) {
             return to_route('patient.index');
         }
-        
+
+        $this->patient = $patient;
+
         $this->medical_record_number = $patient->medical_record_number;
         $this->nik = $patient->nik;
         $this->ihs_number = $patient->ihs_number;
@@ -100,16 +105,16 @@ new class extends Component
         $this->emergency_contact_phone = $patient->emergency_contact_phone;
         $this->is_active = $patient->is_active;
 
-        $this->provinces = IndonesiaRegion::whereRaw('LENGTH(code) = 2')->orderBy('name')->get()->map(fn($item) => ['label' => $item->name, 'value' => $item->code])->toArray();
+        $this->provinces = IndonesiaRegion::where('type', 'provinsi')->get()->map(fn($item) => ['label' => $item->name, 'value' => $item->code])->toArray();
 
         if ($this->province_code) {
-            $this->regencies = IndonesiaRegion::whereRaw('LENGTH(code) = 5')->where('code', 'like', $this->province_code . '.%')->orderBy('name')->get()->map(fn($item) => ['label' => $item->name, 'value' => $item->code])->toArray();
+            $this->regencies = IndonesiaRegion::where('parent', $this->province_code)->orderBy('name', 'ASC')->get()->map(fn($item) => ['label' => $item->name, 'value' => $item->code])->toArray();
         }
         if ($this->regency_code) {
-            $this->districts = IndonesiaRegion::whereRaw('LENGTH(code) = 8')->where('code', 'like', $this->regency_code . '.%')->orderBy('name')->get()->map(fn($item) => ['label' => $item->name, 'value' => $item->code])->toArray();
+            $this->districts = IndonesiaRegion::where('parent', $this->regency_code)->orderBy('name', 'ASC')->get()->map(fn($item) => ['label' => $item->name, 'value' => $item->code])->toArray();
         }
         if ($this->district_code) {
-            $this->villages = IndonesiaRegion::whereRaw('LENGTH(code) = 13')->where('code', 'like', $this->district_code . '.%')->orderBy('name')->get()->map(fn($item) => ['label' => $item->name, 'value' => $item->code])->toArray();
+            $this->villages = IndonesiaRegion::where('parent', $this->district_code)->orderBy('name', 'ASC')->get()->map(fn($item) => ['label' => $item->name, 'value' => $item->code])->toArray();
         }
     }
 
@@ -118,38 +123,43 @@ new class extends Component
         $this->regency_code = null;
         $this->district_code = null;
         $this->village_code = null;
+        $this->regencies = $value
+            ? IndonesiaRegion::where('parent', $value)->orderBy('name', 'ASC')->get()->map(fn($item) => ['label' => $item->name, 'value' => $item->code])->toArray()
+            : [];
         $this->districts = [];
         $this->villages = [];
-        $this->regencies = $value ? IndonesiaRegion::whereRaw('LENGTH(code) = 5')->where('code', 'like', $value . '.%')->orderBy('name')->get()->map(fn($item) => ['label' => $item->name, 'value' => $item->code])->toArray() : [];
     }
 
     public function updatedRegencyCode($value)
     {
         $this->district_code = null;
         $this->village_code = null;
+        $this->districts = $value
+            ? IndonesiaRegion::where('parent', $value)->orderBy('name', 'ASC')->get()->map(fn($item) => ['label' => $item->name, 'value' => $item->code])->toArray()
+            : [];
         $this->villages = [];
-        $this->districts = $value ? IndonesiaRegion::whereRaw('LENGTH(code) = 8')->where('code', 'like', $value . '.%')->orderBy('name')->get()->map(fn($item) => ['label' => $item->name, 'value' => $item->code])->toArray() : [];
     }
 
     public function updatedDistrictCode($value)
     {
         $this->village_code = null;
-        $this->villages = $value ? IndonesiaRegion::whereRaw('LENGTH(code) = 13')->where('code', 'like', $value . '.%')->orderBy('name')->get()->map(fn($item) => ['label' => $item->name, 'value' => $item->code])->toArray() : [];
+        $this->villages = $value
+            ? IndonesiaRegion::where('parent', $value)->orderBy('name', 'ASC')->get()->map(fn($item) => ['label' => $item->name, 'value' => $item->code])->toArray()
+            : [];
     }
 
     public function update()
     {
         $this->validate([
-            'medical_record_number' => 'required|unique:patients,medical_record_number,' . $this->patient->id,
             'full_name' => 'required|string|max:100',
-            'birth_date' => 'required|date',
+            'birth_date' => 'nullable|date',
+            'village_code' => 'required',
             'gender' => 'required',
             'nik' => 'nullable|string|size:16|unique:patients,nik,' . $this->patient->id,
             'mobile_phone' => 'nullable|string|max:20',
         ]);
 
         $this->patient->update([
-            'medical_record_number' => $this->medical_record_number,
             'nik' => $this->nik,
             'ihs_number' => $this->ihs_number,
             'passport_kitas' => $this->passport_kitas,

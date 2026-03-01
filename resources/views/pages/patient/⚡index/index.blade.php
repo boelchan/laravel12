@@ -10,7 +10,7 @@
                 </ul>
             </div>
         </div>
-        <a class="btn btn-soft btn-primary btn-sm" href="{{ route('patient.create') }}" wire:navigate>
+        <a class="btn btn-primary btn-sm" href="{{ route('patient.create') }}" wire:navigate>
             <i class="ti ti-plus text-lg"></i> Tambah
         </a>
     </div>
@@ -21,19 +21,24 @@
             <div class="flex justify-between">
                 <div class="flex items-center gap-2">
                     <span class="font-semibold text-slate-800">Pencarian</span>
-                    <button class="btn btn-soft btn-error btn-xs w-6" type="button" wire:click="resetFilters">
+                    <button class="btn btn-error btn-sm btn-square btn-ghost" type="button" wire:click="resetFilters">
                         <i class="ti ti-filter-x text-lg"></i>
                     </button>
                 </div>
             </div>
             <div>
                 <div class="grid grid-cols-2 gap-4 lg:grid-cols-4 xl:grid-cols-5">
-                    <x-input clearable label="Nama" placeholder="cari nama..." wire:model.live.debounce.500ms="search_full_name" />
                     <x-input clearable label="No. RM" placeholder="cari No. RM..."
                         wire:model.live.debounce.500ms="search_medical_record_number"
                     />
-                    <x-input clearable label="NIK" placeholder="cari nik..." wire:model.live.debounce.500ms="search_nik" />
-                    <x-input clearable label="No. Telepon" placeholder="cari telepon..." wire:model.live.debounce.500ms="search_phone" />
+                    <x-input clearable label="Nama" placeholder="cari nama..." wire:model.live.debounce.500ms="search_full_name" />
+                    <x-input clearable label="Desa" placeholder="cari desa..." wire:model.live.debounce.500ms="search_village" />
+                    <x-select.styled
+                        label="Status"
+                        :options="[['label' => 'Aktif', 'value' => 'true'], ['label' => 'Tidak Aktif', 'value' => 'false']]"
+                        wire:model.live="search_status"
+                        placeholder="Pilih status"
+                    />
                 </div>
             </div>
         </div>
@@ -45,7 +50,7 @@
                 <x-table.th label="No. RM" sort="medical_record_number" width="10%" />
                 <x-table.th label="NIK" width="15%" />
                 <x-table.th label="Nama" sort="full_name" width="20%" />
-                <x-table.th label="Tgl Lahir" sort="birth_date" />
+                <x-table.th label="Desa" />
                 <x-table.th label="Telepon" />
                 <x-table.th label="Status" />
                 <x-table.th />
@@ -55,38 +60,43 @@
                 @forelse ($this->dataTable as $index => $d)
                     <tr class="bg-white hover:bg-neutral-50" wire:key="patient-{{ $d->id }}">
                         <td class="p-2 text-center"> {{ $perPage * ($this->dataTable->currentPage() - 1) + $index + 1 }} </td>
-                        <td class="p-2 font-medium"> {{ $d->medical_record_number }} </td>
-                        <td class="p-2 text-xs"> {{ $d->nik ?? '-' }} </td>
+                        <td class="p-2"> {{ $d->medical_record_number }} </td>
+                        <td class="p-2"> {{ $d->nik ?? '-' }} </td>
                         <td class="p-2"> {{ $d->full_name }} ({{ $d->gender?->singkatan() ?? '-' }})</td>
-                        <td class="p-2 text-xs">
-                            {{ $d->birth_date?->format('d-m-Y') }}
-                            <div class="text-[10px] text-slate-400">{{ $d->umur_sekarang }}</div>
-                        </td>
-                        <td class="p-2 text-xs"> {{ $d->mobile_phone ?? ($d->phone ?? '-') }} </td>
-                        <td class="p-2 text-center">
+                        <td class="p-2"> {{ $d->village?->name ?? '-' }} </td>
+                        <td class="p-2"> {{ $d->mobile_phone ?? ($d->phone ?? '-') }} </td>
+                        <td class="p-2">
                             @if ($d->is_active)
-                                <div class="badge badge-success badge-soft">Active</div>
+                                <div class="badge badge-success badge-soft">Aktif</div>
                             @else
-                                <div class="badge badge-error badge-soft">Inactive</div>
+                                <div class="badge badge-error badge-soft">Tidak Aktif</div>
                             @endif
                         </td>
-                        <td class="flex gap-2 p-2">
-                            <button class="btn btn-xs btn-primary btn-square btn-soft" title="Riwayat" wire:click="$dispatch('open-history-modal', [{{ $d->id }}])">
+                        <td class="flex gap-1 p-2">
+                            <button class="btn btn-sm btn-primary btn-square btn-soft" title="Riwayat"
+                                wire:click="$dispatch('open-history-modal', [{{ $d->id }}])"
+                            >
                                 <i class="ti ti-history text-lg"></i></button>
 
-                            <button class="btn btn-xs btn-success btn-square btn-soft" title="Booking">
-                                <i class="ti ti-calendar text-lg"></i></button>
+                            @if ($d->is_active)
+                                <a class="btn btn-sm btn-primary btn-square" href="{{ route('patient.edit', [$d->id, $d->uuid]) }}"
+                                    title="Ubah"
+                                >
+                                    <i class="ti ti-edit text-lg"></i></a>
 
-                            <a class="btn btn-xs btn-primary btn-square btn-soft" href="{{ route('patient.edit', [$d->id, $d->uuid]) }}"
-                                title="Ubah"
-                            >
-                                <i class="ti ti-edit text-lg"></i></a>
-
-                            <button class="btn btn-xs btn-square btn-error btn-soft" title="Hapus"
-                                wire:click="$js.confirmDelete({{ $d->id }}, '{{ $d->full_name }}')"
-                            >
-                                <i class="ti ti-trash text-lg"></i>
-                            </button>
+                                <button class="btn btn-sm btn-square btn-error btn-soft" title="Hapus"
+                                    wire:click="$js.confirmDelete({{ $d->id }}, '{{ addslashes($d->full_name) }}')"
+                                >
+                                    <i class="ti ti-trash text-lg"></i> </button>
+                            @else
+                                @haspermission('aktifkan-pasien')
+                                    <button class="btn btn-sm btn-square btn-success btn-soft" title="Aktifkan"
+                                        wire:click="$js.confirmAktifkanPasien({{ $d->id }}, '{{ addslashes($d->full_name) }}')"
+                                    >
+                                        <i class="ti ti-refresh text-lg"></i>
+                                    </button>
+                                @endhaspermission
+                            @endif
                         </td>
                     </tr>
                 @empty

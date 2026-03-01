@@ -16,7 +16,7 @@
                     <x-checkbox label="Remember me" wire:model="remember" />
                     <button class="btn btn-primary btn-block btn-circle">
                         Login
-                        <div class="loading loading-spinner" wire:loading>Loading...</div>
+                        <div class="loading loading-spinner" wire:loading></div>
                     </button>
                 </form>
 

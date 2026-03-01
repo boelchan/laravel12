@@ -62,4 +62,9 @@ class Patient extends Model
     {
         return $this->belongsTo(IndonesiaRegion::class, 'village_code', 'code');
     }
+
+    public function encounter()
+    {
+        return $this->hasMany(Encounter::class);
+    }
 }

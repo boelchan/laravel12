@@ -3,13 +3,29 @@
 namespace App\Models;
 
 use App\Enums\StatusEncounterEnum;
-use Attribute;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class Encounter extends Model
 {
     protected $guarded = ['id'];
 
+    public static function create($data){
+        $countEncounter = self::where('visit_date', $data['visit_date'])
+            ->lockForUpdate()
+            ->count();
+
+        return self::create([
+            'uuid' => Str::uuid(),
+            'patient_id' => $data['patient_id'],
+            'visit_date' => $data['visit_date'],
+            'no_antrian' => $countEncounter + 1,
+            'status' => StatusEncounterEnum::REGISTERED,
+            'created_by' => Auth::id(),
+        ]);
+    }
+    
     public function patient()
     {
         return $this->belongsTo(Patient::class);

@@ -86,10 +86,10 @@ new class extends Component
     {
         $date = $this->search_visit_date ?: date('Y-m-d');
         $data = Encounter::where('visit_date', $date)->get();
-        
+
         return [
             'total' => $data->count(),
-            'arrived' => $data->whereIn('status', ['arrived', 'inprogress','finished'])->count(),
+            'arrived' => $data->whereIn('status', ['arrived', 'inprogress', 'finished'])->count(),
             'finished' => $data->where('status', 'finished')->count(),
             'cancelled' => $data->where('status', 'cancelled')->count(),
         ];
@@ -139,7 +139,7 @@ new class extends Component
     {
         if (!$this->patient_id) return collect();
         return Encounter::where('patient_id', $this->patient_id)
-            ->with(['vitalSign', 'anthropometry'])
+            ->with('vitalSign')
             ->latest('visit_date')
             ->limit(10)
             ->get();
@@ -162,29 +162,15 @@ new class extends Component
             'visit_date' => 'required|date',
         ]);
 
-        if ($this->isAlreadyRegistered) {
-            $this->toast()->error('Pasien sudah terdaftar pada tanggal ini!')->send();
-            return;
-        }
-
-        $countEncounter = Encounter::where('visit_date', $this->visit_date)
-            ->lockForUpdate()
-            ->count();
-
-        $nextNoAntrian = $countEncounter + 1;
-
         try {
             Encounter::create([
-                'uuid' => Str::uuid(),
                 'patient_id' => $this->patient_id,
                 'visit_date' => $this->visit_date,
-                'no_antrian' => $nextNoAntrian,
-                'status' => 'registered',
-                'created_by' => Auth::id(),
             ]);
 
             $this->modalEncounter = false;
             $this->search_visit_date = $this->visit_date;
+
             $this->toast()->success('Kunjungan berhasil ditambahkan')->send();
         } catch (\Throwable $th) {
             $this->toast()->error('Gagal menambahkan kunjungan. Coba lagi')->send();

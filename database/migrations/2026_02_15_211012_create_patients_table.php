@@ -23,7 +23,7 @@ return new class extends Migration
             // === DATA PERSONAL ===
             $table->string('full_name', 100);                      // Nama Lengkap
             $table->string('mother_name', 100)->nullable();        // Nama Ibu Kandung
-            $table->date('birth_date');                            // Tanggal Lahir
+            $table->date('birth_date')->nullable();                            // Tanggal Lahir
             $table->string('birth_place', 100)->nullable();        // Tempat Lahir
             $table->tinyInteger('gender');                         // 0=Tidak diketahui, 1=Laki-laki, 2=Perempuan, 3=Tidak ditentukan
 

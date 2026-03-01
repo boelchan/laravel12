@@ -44,13 +44,13 @@ class DummyDataSeeder extends Seeder
         }
 
         // 2. Create 200 Encounters
-        $this->command->info('Creating 200 Encounters...');
+        $this->command->info('Creating 100 Encounters...');
         $patients = Patient::all();
         $statuses = ['registered', 'arrived', 'inprogress', 'finished', 'cancelled'];
 
-        for ($i = 0; $i < 200; $i++) {
+        for ($i = 0; $i < 100; $i++) {
             $status = $faker->randomElement($statuses);
-            $visitDate = Carbon::now()->subDays(rand(0, 30));
+            $visitDate = Carbon::now()->subDays(rand(1, 2));
             
             $arrivedAt = in_array($status, ['arrived', 'inprogress', 'finished']) ? $visitDate->copy()->addHours(rand(1, 4)) : null;
             $inprogressAt = in_array($status, ['inprogress', 'finished']) ? ($arrivedAt ? $arrivedAt->copy()->addMinutes(rand(15, 60)) : null) : null;

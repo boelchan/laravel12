@@ -15,18 +15,24 @@ new class extends Component
 
     public $search_full_name = '';
     public $search_medical_record_number = '';
-    public $search_nik = '';
-    public $search_phone = '';
+    public $search_village = '';
+    public $search_status = '';
 
     #[Computed]
     public function dataTable()
     {
         return Patient::query()
+            ->with('village')
             ->when($this->search_full_name, fn($q) => $q->where('full_name', 'like', '%' . $this->search_full_name . '%'))
             ->when($this->search_medical_record_number, fn($q) => $q->where('medical_record_number', 'like', '%' . $this->search_medical_record_number . '%'))
-            ->when($this->search_nik, fn($q) => $q->where('nik', 'like', '%' . $this->search_nik . '%'))
-            ->when($this->search_phone, fn($q) => $q->where('phone', 'like', '%' . $this->search_phone . '%')
-                ->orWhere('mobile_phone', 'like', '%' . $this->search_phone . '%'))
+            ->when($this->search_village, function ($q) {
+                $q->whereHas('village', function ($q2) {
+                    $q2->where('name', 'like', $this->search_village . '%');
+                });
+            })
+            ->when($this->search_status, function ($q) {
+                $q->where('is_active', $this->search_status);
+            })
             ->orderBy($this->sortField, $this->sortDirection)
             ->paginate($this->perPage)
             ->onEachSide(1);
@@ -35,7 +41,25 @@ new class extends Component
     public function delete($id)
     {
         $patient = Patient::findOrFail($id);
+        if ($patient->encounter()->count() > 0) {
+            $patient->update([
+                'is_active' => false,
+            ]);
+            $this->toast()->success('Pasien berhasil dinonaktifkan')->send();
+            return;
+        }
+
         $patient->delete();
         $this->toast()->success('Pasien berhasil dihapus')->send();
+    }
+
+    public function aktifkanPasien($id)
+    {
+        $patient = Patient::findOrFail($id);
+        $patient->update([
+            'is_active' => true,
+        ]);
+
+        $this->toast()->success('Pasien berhasil diaktifkan')->send();
     }
 };
