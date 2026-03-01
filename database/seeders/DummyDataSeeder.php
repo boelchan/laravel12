@@ -50,7 +50,7 @@ class DummyDataSeeder extends Seeder
 
         for ($i = 0; $i < 100; $i++) {
             $status = $faker->randomElement($statuses);
-            $visitDate = Carbon::now()->subDays(rand(1, 2));
+            $visitDate = Carbon::now();
             
             $arrivedAt = in_array($status, ['arrived', 'inprogress', 'finished']) ? $visitDate->copy()->addHours(rand(1, 4)) : null;
             $inprogressAt = in_array($status, ['inprogress', 'finished']) ? ($arrivedAt ? $arrivedAt->copy()->addMinutes(rand(15, 60)) : null) : null;

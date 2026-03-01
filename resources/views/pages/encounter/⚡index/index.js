@@ -1,5 +1,5 @@
 this.$js.confirmBatal = (id, nama) => {
-    $interaction('dialog')
+    $tsui.interaction('dialog')
         .wireable()
         .question('Batalkan ' + nama + ' ?', 'Data yang sudah dibatalkan tidak dapat dikembalikan')
         .cancel('Tutup')

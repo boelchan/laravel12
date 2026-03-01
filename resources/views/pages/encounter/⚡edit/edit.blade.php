@@ -319,295 +319,293 @@
     </style>
 @endpush
 
-@push('scripts')
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <script>
-        /* jquery-drawpad.js implementation (Inlined to ensure it works without external file management issues) */
-        (function($) {
-            const pluginSuffix = "drawpad";
-            $.drawpad = function(element, options) {
-                let defaults = {
-                    defaultColor: "#000000",
-                    colors: ["#000000", "#e74c3c", "#3498db"],
-                    eraserSize: 15,
-                };
-                let plugin = this;
-                let $element = $(element);
-                plugin.settings = {};
-                const coordinate = {
-                    x: 0,
-                    y: 0
-                };
-                let drawing = false;
-                let drawingType = "pen";
-                let lineStyle = {
-                    width: 2,
-                    color: "#000000",
-                    type: "round"
-                };
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script>
+    /* jquery-drawpad.js implementation (Inlined to ensure it works without external file management issues) */
+    (function($) {
+        const pluginSuffix = "drawpad";
+        $.drawpad = function(element, options) {
+            let defaults = {
+                defaultColor: "#000000",
+                colors: ["#000000", "#e74c3c", "#3498db"],
+                eraserSize: 15,
+            };
+            let plugin = this;
+            let $element = $(element);
+            plugin.settings = {};
+            const coordinate = {
+                x: 0,
+                y: 0
+            };
+            let drawing = false;
+            let drawingType = "pen";
+            let lineStyle = {
+                width: 2,
+                color: "#000000",
+                type: "round"
+            };
 
-                // Undo/Redo states
-                let history = [];
-                let historyIndex = -1;
+            // Undo/Redo states
+            let history = [];
+            let historyIndex = -1;
 
-                const saveState = () => {
-                    const state = plugin.canvas.toDataURL();
-                    // If we're not at the end of history, discard future states
-                    if (historyIndex < history.length - 1) {
-                        history = history.slice(0, historyIndex + 1);
-                    }
-                    history.push(state);
-                    historyIndex++;
-                    // Limit history size to 30 steps
-                    if (history.length > 30) {
-                        history.shift();
-                        historyIndex--;
-                    }
+            const saveState = () => {
+                const state = plugin.canvas.toDataURL();
+                // If we're not at the end of history, discard future states
+                if (historyIndex < history.length - 1) {
+                    history = history.slice(0, historyIndex + 1);
+                }
+                history.push(state);
+                historyIndex++;
+                // Limit history size to 30 steps
+                if (history.length > 30) {
+                    history.shift();
+                    historyIndex--;
+                }
+            };
+
+            const loadState = (index) => {
+                const img = new Image();
+                img.onload = function() {
+                    const ratio = 3; // Match ratio in resizeCanvas
+                    plugin.context.setTransform(1, 0, 0, 1, 0, 0);
+                    plugin.context.clearRect(0, 0, plugin.canvas.width, plugin.canvas.height);
+                    plugin.context.drawImage(img, 0, 0, plugin.canvas.width, plugin.canvas.height);
+                    plugin.context.setTransform(ratio, 0, 0, ratio, 0, 0);
                 };
+                img.src = history[index];
+            };
 
-                const loadState = (index) => {
+            const createCanvas = () => {
+                plugin.$canvas = $("<canvas></canvas>");
+                plugin.canvas = plugin.$canvas.get(0);
+                plugin.context = plugin.canvas.getContext("2d");
+                return plugin.$canvas;
+            };
+            const resizeCanvas = () => {
+                const rect = $element[0].getBoundingClientRect();
+                if (rect.width === 0 || rect.height === 0) return;
+
+                const ratio = 3; // High resolution multiplier
+                const tempState = historyIndex >= 0 ? plugin.canvas.toDataURL() : null;
+
+                plugin.canvas.width = rect.width * ratio;
+                plugin.canvas.height = rect.height * ratio;
+
+                plugin.context.setTransform(ratio, 0, 0, ratio, 0, 0);
+
+                if (tempState) {
                     const img = new Image();
-                    img.onload = function() {
-                        const ratio = 3; // Match ratio in resizeCanvas
+                    img.onload = () => {
+                        // Reset transform before drawing to match actual pixels
                         plugin.context.setTransform(1, 0, 0, 1, 0, 0);
-                        plugin.context.clearRect(0, 0, plugin.canvas.width, plugin.canvas.height);
                         plugin.context.drawImage(img, 0, 0, plugin.canvas.width, plugin.canvas.height);
+                        // Restore transform for subsequent drawing
                         plugin.context.setTransform(ratio, 0, 0, ratio, 0, 0);
                     };
-                    img.src = history[index];
-                };
-
-                const createCanvas = () => {
-                    plugin.$canvas = $("<canvas></canvas>");
-                    plugin.canvas = plugin.$canvas.get(0);
-                    plugin.context = plugin.canvas.getContext("2d");
-                    return plugin.$canvas;
-                };
-                const resizeCanvas = () => {
-                    const rect = $element[0].getBoundingClientRect();
-                    if (rect.width === 0 || rect.height === 0) return;
-
-                    const ratio = 3; // High resolution multiplier
-                    const tempState = historyIndex >= 0 ? plugin.canvas.toDataURL() : null;
-
-                    plugin.canvas.width = rect.width * ratio;
-                    plugin.canvas.height = rect.height * ratio;
-
-                    plugin.context.setTransform(ratio, 0, 0, ratio, 0, 0);
-
-                    if (tempState) {
-                        const img = new Image();
-                        img.onload = () => {
-                            // Reset transform before drawing to match actual pixels
-                            plugin.context.setTransform(1, 0, 0, 1, 0, 0);
-                            plugin.context.drawImage(img, 0, 0, plugin.canvas.width, plugin.canvas.height);
-                            // Restore transform for subsequent drawing
-                            plugin.context.setTransform(ratio, 0, 0, ratio, 0, 0);
-                        };
-                        img.src = tempState;
-                    }
-                };
-                const createToolbox = () => {
-                    const $toolbox = $(`<div class="${pluginSuffix}-toolbox"></div>`);
-                    const $colors = $(`<div class="${pluginSuffix}-colors"></div>`);
-                    plugin.settings.colors.forEach((color) => {
-                        let $cb = $(`<div class="${pluginSuffix}-colorbox" style="background-color:${color};"></div>`);
-                        if (color === plugin.settings.defaultColor) $cb.addClass(`${pluginSuffix}-colorbox-active`);
-                        $cb.click(() => {
-                            drawingType = "pen";
-                            lineStyle.color = color;
-                            $cb.addClass(`${pluginSuffix}-colorbox-active`).siblings().removeClass(
-                                `${pluginSuffix}-colorbox-active`);
-                        });
-                        $colors.append($cb);
-                    });
-                    const $eraser = $(`<div class="${pluginSuffix}-colorbox ${pluginSuffix}-eraser"></div>`);
-                    $eraser.click(() => {
-                        drawingType = "eraser";
-                        $eraser.addClass(`${pluginSuffix}-colorbox-active`).siblings().removeClass(
+                    img.src = tempState;
+                }
+            };
+            const createToolbox = () => {
+                const $toolbox = $(`<div class="${pluginSuffix}-toolbox"></div>`);
+                const $colors = $(`<div class="${pluginSuffix}-colors"></div>`);
+                plugin.settings.colors.forEach((color) => {
+                    let $cb = $(`<div class="${pluginSuffix}-colorbox" style="background-color:${color};"></div>`);
+                    if (color === plugin.settings.defaultColor) $cb.addClass(`${pluginSuffix}-colorbox-active`);
+                    $cb.click(() => {
+                        drawingType = "pen";
+                        lineStyle.color = color;
+                        $cb.addClass(`${pluginSuffix}-colorbox-active`).siblings().removeClass(
                             `${pluginSuffix}-colorbox-active`);
                     });
-                    $colors.append($eraser);
-                    $toolbox.append($colors);
-                    return $toolbox;
-                };
+                    $colors.append($cb);
+                });
+                const $eraser = $(`<div class="${pluginSuffix}-colorbox ${pluginSuffix}-eraser"></div>`);
+                $eraser.click(() => {
+                    drawingType = "eraser";
+                    $eraser.addClass(`${pluginSuffix}-colorbox-active`).siblings().removeClass(
+                        `${pluginSuffix}-colorbox-active`);
+                });
+                $colors.append($eraser);
+                $toolbox.append($colors);
+                return $toolbox;
+            };
 
-                const updateCoordinate = (event) => {
-                    const rect = plugin.canvas.getBoundingClientRect();
-                    const clientX = (event.clientX !== undefined) ? event.clientX : (event.touches ? event.touches[0].clientX : 0);
-                    const clientY = (event.clientY !== undefined) ? event.clientY : (event.touches ? event.touches[0].clientY : 0);
-                    coordinate.x = clientX - rect.left;
-                    coordinate.y = clientY - rect.top;
-                };
+            const updateCoordinate = (event) => {
+                const rect = plugin.canvas.getBoundingClientRect();
+                const clientX = (event.clientX !== undefined) ? event.clientX : (event.touches ? event.touches[0].clientX : 0);
+                const clientY = (event.clientY !== undefined) ? event.clientY : (event.touches ? event.touches[0].clientY : 0);
+                coordinate.x = clientX - rect.left;
+                coordinate.y = clientY - rect.top;
+            };
 
-                const handleStartDraw = (event) => {
-                    drawing = true;
-                    updateCoordinate(event);
-                    plugin.context.beginPath();
-                    plugin.context.moveTo(coordinate.x, coordinate.y);
-                    // No event.preventDefault() here to allow scrolling if needed, or keep it for better drawing
-                };
-                const handleStopDraw = () => {
-                    if (drawing) {
-                        drawing = false;
-                        saveState();
-                    }
-                };
-                const handleDraw = (event) => {
-                    if (!drawing) return;
-                    const ctx = plugin.context;
-                    ctx.globalCompositeOperation = drawingType === "pen" ? "source-over" : "destination-out";
-                    ctx.lineWidth = drawingType === "pen" ? 2.5 : plugin.settings.eraserSize;
-                    ctx.lineCap = "round";
-                    ctx.lineJoin = "round";
-                    ctx.strokeStyle = lineStyle.color;
-                    updateCoordinate(event);
-                    ctx.lineTo(coordinate.x, coordinate.y);
-                    ctx.stroke();
-                    event.preventDefault(); // Prevent scrolling while drawing
-                };
+            const handleStartDraw = (event) => {
+                drawing = true;
+                updateCoordinate(event);
+                plugin.context.beginPath();
+                plugin.context.moveTo(coordinate.x, coordinate.y);
+                // No event.preventDefault() here to allow scrolling if needed, or keep it for better drawing
+            };
+            const handleStopDraw = () => {
+                if (drawing) {
+                    drawing = false;
+                    saveState();
+                }
+            };
+            const handleDraw = (event) => {
+                if (!drawing) return;
+                const ctx = plugin.context;
+                ctx.globalCompositeOperation = drawingType === "pen" ? "source-over" : "destination-out";
+                ctx.lineWidth = drawingType === "pen" ? 2.5 : plugin.settings.eraserSize;
+                ctx.lineCap = "round";
+                ctx.lineJoin = "round";
+                ctx.strokeStyle = lineStyle.color;
+                updateCoordinate(event);
+                ctx.lineTo(coordinate.x, coordinate.y);
+                ctx.stroke();
+                event.preventDefault(); // Prevent scrolling while drawing
+            };
 
-                plugin.init = function() {
-                    plugin.settings = $.extend({}, defaults, options);
-                    lineStyle.color = plugin.settings.defaultColor;
-                    $element.addClass(pluginSuffix).append(createCanvas()).append(createToolbox());
+            plugin.init = function() {
+                plugin.settings = $.extend({}, defaults, options);
+                lineStyle.color = plugin.settings.defaultColor;
+                $element.addClass(pluginSuffix).append(createCanvas()).append(createToolbox());
 
-                    // Use ResizeObserver for more robust sizing
-                    setTimeout(resizeCanvas, 50); // Initial resize
+                // Use ResizeObserver for more robust sizing
+                setTimeout(resizeCanvas, 50); // Initial resize
 
-                    const ro = new ResizeObserver(() => {
-                        resizeCanvas();
-                    });
-                    ro.observe($element[0]);
+                const ro = new ResizeObserver(() => {
+                    resizeCanvas();
+                });
+                ro.observe($element[0]);
 
-                    saveState(); // Initial empty state
-                    plugin.$canvas.on("mousedown touchstart", handleStartDraw);
-                    $(window).on("mouseup touchend", handleStopDraw);
-                    plugin.$canvas.on("mousemove touchmove", handleDraw);
-                };
-                plugin.clear = function() {
+                saveState(); // Initial empty state
+                plugin.$canvas.on("mousedown touchstart", handleStartDraw);
+                $(window).on("mouseup touchend", handleStopDraw);
+                plugin.$canvas.on("mousemove touchmove", handleDraw);
+            };
+            plugin.clear = function() {
+                plugin.context.clearRect(0, 0, plugin.canvas.width, plugin.canvas.height);
+                saveState();
+            };
+            plugin.undo = function() {
+                if (historyIndex > 0) {
+                    historyIndex--;
+                    loadState(historyIndex);
+                }
+            };
+            plugin.redo = function() {
+                if (historyIndex < history.length - 1) {
+                    historyIndex++;
+                    loadState(historyIndex);
+                }
+            };
+            plugin.load = function(base64) {
+                const img = new Image();
+                img.onload = function() {
+                    const rect = $element[0].getBoundingClientRect();
                     plugin.context.clearRect(0, 0, plugin.canvas.width, plugin.canvas.height);
+
+                    // Reset transform to draw the high-res image 1:1 to canvas pixels
+                    plugin.context.setTransform(1, 0, 0, 1, 0, 0);
+                    plugin.context.drawImage(img, 0, 0, plugin.canvas.width, plugin.canvas.height);
+
+                    // Restore scaling transform (ratio = 3 as defined in resizeCanvas)
+                    plugin.context.setTransform(3, 0, 0, 3, 0, 0);
+
                     saveState();
                 };
-                plugin.undo = function() {
-                    if (historyIndex > 0) {
-                        historyIndex--;
-                        loadState(historyIndex);
-                    }
-                };
-                plugin.redo = function() {
-                    if (historyIndex < history.length - 1) {
-                        historyIndex++;
-                        loadState(historyIndex);
-                    }
-                };
-                plugin.load = function(base64) {
-                    const img = new Image();
-                    img.onload = function() {
-                        const rect = $element[0].getBoundingClientRect();
-                        plugin.context.clearRect(0, 0, plugin.canvas.width, plugin.canvas.height);
-
-                        // Reset transform to draw the high-res image 1:1 to canvas pixels
-                        plugin.context.setTransform(1, 0, 0, 1, 0, 0);
-                        plugin.context.drawImage(img, 0, 0, plugin.canvas.width, plugin.canvas.height);
-
-                        // Restore scaling transform (ratio = 3 as defined in resizeCanvas)
-                        plugin.context.setTransform(3, 0, 0, 3, 0, 0);
-
-                        saveState();
-                    };
-                    img.src = base64;
-                };
-                plugin.init();
+                img.src = base64;
             };
-            $.fn.drawpad = function(options) {
-                return this.each(function() {
-                    if (!$(this).data(pluginSuffix)) {
-                        $(this).data(pluginSuffix, new $.drawpad(this, options));
+            plugin.init();
+        };
+        $.fn.drawpad = function(options) {
+            return this.each(function() {
+                if (!$(this).data(pluginSuffix)) {
+                    $(this).data(pluginSuffix, new $.drawpad(this, options));
+                }
+            });
+        };
+    })(jQuery);
+
+    function loadSignature(padId, base64) {
+        if (!base64 || base64.length < 100) return;
+        $(`#${padId}`).data('drawpad').load(base64);
+    }
+
+
+    function initAllPads() {
+        // Slight delay to ensure DOM is settled
+        setTimeout(() => {
+            $('.signature-pad').each(function() {
+                const $pad = $(this);
+                const id = $pad.attr('id');
+                const type = $pad.data('type');
+                const index = $pad.data('index');
+
+                if (!$pad.data('drawpad')) {
+                    $pad.drawpad();
+
+                    // Access the current signatures from JS arrays (updated on render)
+                    const sigData = type === 'hasil' ?
+                        @js($hasil_signatures)[index] :
+                        @js($resep_signatures)[index];
+
+                    if (sigData && sigData.length > 100) {
+                        setTimeout(() => loadSignature(id, sigData), 150);
                     }
-                });
-            };
-        })(jQuery);
+                }
+            });
+        }, 50);
+    }
 
-        function loadSignature(padId, base64) {
-            if (!base64 || base64.length < 100) return;
-            $(`#${padId}`).data('drawpad').load(base64);
-        }
+    // Initialize Pads on load
+    $(function() {
+        initAllPads();
+    });
 
-
-        function initAllPads() {
-            // Slight delay to ensure DOM is settled
-            setTimeout(() => {
-                $('.signature-pad').each(function() {
-                    const $pad = $(this);
-                    const id = $pad.attr('id');
-                    const type = $pad.data('type');
-                    const index = $pad.data('index');
-
-                    if (!$pad.data('drawpad')) {
-                        $pad.drawpad();
-
-                        // Access the current signatures from JS arrays (updated on render)
-                        const sigData = type === 'hasil' ?
-                            @js($hasil_signatures)[index] :
-                            @js($resep_signatures)[index];
-
-                        if (sigData && sigData.length > 100) {
-                            setTimeout(() => loadSignature(id, sigData), 150);
-                        }
-                    }
-                });
-            }, 50);
-        }
-
-        // Initialize Pads on load
-        $(function() {
+    // Use standard Livewire hooks if available
+    document.addEventListener('livewire:initialized', () => {
+        Livewire.hook('morph.updated', (el, component) => {
             initAllPads();
         });
+    });
 
-        // Use standard Livewire hooks if available
-        document.addEventListener('livewire:initialized', () => {
-            Livewire.hook('morph.updated', (el, component) => {
-                initAllPads();
+    window.clearPad = function(id) {
+        $(`#${id}`).data('drawpad').clear();
+    };
+
+    window.undoPad = function(id) {
+        $(`#${id}`).data('drawpad').undo();
+    };
+
+    window.redoPad = function(id) {
+        $(`#${id}`).data('drawpad').redo();
+    };
+
+    // Capture signatures before submit
+    document.addEventListener('livewire:initialized', () => {
+        window.addEventListener('capture-signatures', () => {
+            const hasilSigs = [];
+            const resepSigs = [];
+
+            $('.signature-pad').each(function() {
+                const $pad = $(this);
+                const type = $pad.data('type');
+                const canvas = $pad.find('canvas')[0];
+                const dataUrl = canvas.toDataURL();
+
+                if (type === 'hasil') {
+                    hasilSigs.push(dataUrl);
+                } else {
+                    resepSigs.push(dataUrl);
+                }
+            });
+
+            @this.setSignatures({
+                'hasil': hasilSigs,
+                'resep': resepSigs
             });
         });
-
-        window.clearPad = function(id) {
-            $(`#${id}`).data('drawpad').clear();
-        };
-
-        window.undoPad = function(id) {
-            $(`#${id}`).data('drawpad').undo();
-        };
-
-        window.redoPad = function(id) {
-            $(`#${id}`).data('drawpad').redo();
-        };
-
-        // Capture signatures before submit
-        document.addEventListener('livewire:initialized', () => {
-            window.addEventListener('capture-signatures', () => {
-                const hasilSigs = [];
-                const resepSigs = [];
-
-                $('.signature-pad').each(function() {
-                    const $pad = $(this);
-                    const type = $pad.data('type');
-                    const canvas = $pad.find('canvas')[0];
-                    const dataUrl = canvas.toDataURL();
-
-                    if (type === 'hasil') {
-                        hasilSigs.push(dataUrl);
-                    } else {
-                        resepSigs.push(dataUrl);
-                    }
-                });
-
-                @this.setSignatures({
-                    'hasil': hasilSigs,
-                    'resep': resepSigs
-                });
-            });
-        });
-    </script>
-@endpush
+    });
+</script>

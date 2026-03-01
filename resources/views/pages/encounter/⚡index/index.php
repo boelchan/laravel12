@@ -162,19 +162,15 @@ new class extends Component
             'visit_date' => 'required|date',
         ]);
 
-        try {
-            Encounter::create([
-                'patient_id' => $this->patient_id,
-                'visit_date' => $this->visit_date,
-            ]);
+        Encounter::createEncounter([
+            'patient_id' => $this->patient_id,
+            'visit_date' => $this->visit_date,
+        ]);
 
-            $this->modalEncounter = false;
-            $this->search_visit_date = $this->visit_date;
+        $this->modalEncounter = false;
+        $this->search_visit_date = $this->visit_date;
 
-            $this->toast()->success('Kunjungan berhasil ditambahkan')->send();
-        } catch (\Throwable $th) {
-            $this->toast()->error('Gagal menambahkan kunjungan. Coba lagi')->send();
-        }
+        $this->toast()->success('Kunjungan berhasil ditambahkan')->send();
     }
 
     public function setArrived($id)
