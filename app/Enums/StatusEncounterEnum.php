@@ -34,11 +34,26 @@ enum StatusEncounterEnum: string
     public static function choices(): array
     {
         return [
-            static::REGISTERED->value => static::REGISTERED->label(),
-            static::ARRIVED->value => static::ARRIVED->label(),
-            static::INPROGRESS->value => static::INPROGRESS->label(),
-            static::FINISHED->value => static::FINISHED->label(),
-            static::CANCELLED->value => static::CANCELLED->label(),
+            [
+                'value' => static::REGISTERED->value,
+                'label' => static::REGISTERED->label(),
+            ],
+            [
+                'value' => static::ARRIVED->value,
+                'label' => static::ARRIVED->label(),
+            ],
+            [
+                'value' => static::INPROGRESS->value,
+                'label' => static::INPROGRESS->label(),
+            ],
+            [
+                'value' => static::FINISHED->value,
+                'label' => static::FINISHED->label(),
+            ],
+            [
+                'value' => static::CANCELLED->value,
+                'label' => static::CANCELLED->label(),
+            ],
         ];
     }
 }

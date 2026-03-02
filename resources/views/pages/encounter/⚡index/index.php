@@ -23,6 +23,7 @@ new class extends Component
     public $search_medical_record_number = '';
     public $search_visit_date = '';
     public $search_status = '';
+    public $search_no_antrian = '';
 
     // Create Encounter form
     public $modalEncounter = false;
@@ -66,6 +67,7 @@ new class extends Component
                 });
             })
             ->when($this->search_status, fn($q) => $q->where('status', $this->search_status))
+            ->when($this->search_no_antrian, fn($q) => $q->where('no_antrian', $this->search_no_antrian))
             ->where('visit_date', $this->search_visit_date ?? now()->format('Y-m-d'))
             ->orderBy($this->sortField, $this->sortDirection)
             ->paginate($this->perPage)
@@ -94,7 +96,8 @@ new class extends Component
 
         return [
             'total' => $data->count(),
-            'arrived' => $data->whereIn('status', ['arrived', 'inprogress', 'finished'])->count(),
+            'registered' => $data->where('status', 'registered')->count(),
+            'arrived' => $data->whereIn('status', ['arrived', 'inprogress'])->count(),
             'finished' => $data->where('status', 'finished')->count(),
             'cancelled' => $data->where('status', 'cancelled')->count(),
         ];

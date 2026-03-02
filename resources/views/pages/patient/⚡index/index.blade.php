@@ -89,13 +89,13 @@
                                 >
                                     <i class="ti ti-trash text-lg"></i> </button>
                             @else
-                                @haspermission('aktifkan-pasien')
+                                @can('pasien-aktifkan')
                                     <button class="btn btn-sm btn-square btn-success btn-soft" title="Aktifkan"
                                         wire:click="$js.confirmAktifkanPasien({{ $d->id }}, '{{ addslashes($d->full_name) }}')"
                                     >
                                         <i class="ti ti-refresh text-lg"></i>
                                     </button>
-                                @endhaspermission
+                                @endcan
                             @endif
                         </td>
                     </tr>

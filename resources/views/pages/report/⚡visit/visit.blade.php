@@ -37,7 +37,6 @@
                     label="Status Kunjungan" 
                     placeholder="Semua Status"
                     :options="App\Enums\StatusEncounterEnum::choices()"
-                    select="label:value"
                     wire:model.live="search_status" 
                 />
             </div>

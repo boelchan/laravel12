@@ -25,74 +25,72 @@ class DatabaseSeeder extends Seeder
         ]);
         
         Permission::insert([
-            ['name' => 'list-user', 'guard_name' => 'web'],
-            ['name' => 'tambah-user', 'guard_name' => 'web'],
-            ['name' => 'edit-user', 'guard_name' => 'web'],
-            ['name' => 'hapus-user', 'guard_name' => 'web'],
-            ['name' => 'list-pasien', 'guard_name' => 'web'],
-            ['name' => 'tambah-pasien', 'guard_name' => 'web'],
-            ['name' => 'edit-pasien', 'guard_name' => 'web'],
-            ['name' => 'hapus-pasien', 'guard_name' => 'web'],
-            ['name' => 'list-kunjungan', 'guard_name' => 'web'],
-            ['name' => 'tambah-kunjungan', 'guard_name' => 'web'],
-            ['name' => 'edit-status-kunjungan', 'guard_name' => 'web'],
-            ['name' => 'edit-observasi', 'guard_name' => 'web'],
-            ['name' => 'edit-pemeriksaan', 'guard_name' => 'web'],
-            ['name' => 'lihat-observasi', 'guard_name' => 'web'],
-            ['name' => 'lihat-hasil', 'guard_name' => 'web'],
-            ['name' => 'lihat-resep', 'guard_name' => 'web'],
-            ['name' => 'aktifkan-pasien', 'guard_name' => 'web'],
+            ['name' => 'user-list', 'guard_name' => 'web'],
+            ['name' => 'user-tambah', 'guard_name' => 'web'],
+            ['name' => 'user-edit', 'guard_name' => 'web'],
+            ['name' => 'user-hapus', 'guard_name' => 'web'],
+            ['name' => 'pasien-list', 'guard_name' => 'web'],
+            ['name' => 'pasien-tambah', 'guard_name' => 'web'],
+            ['name' => 'pasien-edit', 'guard_name' => 'web'],
+            ['name' => 'pasien-hapus', 'guard_name' => 'web'],
+            ['name' => 'pasien-aktifkan', 'guard_name' => 'web'],
+            ['name' => 'kunjungan-list', 'guard_name' => 'web'],
+            ['name' => 'kunjungan-tambah', 'guard_name' => 'web'],
+            ['name' => 'kunjungan-edit-status', 'guard_name' => 'web'],
+            ['name' => 'kunjungan-edit-observasi', 'guard_name' => 'web'],
+            ['name' => 'kunjungan-edit-pemeriksaan', 'guard_name' => 'web'],
+            ['name' => 'kunjungan-lihat-hasil', 'guard_name' => 'web'],
+            ['name' => 'apotek-lihat-resep', 'guard_name' => 'web'],
         ]);
 
         $role = Role::create(
             ['name' => 'administrator', 'guard_name' => 'web'],
         );
         $role->givePermissionTo([
-            'list-user',
-            'tambah-user',
-            'edit-user',
-            'hapus-user',
+            'user-list',
+            'user-tambah',
+            'user-edit',
+            'user-hapus',
         ]);
 
         $user = Role::create(
             ['name' => 'dokter', 'guard_name' => 'web'],
         );
         $user->givePermissionTo([
-            'list-pasien',
-            'tambah-pasien',
-            'edit-pasien',
-            'hapus-pasien',
-            'list-kunjungan',
-            'tambah-kunjungan',
-            'edit-status-kunjungan',
-            'edit-observasi',
-            'edit-pemeriksaan',
-            'lihat-observasi',
-            'lihat-hasil',
-            'lihat-resep',
-            'aktifkan-pasien',
+            'pasien-list',
+            'pasien-tambah',
+            'pasien-edit',
+            'pasien-hapus',
+            'pasien-aktifkan',
+            'kunjungan-list',
+            'kunjungan-tambah',
+            'kunjungan-edit-status',
+            'kunjungan-edit-observasi',
+            'kunjungan-edit-pemeriksaan',
+            'kunjungan-lihat-hasil',
+            'apotek-lihat-resep',
         ]);
 
         $user = Role::create(
             ['name' => 'bidan', 'guard_name' => 'web'],
         );
         $user->givePermissionTo([
-            'list-pasien',
-            'tambah-pasien',
-            'edit-pasien',
-            'hapus-pasien',
-            'list-kunjungan',
-            'tambah-kunjungan',
-            'edit-status-kunjungan',
-            'edit-observasi',
-            'lihat-observasi',
+            'pasien-list',
+            'pasien-tambah',
+            'pasien-edit',
+            'pasien-hapus',
+            'pasien-aktifkan',
+            'kunjungan-list',
+            'kunjungan-tambah',
+            'kunjungan-edit-status',
+            'kunjungan-edit-observasi',
         ]);
 
         $user = Role::create(
             ['name' => 'apoteker', 'guard_name' => 'web'],
         );
         $user->givePermissionTo([
-            'lihat-resep',
+            'apotek-lihat-resep',
         ]);
 
         // dummy admin
@@ -110,33 +108,6 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('123'),
         ]);
         $user->assignRole('bidan');
-
-        Patient::create([
-            'uuid' => Str::uuid(),
-            'medical_record_number' => 'RM-00001',
-            'full_name' => 'Mainuma',
-            'gender' => '2',
-            'birth_date' => '2000-01-01',
-            'address' => 'Jl. Mainuma',
-            'village_code' => '3529012013',
-            'phone' => '08123456789',
-            'email' => 'mainuma@app.com',
-            'created_by' => 1,
-        ]);
-
-        Patient::create([
-            'uuid' => Str::uuid(),
-            'nik' => '1234567890123456',
-            'medical_record_number' => 'RM-00002',
-            'full_name' => 'Fatima',
-            'gender' => '2',
-            'birth_date' => '1992-06-01',
-            'address' => 'Jl. imam bonjol',
-            'village_code' => '3529012009',
-            'phone' => '08123456789',
-            'email' => 'mainuma@app.com',
-            'created_by' => 1,
-        ]);
 
     }
 }

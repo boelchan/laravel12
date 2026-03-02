@@ -27,8 +27,7 @@
                         <div class="card-body">
                             <ul class="space-y-1">
                                 <li><i class="ti ti-user text-lg"></i> {{ $encounter->patient->full_name }}</li>
-                                <li><i class="ti ti-cake text-lg"></i> {{ $encounter->patient->birth_date->format('d-m-Y') }}</li>
-                                <li><i class="ti ti-clock text-lg"></i> {{ $encounter->patient->umur_sekarang }}</li>
+                                <li><i class="ti ti-home text-lg"></i> {{ $encounter->patient->village->name }} - {{ $encounter->patient->district->name }} - {{ $encounter->patient->regency->name }} </li>
                             </ul>
                         </div>
                     </div>
@@ -39,11 +38,9 @@
                             </h2>
                         </div>
                         <div class="card-body">
-                            <div class="grid grid-cols-2 gap-4">
+                            <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
                                 <x-input type="number" wire:model="systolic" label="Systolic" suffix="mmHg" />
                                 <x-input type="number" wire:model="diastolic" label="Diastolic" suffix="mmHg" />
-                            </div>
-                            <div class="grid grid-cols-2 gap-4">
                                 <x-input type="number" wire:model="body_temperature" label="Suhu Tubuh" suffix="°C" />
                             </div>
                         </div>

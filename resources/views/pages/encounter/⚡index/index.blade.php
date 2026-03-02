@@ -18,7 +18,7 @@
     <div class="mt-6">
         <div class="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-5">
             {{-- Total --}}
-            <div class="rounded-xl border border-slate-100 bg-white p-4 shadow-sm">
+            <div class="rounded-xl border border-slate-100 bg-white p-2 shadow-sm">
                 <div class="flex items-center gap-3">
                     <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-slate-100 text-slate-600">
                         <i class="ti ti-users text-2xl"></i>
@@ -30,37 +30,50 @@
                 </div>
             </div>
             {{-- Arrived --}}
-            <div class="rounded-xl border border-warning/10 bg-white p-4 shadow-sm">
+            <div class="border-info/10 rounded-xl border bg-white p-2 shadow-sm">
                 <div class="flex items-center gap-3">
-                    <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-warning/10 text-warning">
+                    <div class="bg-info/10 text-info flex h-10 w-10 items-center justify-center rounded-lg">
+                        <i class="ti ti-user-plus text-2xl"></i>
+                    </div>
+                    <div>
+                        <div class="text-info/70 text-[10px] font-bold uppercase tracking-wider">Belum Datang</div>
+                        <div class="text-xl font-bold text-slate-800">{{ $this->stats['registered'] }}</div>
+                    </div>
+                </div>
+            </div>
+            {{-- Finished --}}
+            {{-- Arrived --}}
+            <div class="border-primary/10 rounded-xl border bg-white p-2 shadow-sm">
+                <div class="flex items-center gap-3">
+                    <div class="bg-primary/10 text-primary flex h-10 w-10 items-center justify-center rounded-lg">
                         <i class="ti ti-walk text-2xl"></i>
                     </div>
                     <div>
-                        <div class="text-[10px] font-bold uppercase tracking-wider text-warning/70">Datang</div>
+                        <div class="text-primary/70 text-[10px] font-bold uppercase tracking-wider">Datang</div>
                         <div class="text-xl font-bold text-slate-800">{{ $this->stats['arrived'] }}</div>
                     </div>
                 </div>
             </div>
             {{-- Finished --}}
-            <div class="rounded-xl border border-success/10 bg-white p-4 shadow-sm">
+            <div class="border-success/10 rounded-xl border bg-white p-2 shadow-sm">
                 <div class="flex items-center gap-3">
-                    <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-success/10 text-success">
+                    <div class="bg-success/10 text-success flex h-10 w-10 items-center justify-center rounded-lg">
                         <i class="ti ti-circle-check text-2xl"></i>
                     </div>
                     <div>
-                        <div class="text-[10px] font-bold uppercase tracking-wider text-success/70">Selesai</div>
+                        <div class="text-success/70 text-[10px] font-bold uppercase tracking-wider">Selesai</div>
                         <div class="text-xl font-bold text-slate-800">{{ $this->stats['finished'] }}</div>
                     </div>
                 </div>
             </div>
             {{-- Cancelled --}}
-            <div class="rounded-xl border border-error/10 bg-white p-4 shadow-sm">
+            <div class="border-error/10 rounded-xl border bg-white p-2 shadow-sm">
                 <div class="flex items-center gap-3">
-                    <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-error/10 text-error">
+                    <div class="bg-error/10 text-error flex h-10 w-10 items-center justify-center rounded-lg">
                         <i class="ti ti-x text-2xl"></i>
                     </div>
                     <div>
-                        <div class="text-[10px] font-bold uppercase tracking-wider text-error/70">Batal</div>
+                        <div class="text-error/70 text-[10px] font-bold uppercase tracking-wider">Batal</div>
                         <div class="text-xl font-bold text-slate-800">{{ $this->stats['cancelled'] }}</div>
                     </div>
                 </div>
@@ -80,12 +93,23 @@
                 </div>
             </div>
             <div>
-                <div class="grid grid-cols-2 gap-4 lg:grid-cols-4 xl:grid-cols-5">
-                    <x-date label="Tanggal" placeholder="cari tanggal..." wire:model.live.debounce.500ms="search_visit_date" value="{{ request()->search_visit_date }}"/>
+                <div class="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-5">
+                    <x-date value="{{ request()->search_visit_date }}" label="Tanggal" placeholder="cari tanggal..."
+                        wire:model.live.debounce.500ms="search_visit_date"
+                    />
+                    <x-input
+                        type="number"
+                        clearable
+                        label="No. Antrian"
+                        placeholder="cari Nomer Antrian."
+                        wire:model.live.debounce.500ms="search_no_antrian"
+                    />
                     <x-input clearable label="Nama Pasien" placeholder="cari nama..." wire:model.live.debounce.500ms="search_full_name" />
                     <x-input clearable label="No. RM" placeholder="cari No. RM..."
                         wire:model.live.debounce.500ms="search_medical_record_number"
                     />
+                    <x-select.styled wire:model.live="search_status" label="Status" :options="\App\Enums\StatusEncounterEnum::choices()" />
+
                 </div>
             </div>
         </div>
@@ -93,23 +117,20 @@
 
         <x-table :paginate="$this->dataTable">
             <x-table.thead class="bg-slate-50" :sortDirection="$sortDirection" :sortField="$sortField">
-                <x-table.th width="5%" />
-                <x-table.th label="Tanggal" sort="created_at" width="10%" />
-                <x-table.th label="Antrian" sort="no_antrian" width="10%" />
-                <x-table.th label="Pasien" width="20%" />
-                <x-table.th label="Umur" />
-                <x-table.th label="TTV" />
-                <x-table.th label="Antropometri" />
-                <x-table.th label="Status" />
-                <x-table.th />
+                <x-table.th label="Antrian" sort="no_antrian" width="5%" />
+                <x-table.th label="Tanggal" width="15%" />
+                <x-table.th label="Pasien" width="35%" />
+                <x-table.th label="TTV" width="15%"/>
+                <x-table.th label="BB/TB" width="15%"/>
+                <x-table.th label="Status" sort="status" width="10%"/>
+                <x-table.th width="15%"/>
             </x-table.thead>
 
             <tbody>
                 @forelse ($this->dataTable as $index => $d)
                     <tr class="bg-white hover:bg-neutral-50" wire:key="encounter-{{ $d->id }}">
-                        <td class="p-2 text-center"> {{ $perPage * ($this->dataTable->currentPage() - 1) + $index + 1 }} </td>
-                        <td class="p-2"> {{ $d->visit_date }} </td>
                         <td class="p-2"> {{ $d->no_antrian }} </td>
+                        <td class="p-2"> {{ $d->visit_date }} </td>
                         <td class="p-2">
                             {{ $d->patient->medical_record_number }}<br>
                             {{ $d->patient->full_name }}
@@ -120,10 +141,13 @@
                             </button>
                         </td>
                         <td class="p-2">
-                            {{ $d->patient->umur_sekarang }}
-                        </td>
-                        <td class="p-2">
-                            {{ $d->vitalSign->systolic ?? '-' }} / {{ $d->vitalSign->diastolic ?? '-' }} <i>mmHg</i>
+                            @if ($d->vitalSign)
+                                {{ $d->vitalSign->systolic ?? '-' }} / {{ $d->vitalSign->diastolic ?? '-' }}
+                                <br>
+                                {{ $d->vitalSign->body_temperature ?? '-' }} <i>°C</i>
+                            @else
+                                -
+                            @endif
                             @if ($d->status == 'arrived' || $d->status == 'inprogress')
                                 <button class="btn btn-xs btn-square btn-primary btn-ghost"
                                     wire:click="openModalObservation({{ $d->id }})"
@@ -131,11 +155,15 @@
                                     <i class="ti ti-pencil text-lg"></i>
                                 </button>
                             @endif
-                            <br>
-                            {{ $d->vitalSign->body_temperature ?? '-' }} <i>°C</i>
                         </td>
                         <td class="p-2">
-                            BB : {{ $d->anthropometry->body_weight ?? '-' }} <i>kg</i>
+                            @if ($d->anthropometry)
+                                {{ $d->anthropometry->body_weight ?? '-' }} <i>kg</i>
+                                <br>
+                                {{ $d->anthropometry->body_height ?? '-' }} <i>cm</i>
+                            @else
+                                -
+                            @endif
                             @if ($d->status == 'arrived' || $d->status == 'inprogress')
                                 <button class="btn btn-xs btn-square btn-primary btn-ghost"
                                     wire:click="openModalObservation({{ $d->id }})"
@@ -143,8 +171,6 @@
                                     <i class="ti ti-pencil text-lg"></i>
                                 </button>
                             @endif
-                            <br>
-                            TB : {{ $d->anthropometry->body_height ?? '-' }} <i>cm</i>
                         </td>
                         <td class="p-2">
                             {!! $d->statusBadge !!}
@@ -152,39 +178,43 @@
                         <td class="p-2">
                             <div class="flex gap-2">
 
-                                @if ($d->status == 'registered')
-                                    <button class="btn btn-xs btn-square btn-warning btn-soft" title="Pasien Datang"
-                                        wire:click="setArrived({{ $d->id }})"
-                                    >
-                                        <i class="ti ti-check text-lg"></i>
-                                    </button>
-                                @endif
+                                @if ($d->visit_date == now()->format('Y-m-d'))
+                                    @if ($d->status == 'registered')
+                                        <button class="btn btn-sm btn-square btn-primary" title="Pasien Datang"
+                                            wire:click="setArrived({{ $d->id }})"
+                                        >
+                                            <i class="ti ti-check text-lg"></i>
+                                        </button>
+                                    @endif
 
-                                @if ($d->status == 'arrived')
-                                    <button class="btn btn-xs btn-square btn-info btn-soft" title="Mulai Pemeriksaan"
-                                        wire:click="setInprogress({{ $d->id }})"
-                                    >
-                                        <i class="ti ti-send text-lg"></i>
-                                    </button>
-                                @endif
+                                    @if ($d->status == 'arrived')
+                                        <button class="btn btn-sm btn-square btn-warning" title="Mulai Pemeriksaan"
+                                            wire:click="setInprogress({{ $d->id }})"
+                                        >
+                                            <i class="ti ti-send text-lg"></i>
+                                        </button>
+                                    @endif
 
-                                @if ($d->status == 'inprogress' || $d->status == 'finished')
-                                    <a class="btn btn-xs btn-primary btn-square btn-soft"
-                                        href="{{ route('encounter.edit', [$d->id, $d->uuid]) }}"
-                                    >
-                                        <i class="ti ti-edit text-lg"></i></a>
+                                    @can('kunjungan-edit-pemeriksaan')
+                                        @if ($d->status == 'inprogress' || $d->status == 'finished')
+                                            <a class="btn btn-sm btn-success btn-square" title="Pemeriksaan"
+                                                href="{{ route('encounter.edit', [$d->id, $d->uuid]) }}"
+                                            >
+                                                <i class="ti ti-stethoscope text-lg"></i></a>
+                                        @endif
+                                    @endcan
                                 @endif
 
                                 @if ($d->status == 'cancelled')
-                                    <button class="btn btn-xs btn-square btn-success btn-soft" title="Pulihkan Kunjungan (Pasien Datang)"
+                                    <button class="btn btn-sm btn-square btn-success btn-soft" title="Pulihkan Kunjungan (Pasien Datang)"
                                         wire:click="setArrived({{ $d->id }})"
                                     >
                                         <i class="ti ti-refresh text-lg"></i>
                                     </button>
                                 @endif
 
-                                @if ($d->status == 'registered')
-                                    <button class="btn btn-xs btn-square btn-error btn-soft" title="Batalkan Kunjungan"
+                                @if ($d->status == 'registered' || $d->status == 'arrived')
+                                    <button class="btn btn-sm btn-square btn-error btn-soft" title="Batalkan Kunjungan"
                                         wire:click="$js.confirmBatal({{ $d->id }}, '{{ addslashes($d->patient->full_name) }}')"
                                     >
                                         <i class="ti ti-x text-lg"></i>
@@ -203,7 +233,13 @@
     </div>
 
     {{-- Modal Encounter --}}
-    <x-modal id="modalEncounter" persistent title="Tambah Kunjungan Baru" size="4xl" wire="modalEncounter">
+    <x-modal
+        id="modalEncounter"
+        title="Tambah Kunjungan Baru"
+        persistent
+        size="4xl"
+        wire="modalEncounter"
+    >
         <div class="space-y-6">
             {{-- Patient Selection Section --}}
             <div class="rounded-xl border border-slate-100 bg-slate-50/50 p-4">
@@ -227,16 +263,16 @@
                                 <div class="text-xs font-medium uppercase tracking-wider text-slate-500">Pasien Terpilih</div>
                                 <div class="text-lg font-bold text-slate-800">{{ $selectedPatientName }}</div>
                             </div>
-                            <button class="btn btn-circle btn-ghost btn-sm text-error hover:bg-error/10" type="button" title="Ganti Pasien"
-                                wire:click="$set('selectedPatientName', '')"
+                            <button class="btn btn-circle btn-ghost btn-sm text-error hover:bg-error/10" type="button"
+                                title="Ganti Pasien" wire:click="$set('selectedPatientName', '')"
                             >
                                 <i class="ti ti-rotate text-lg"></i>
                             </button>
                         </div>
 
                         {{-- Riwayat Kunjungan singkat --}}
-                        <div class="rounded-xl border border-slate-200 bg-white overflow-hidden shadow-sm">
-                            <div class="bg-slate-50 px-4 py-2 border-b border-slate-200">
+                        <div class="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
+                            <div class="border-b border-slate-200 bg-slate-50 px-4 py-2">
                                 <h4 class="text-[10px] font-bold uppercase tracking-widest text-slate-400">10 Kunjungan Terakhir</h4>
                             </div>
                             <div class="max-h-40 overflow-y-auto">
@@ -244,26 +280,27 @@
                                     <thead class="bg-slate-100 text-[10px] uppercase text-slate-500">
                                         <tr>
                                             <th class="px-4 py-2 font-bold">Tanggal</th>
-                                            <th class="px-4 py-2 font-bold text-center">No. Antrian</th>
+                                            <th class="px-4 py-2 text-center font-bold">No. Antrian</th>
                                             <th class="px-4 py-2 font-bold">TTV / Status</th>
-                                            <th class="px-4 py-2 font-bold text-right">Status</th>
+                                            <th class="px-4 py-2 text-right font-bold">Status</th>
                                         </tr>
                                     </thead>
                                     <tbody class="divide-y divide-slate-100">
                                         @forelse($this->patientHistory as $history)
-                                            <tr class="hover:bg-slate-50 transition-colors">
+                                            <tr class="transition-colors hover:bg-slate-50">
                                                 <td class="px-4 py-2 font-medium text-slate-700">{{ $history->visit_date }}</td>
-                                                <td class="px-4 py-2 text-center text-slate-500 font-mono">{{ $history->no_antrian }}</td>
+                                                <td class="px-4 py-2 text-center font-mono text-slate-500">{{ $history->no_antrian }}</td>
                                                 <td class="px-4 py-2 text-slate-500">
-                                                    @if($history->vitalSign)
-                                                        {{ $history->vitalSign->systolic }}/{{ $history->vitalSign->diastolic }} @ {{ $history->vitalSign->body_temperature }}°C
+                                                    @if ($history->vitalSign)
+                                                        {{ $history->vitalSign->systolic }}/{{ $history->vitalSign->diastolic }} @
+                                                        {{ $history->vitalSign->body_temperature }}°C
                                                     @else
                                                         -
                                                     @endif
                                                 </td>
-                                                <td class="px-4 py-2 text-right flex items-center justify-end gap-2">
+                                                <td class="flex items-center justify-end gap-2 px-4 py-2 text-right">
                                                     {!! $history->statusBadge !!}
-                                                    @if($history->status == 'cancelled' && $history->visit_date == $visit_date)
+                                                    @if ($history->status == 'cancelled' && $history->visit_date == $visit_date)
                                                         <button class="btn btn-xs btn-success btn-soft" title="Pulihkan ke Pasien Datang"
                                                             wire:click="setArrived({{ $history->id }})"
                                                         >
@@ -274,7 +311,8 @@
                                             </tr>
                                         @empty
                                             <tr>
-                                                <td colspan="4" class="px-4 py-6 text-center text-slate-400 italic">Belum ada riwayat kunjungan</td>
+                                                <td class="px-4 py-6 text-center italic text-slate-400" colspan="4">Belum ada riwayat
+                                                    kunjungan</td>
                                             </tr>
                                         @endforelse
                                     </tbody>
@@ -286,9 +324,13 @@
                     <div class="space-y-3">
                         <div class="flex items-end gap-3">
                             <div class="grid flex-1 grid-cols-1 gap-3 md:grid-cols-3">
-                                <x-input label="No. RM" placeholder="Ketik No. RM..." wire:model.live.debounce.500ms="searchPatientMRN" />
-                                <x-input label="Nama Pasien" placeholder="Ketik nama..." wire:model.live.debounce.500ms="searchPatientName" />
-                                <x-input label="Desa" placeholder="Ketik desa..." wire:model.live.debounce.500ms="searchPatientVillage" />
+                                <x-input label="No. RM" placeholder="Ketik No. RM..."
+                                    wire:model.live.debounce.500ms="searchPatientMRN" />
+                                <x-input label="Nama Pasien" placeholder="Ketik nama..."
+                                    wire:model.live.debounce.500ms="searchPatientName"
+                                />
+                                <x-input label="Desa" placeholder="Ketik desa..."
+                                    wire:model.live.debounce.500ms="searchPatientVillage" />
                             </div>
                             <div class="shrink-0 pb-1">
                                 <a class="btn btn-primary btn-sm" href="{{ route('patient.create') }}">
@@ -299,9 +341,9 @@
 
                         {{-- Loading Indicator --}}
                         <div class="mt-2" wire:loading wire:target="searchPatientMRN, searchPatientName, searchPatientVillage">
-                            <div class="flex items-center gap-2 rounded-lg border border-primary/10 bg-primary/5 px-3 py-2">
-                                <i class="ti ti-loader-2 animate-spin text-primary"></i>
-                                <span class="text-xs font-medium text-primary">Mencari data pasien...</span>
+                            <div class="border-primary/10 bg-primary/5 flex items-center gap-2 rounded-lg border px-3 py-2">
+                                <i class="ti ti-loader-2 text-primary animate-spin"></i>
+                                <span class="text-primary text-xs font-medium">Mencari data pasien...</span>
                             </div>
                         </div>
 
@@ -316,8 +358,7 @@
                                             wire:key="patient-search-{{ $p->id }}"
                                         >
                                             <div
-                                                class="group-hover:bg-primary/10 group-hover:text-primary flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-slate-100 text-slate-500"
-                                            >
+                                                class="group-hover:bg-primary/10 group-hover:text-primary flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-slate-100 text-slate-500">
                                                 <i class="ti ti-user text-xl"></i>
                                             </div>
                                             <div class="min-w-0 flex-1">
@@ -366,11 +407,11 @@
                 </div>
 
                 <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
-                    <x-date label="Tanggal Periksa" wire:model.live="visit_date"/>
+                    <x-date label="Tanggal Periksa" wire:model.live="visit_date" />
 
                     @if ($visit_date)
                         @if ($this->isAlreadyRegistered && $selectedPatientName)
-                            <div role="alert" class="alert alert-error">
+                            <div class="alert alert-error" role="alert">
                                 <i class="ti ti-alert-triangle text-2xl"></i>
                                 <span>PASIEN SUDAH TERDAFTAR <br>pada tanggal {{ $visit_date }}</span>
                             </div>
@@ -387,12 +428,12 @@
                 <p class="text-[10px] font-medium uppercase tracking-tighter text-slate-400">* Wajib diisi</p>
                 <div class="flex gap-2">
                     <button class="btn btn-ghost" type="button" wire:click="$set('modalEncounter', false)">Batal</button>
-                    @if(!$this->isAlreadyRegistered)
-                        <button class="btn btn-primary px-6 shadow-lg shadow-primary/20" type="button" wire:click="saveEncounter">
+                    @if (!$this->isAlreadyRegistered)
+                        <button class="btn btn-primary shadow-primary/20 px-6 shadow-lg" type="button" wire:click="saveEncounter">
                             <i class="ti ti-device-floppy mr-1.5"></i> Simpan Kunjungan
                         </button>
                     @else
-                        <button class="btn btn-outline btn-error opacity-50 cursor-not-allowed" type="button" disabled>
+                        <button class="btn btn-outline btn-error cursor-not-allowed opacity-50" type="button" disabled>
                             Sudah Terdaftar
                         </button>
                     @endif
@@ -422,8 +463,8 @@
                 <div class="space-y-4">
                     <h4 class="font-semibold text-slate-700">Antropometri</h4>
                     <div class="grid grid-cols-2 gap-4">
-                        <x-input type="number" label="Tinggi Badan" wire:model="body_height" suffix="cm" />
                         <x-input type="number" label="Berat Badan" wire:model="body_weight" suffix="kg" />
+                        <x-input type="number" label="Tinggi Badan" wire:model="body_height" suffix="cm" />
                     </div>
                 </div>
             </div>

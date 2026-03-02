@@ -36,12 +36,8 @@ new class extends Component {
                         <span> {{ $patient->full_name }} </span>
                     </div>
                     <div class="flex items-center gap-2">
-                        <i class="ti ti-cake text-lg"></i>
-                        <span> {{ $patient->umur_sekarang }} </span>
-                    </div>
-                    <div class="flex items-center gap-2">
                         <i class="ti ti-home text-lg"></i>
-                        <span> {{ $patient->address }} </span>
+                        <span> {{ $patient->village->name }} - {{ $patient->district->name }} - {{ $patient->regency->name }} </span>
                     </div>
                 </div>
             @endif
