@@ -103,6 +103,11 @@ new class extends Component
             : [];
     }
 
+    public function updatedBookingDate($value)
+    {
+        $this->dispatch('load-jumlah-pendaftar', $value);
+    }
+
     public function store()
     {
         $this->validate([
@@ -149,12 +154,14 @@ new class extends Component
             'created_by' => Auth::id(),
         ]);
 
-        Encounter::create([
-            'uuid' => Str::uuid(),
-            'patient_id' => $user->id,
-            'visit_date' => $this->booking_date,
-            'created_by' => Auth::id(),
-        ]);
+        if ($this->booking_date) {
+            Encounter::createEncounter([
+                'patient_id' => $user->id,
+                'visit_date' => $this->booking_date,
+            ]);
+            $this->toast()->success('Pasien berhasil ditambahkan')->send();
+            return to_route('encounter.index', ['search_visit_date' => $this->booking_date]);
+        }
 
         $this->toast()->success('Pasien berhasil ditambahkan')->send();
 

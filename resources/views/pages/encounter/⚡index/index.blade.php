@@ -81,7 +81,7 @@
             </div>
             <div>
                 <div class="grid grid-cols-2 gap-4 lg:grid-cols-4 xl:grid-cols-5">
-                    <x-date label="Tanggal" placeholder="cari tanggal..." wire:model.live.debounce.500ms="search_visit_date" />
+                    <x-date label="Tanggal" placeholder="cari tanggal..." wire:model.live.debounce.500ms="search_visit_date" value="{{ request()->search_visit_date }}"/>
                     <x-input clearable label="Nama Pasien" placeholder="cari nama..." wire:model.live.debounce.500ms="search_full_name" />
                     <x-input clearable label="No. RM" placeholder="cari No. RM..."
                         wire:model.live.debounce.500ms="search_medical_record_number"
@@ -203,7 +203,7 @@
     </div>
 
     {{-- Modal Encounter --}}
-    <x-modal id="modalEncounter" title="Tambah Kunjungan Baru" size="4xl" wire="modalEncounter">
+    <x-modal id="modalEncounter" persistent title="Tambah Kunjungan Baru" size="4xl" wire="modalEncounter">
         <div class="space-y-6">
             {{-- Patient Selection Section --}}
             <div class="rounded-xl border border-slate-100 bg-slate-50/50 p-4">
@@ -214,12 +214,6 @@
                         </div>
                         <h3 class="text-sm font-semibold text-slate-800">Informasi Pasien</h3>
                     </div>
-                    @if ($this->isAlreadyRegistered && $selectedPatientName)
-                        <div class="flex items-center gap-2 rounded-lg bg-error/10 px-3 py-1 text-xs font-bold text-error animate-pulse">
-                            <i class="ti ti-alert-triangle"></i>
-                            PASIEN SUDAH TERDAFTAR HARI INI
-                        </div>
-                    @endif
                 </div>
 
                 @if ($selectedPatientName)
@@ -292,11 +286,9 @@
                     <div class="space-y-3">
                         <div class="flex items-end gap-3">
                             <div class="grid flex-1 grid-cols-1 gap-3 md:grid-cols-3">
-                                <x-input label="No. RM" placeholder="Ketik No. RM..." wire:model.live.debounce.300ms="searchPatientMRN" />
-                                <x-input label="Nama Pasien" placeholder="Ketik nama..." wire:model.live.debounce.300ms="searchPatientName" />
-                                <x-select.styled :options="$villages" label="Wilayah/Desa" placeholder="Pilih desa..." searchable
-                                    wire:model.live.debounce.300ms="searchPatientVillage"
-                                />
+                                <x-input label="No. RM" placeholder="Ketik No. RM..." wire:model.live.debounce.500ms="searchPatientMRN" />
+                                <x-input label="Nama Pasien" placeholder="Ketik nama..." wire:model.live.debounce.500ms="searchPatientName" />
+                                <x-input label="Desa" placeholder="Ketik desa..." wire:model.live.debounce.500ms="searchPatientVillage" />
                             </div>
                             <div class="shrink-0 pb-1">
                                 <a class="btn btn-primary btn-sm" href="{{ route('patient.create') }}">
@@ -374,22 +366,17 @@
                 </div>
 
                 <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
-                    <x-input type="date" label="Tanggal Periksa" wire:model.live="visit_date"/>
+                    <x-date label="Tanggal Periksa" wire:model.live="visit_date"/>
 
                     @if ($visit_date)
-                        <div class="bg-info/5 border-info/10 flex items-center gap-4 rounded-lg border p-3">
-                            <div class="text-info flex h-10 w-10 items-center justify-center rounded-lg bg-white shadow-sm">
-                                <span wire:loading.remove wire:target="visit_date" class="text-lg font-bold">{{ $this->encounterCount }}</span>
-                                <i wire:loading wire:target="visit_date" class="ti ti-loader-2 animate-spin text-lg"></i>
+                        @if ($this->isAlreadyRegistered && $selectedPatientName)
+                            <div role="alert" class="alert alert-error">
+                                <i class="ti ti-alert-triangle text-2xl"></i>
+                                <span>PASIEN SUDAH TERDAFTAR <br>pada tanggal {{ $visit_date }}</span>
                             </div>
-                            <div>
-                                <div class="text-info text-[10px] font-medium uppercase tracking-wider">Antrian Saat Ini</div>
-                                <div class="text-xs font-medium text-slate-600">
-                                    <span wire:loading.remove wire:target="visit_date">Pasien telah terdaftar pada tanggal ini</span>
-                                    <span wire:loading wire:target="visit_date">Memperbarui data...</span>
-                                </div>
-                            </div>
-                        </div>
+                        @else
+                            <livewire:jumlah_pendaftar />
+                        @endif
                     @endif
                 </div>
             </div>

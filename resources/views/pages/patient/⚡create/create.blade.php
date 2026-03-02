@@ -97,7 +97,9 @@
                 <div class="card border border-blue-200">
                     <div class="card-body space-y-2">
                         <h2 class="card-title">Booking Pendaftaran</h2>
-                        <x-date wire:model="booking_date" label="Tanggal" :min-date="now()" />
+                        <x-date wire:model.live="booking_date" label="Tanggal" :min-date="now()" />
+
+                        <livewire:jumlah_pendaftar />
                     </div>
                 </div>
 

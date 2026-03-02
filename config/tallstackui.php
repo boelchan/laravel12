@@ -414,7 +414,7 @@ return [
                 'progress' => true,
                 'expandable' => false,
                 'position' => 'top-right',
-                'timeout' => 3,
+                'timeout' => 2,
             ],
         ],
         'toggle' => Components\Form\Toggle\Component::class,

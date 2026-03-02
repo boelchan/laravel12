@@ -205,6 +205,7 @@
         </div>
 
         @livewireScripts
+        @stack('scripts')
     </div>
 </body>
 

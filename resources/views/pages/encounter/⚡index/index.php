@@ -32,7 +32,6 @@ new class extends Component
     public $searchPatientMRN = '';
     public $searchPatientVillage = '';
     public $selectedPatientName = '';
-    public $villages = [];
 
     // Vitals form
     public $modalObservation = false;
@@ -42,8 +41,12 @@ new class extends Component
 
     public function mount()
     {
-        $this->search_visit_date = date('Y-m-d');
-        $this->villages = IndonesiaRegion::where('parent', 'like', '3529%')->where('type', 'desa')->orderBy('name', 'ASC')->get()->map(fn($item) => ['label' => $item->name, 'value' => $item->code])->toArray();
+        $this->search_visit_date = now()->format('Y-m-d');
+    }
+
+    public function updatedVisitDate($value)
+    {
+        $this->dispatch('load-jumlah-pendaftar', $value);
     }
 
     #[Computed]
@@ -96,13 +99,6 @@ new class extends Component
     }
 
     #[Computed]
-    public function encounterCount()
-    {
-        if (!$this->visit_date) return 0;
-        return Encounter::where('visit_date', $this->visit_date)->count();
-    }
-
-    #[Computed]
     public function patientList()
     {
         if (strlen($this->searchPatientName) < 1 && strlen($this->searchPatientMRN) < 1 && !$this->searchPatientVillage) return collect();
@@ -111,7 +107,7 @@ new class extends Component
             ->with('village')
             ->when($this->searchPatientName, fn($q) => $q->where('full_name', 'like', '%' . $this->searchPatientName . '%'))
             ->when($this->searchPatientMRN, fn($q) => $q->where('medical_record_number', 'like', '%' . $this->searchPatientMRN . '%'))
-            ->when($this->searchPatientVillage, fn($q) => $q->where('village_code', $this->searchPatientVillage))
+            ->when($this->searchPatientVillage, fn($q) => $q->whereHas('village', fn($q2) => $q2->where('name', 'like',  $this->searchPatientVillage . '%')))
             ->orderBy('full_name')
             ->limit(10)
             ->get();
@@ -130,7 +126,6 @@ new class extends Component
     public function openModalEncounter()
     {
         $this->reset(['patient_id', 'visit_date', 'searchPatientName', 'searchPatientMRN', 'searchPatientVillage', 'selectedPatientName']);
-        $this->visit_date = date('Y-m-d');
         $this->modalEncounter = true;
     }
 

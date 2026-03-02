@@ -2,12 +2,11 @@
 
 namespace App\Livewire\Traits;
 
-use Livewire\WithoutUrlPagination;
 use Livewire\WithPagination;
 
 trait WithTableX
 {
-    use WithoutUrlPagination, WithPagination;
+    use WithPagination;
 
     public function mountWithTableX()
     {

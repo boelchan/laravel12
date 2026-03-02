@@ -25,72 +25,74 @@ class DatabaseSeeder extends Seeder
         ]);
         
         Permission::insert([
-            ['name' => 'list user', 'guard_name' => 'web'],
-            ['name' => 'tambah user', 'guard_name' => 'web'],
-            ['name' => 'edit user', 'guard_name' => 'web'],
-            ['name' => 'hapus user', 'guard_name' => 'web'],
-            ['name' => 'list pasien', 'guard_name' => 'web'],
-            ['name' => 'tambah pasien', 'guard_name' => 'web'],
-            ['name' => 'edit pasien', 'guard_name' => 'web'],
-            ['name' => 'hapus pasien', 'guard_name' => 'web'],
-            ['name' => 'list kunjungan', 'guard_name' => 'web'],
-            ['name' => 'tambah kunjungan', 'guard_name' => 'web'],
-            ['name' => 'edit status kunjungan', 'guard_name' => 'web'],
-            ['name' => 'edit observasi', 'guard_name' => 'web'],
-            ['name' => 'edit pemeriksaan', 'guard_name' => 'web'],
-            ['name' => 'lihat observasi', 'guard_name' => 'web'],
-            ['name' => 'lihat hasil', 'guard_name' => 'web'],
-            ['name' => 'lihat resep', 'guard_name' => 'web'],
+            ['name' => 'list-user', 'guard_name' => 'web'],
+            ['name' => 'tambah-user', 'guard_name' => 'web'],
+            ['name' => 'edit-user', 'guard_name' => 'web'],
+            ['name' => 'hapus-user', 'guard_name' => 'web'],
+            ['name' => 'list-pasien', 'guard_name' => 'web'],
+            ['name' => 'tambah-pasien', 'guard_name' => 'web'],
+            ['name' => 'edit-pasien', 'guard_name' => 'web'],
+            ['name' => 'hapus-pasien', 'guard_name' => 'web'],
+            ['name' => 'list-kunjungan', 'guard_name' => 'web'],
+            ['name' => 'tambah-kunjungan', 'guard_name' => 'web'],
+            ['name' => 'edit-status-kunjungan', 'guard_name' => 'web'],
+            ['name' => 'edit-observasi', 'guard_name' => 'web'],
+            ['name' => 'edit-pemeriksaan', 'guard_name' => 'web'],
+            ['name' => 'lihat-observasi', 'guard_name' => 'web'],
+            ['name' => 'lihat-hasil', 'guard_name' => 'web'],
+            ['name' => 'lihat-resep', 'guard_name' => 'web'],
+            ['name' => 'aktifkan-pasien', 'guard_name' => 'web'],
         ]);
 
         $role = Role::create(
             ['name' => 'administrator', 'guard_name' => 'web'],
         );
         $role->givePermissionTo([
-            'list user',
-            'tambah user',
-            'edit user',
-            'hapus user',
+            'list-user',
+            'tambah-user',
+            'edit-user',
+            'hapus-user',
         ]);
 
         $user = Role::create(
             ['name' => 'dokter', 'guard_name' => 'web'],
         );
         $user->givePermissionTo([
-            'list pasien',
-            'tambah pasien',
-            'edit pasien',
-            'hapus pasien',
-            'list kunjungan',
-            'tambah kunjungan',
-            'edit status kunjungan',
-            'edit observasi',
-            'edit pemeriksaan',
-            'lihat observasi',
-            'lihat hasil',
-            'lihat resep',
+            'list-pasien',
+            'tambah-pasien',
+            'edit-pasien',
+            'hapus-pasien',
+            'list-kunjungan',
+            'tambah-kunjungan',
+            'edit-status-kunjungan',
+            'edit-observasi',
+            'edit-pemeriksaan',
+            'lihat-observasi',
+            'lihat-hasil',
+            'lihat-resep',
+            'aktifkan-pasien',
         ]);
 
         $user = Role::create(
             ['name' => 'bidan', 'guard_name' => 'web'],
         );
         $user->givePermissionTo([
-            'list pasien',
-            'tambah pasien',
-            'edit pasien',
-            'hapus pasien',
-            'list kunjungan',
-            'tambah kunjungan',
-            'edit status kunjungan',
-            'edit observasi',
-            'lihat observasi',
+            'list-pasien',
+            'tambah-pasien',
+            'edit-pasien',
+            'hapus-pasien',
+            'list-kunjungan',
+            'tambah-kunjungan',
+            'edit-status-kunjungan',
+            'edit-observasi',
+            'lihat-observasi',
         ]);
 
         $user = Role::create(
             ['name' => 'apoteker', 'guard_name' => 'web'],
         );
         $user->givePermissionTo([
-            'lihat resep',
+            'lihat-resep',
         ]);
 
         // dummy admin
