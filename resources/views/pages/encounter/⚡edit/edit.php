@@ -13,20 +13,20 @@ use TallStackUi\Traits\Interactions;
 new class extends Component
 {
     use Interactions;
-    
-    public Encounter $encounter;
-    
+
+    public $encounter;
+
     public $systolic, $diastolic,  $body_temperature;
     public $body_weight, $body_height;
     public $hasil_text, $resep_text;
-    
+
     public $hasil_signatures = [];
     public $resep_signatures = [];
 
     public function mount(Encounter $encounter)
     {
         $this->encounter = $encounter->load('vitalSign', 'anthropometry');
-        
+
         // Load TTV
         if ($this->encounter->vitalSign) {
             $this->systolic = $this->encounter->vitalSign->systolic;
@@ -39,17 +39,17 @@ new class extends Component
             $this->body_weight = $this->encounter->anthropometry->body_weight;
             $this->body_height = $this->encounter->anthropometry->body_height;
         }
-        
+
         // Load Hasil & Resep (Tipe Text)
         // We look for 'text' or NULL (as fallback for old data)
         $hasilTable = Hasil::where('encounter_id', $this->encounter->id)
-            ->where(function($q) {
+            ->where(function ($q) {
                 $q->where('tipe', 'text')->orWhereNull('tipe');
             })->first();
         $this->hasil_text = $hasilTable->hasil ?? '';
-        
+
         $resepTable = Resep::where('encounter_id', $this->encounter->id)
-            ->where(function($q) {
+            ->where(function ($q) {
                 $q->where('tipe', 'text')->orWhereNull('tipe');
             })->first();
         $this->resep_text = $resepTable->resep ?? '';
@@ -90,18 +90,18 @@ new class extends Component
         if (isset($data['resep'])) {
             $this->resep_signatures = $data['resep'];
         }
-        
+
         $this->update();
     }
 
     public function update()
     {
         $this->encounter->update([
-            'finished_at' => now(),
+            'finished_at' => $this->encounter->finished_at ?? now(),
             'status' => StatusEncounterEnum::FINISHED,
             'updated_by' => Auth::id(),
         ]);
-        
+
         // 1. Save TTV
         VitalSign::updateOrCreate(
             ['encounter_id' => $this->encounter->id],
@@ -160,7 +160,7 @@ new class extends Component
         );
 
         $this->toast()->success('Data pemeriksaan berhasil diperbarui.')->send();
-        
+
         return to_route('encounter.index');
     }
 };
