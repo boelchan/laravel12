@@ -41,7 +41,9 @@ new class extends Component
 
     public function mount()
     {
-        $this->search_visit_date = now()->format('Y-m-d');
+        if (empty($this->search_visit_date)) {
+            $this->search_visit_date = now()->format('Y-m-d');
+        }
     }
 
     public function updatedVisitDate($value)

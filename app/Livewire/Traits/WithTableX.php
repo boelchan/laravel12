@@ -8,6 +8,17 @@ trait WithTableX
 {
     use WithPagination;
 
+    public function queryStringWithTableX()
+    {
+        $qs = [];
+        foreach (get_object_vars($this) as $property => $value) {
+            if (str_starts_with($property, 'search_')) {
+                $qs[$property] = ['except' => ''];
+            }
+        }
+        return $qs;
+    }
+
     public function mountWithTableX()
     {
         if (property_exists($this, 'sortFieldDefault')) {
@@ -19,7 +30,7 @@ trait WithTableX
         }
     }
 
-    public $perPage = 10;
+    public $perPage = 50;
 
     public bool $open = false;
 
@@ -58,5 +69,10 @@ trait WithTableX
                 $this->$property = null;
             }
         }
+    }
+
+    public function paginationView()
+    {
+        return 'components.table.pagination';
     }
 }
