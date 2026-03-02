@@ -31,7 +31,11 @@ new class extends Component
                 });
             })
             ->when($this->search_status, function ($q) {
-                $q->where('is_active', $this->search_status);
+                if ($this->search_status == 'aktif') {
+                    $q->where('is_active', true);
+                } else {
+                    $q->where('is_active', false);
+                }
             })
             ->orderBy($this->sortField, $this->sortDirection)
             ->paginate($this->perPage)

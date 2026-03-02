@@ -33,9 +33,9 @@
                     />
                     <x-input clearable label="Nama" placeholder="cari nama..." wire:model.live.debounce.500ms="search_full_name" />
                     <x-input clearable label="Desa" placeholder="cari desa..." wire:model.live.debounce.500ms="search_village" />
-                    <x-select.styled
+                    <x-select.native
                         label="Status"
-                        :options="[['label' => 'Aktif', 'value' => 'true'], ['label' => 'Tidak Aktif', 'value' => 'false']]"
+                        :options="[['label' => 'Semua', 'value' => ''],['label' => 'Aktif', 'value' => 'aktif'], ['label' => 'Tidak Aktif', 'value' => 'tidak_aktif']]"
                         wire:model.live="search_status"
                         placeholder="Pilih status"
                     />
@@ -67,9 +67,9 @@
                         <td class="p-2"> {{ $d->mobile_phone ?? ($d->phone ?? '-') }} </td>
                         <td class="p-2">
                             @if ($d->is_active)
-                                <div class="badge badge-success badge-soft">Aktif</div>
+                                <div class="badge badge-success">Aktif</div>
                             @else
-                                <div class="badge badge-error badge-soft">Tidak Aktif</div>
+                                <div class="badge badge-error">Tidak Aktif</div>
                             @endif
                         </td>
                         <td class="flex gap-1 p-2">
