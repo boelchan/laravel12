@@ -130,7 +130,7 @@
                                 <i class="ti ti-hash"></i>{{ $inc->no_antrian }} • {{ $inc->patient->medical_record_number }} • {{ $inc->patient->village?->name }}
                             </div>
                         </div>
-                        <a class="btn btn-warning btn-square btn-soft btn-sm group-hover:bg-warning shadow-sm transition-all group-hover:text-white"
+                        <a class="btn btn-warning btn-square"
                             href="{{ route('encounter.edit', [$inc->id, $inc->uuid]) }}" 
                         >
                             <i class="ti ti-chevron-right text-lg"></i>
