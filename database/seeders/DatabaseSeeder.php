@@ -41,6 +41,8 @@ class DatabaseSeeder extends Seeder
             ['name' => 'kunjungan-edit-pemeriksaan', 'guard_name' => 'web'],
             ['name' => 'kunjungan-lihat-hasil', 'guard_name' => 'web'],
             ['name' => 'apotek-lihat-resep', 'guard_name' => 'web'],
+            ['name' => 'laporan-kunjungan', 'guard_name' => 'web'],
+            ['name' => 'laporan-pasien', 'guard_name' => 'web'],
         ]);
 
         $role = Role::create(
@@ -69,6 +71,8 @@ class DatabaseSeeder extends Seeder
             'kunjungan-edit-pemeriksaan',
             'kunjungan-lihat-hasil',
             'apotek-lihat-resep',
+            'laporan-kunjungan',
+            'laporan-pasien',
         ]);
 
         $user = Role::create(
