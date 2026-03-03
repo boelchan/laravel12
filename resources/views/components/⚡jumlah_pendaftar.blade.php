@@ -18,21 +18,15 @@ new class extends Component {
 ?>
 
 <div>
-    @placeholder
-        <div>
-            sdsdsds
-        </div>
-    @endplaceholder
-
     @if ($booking_date)
-        <div class="bg-info/5 border-info/10 flex items-center gap-4 rounded-lg border p-3">
+        <div class="bg-info/5 border-info/10 flex items-center gap-4 rounded-lg border p-2">
             <div class="text-info flex h-10 w-10 items-center justify-center rounded-lg bg-white shadow-sm">
                 <span class="text-lg font-bold">{{ $jumlah_pendaftar }}</span>
             </div>
             <div>
-                <div class="text-info text-[10px] font-medium uppercase tracking-wider">Antrian Saat Ini</div>
+                <div class="text-info text-[10px] font-medium uppercase tracking-wider">Jumlah Pendaftar</div>
                 <div class="text-xs font-medium text-slate-600">
-                    <span>Pasien telah terdaftar pada tanggal tersebut</span>
+                    <span>{{ $booking_date }}</span>
                 </div>
             </div>
         </div>

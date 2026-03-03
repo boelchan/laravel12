@@ -27,7 +27,11 @@
                         <div class="card-body">
                             <ul class="space-y-1">
                                 <li><i class="ti ti-user text-lg"></i> {{ $encounter->patient->full_name }}</li>
-                                <li><i class="ti ti-home text-lg"></i> {{ $encounter->patient->village->name }} - {{ $encounter->patient->district->name }} - {{ $encounter->patient->regency->name }} </li>
+                                <li>
+                                    <i class="ti ti-home text-lg"></i>
+                                    {{ $encounter->patient->village?->name }} - {{ $encounter->patient->district?->name }} -
+                                    {{ $encounter->patient->regency?->name }}
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -38,7 +42,7 @@
                             </h2>
                         </div>
                         <div class="card-body">
-                            <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                            <div class="grid grid-cols-2 gap-4 md:grid-cols-3">
                                 <x-input type="number" wire:model="systolic" label="Systolic" suffix="mmHg" />
                                 <x-input type="number" wire:model="diastolic" label="Diastolic" suffix="mmHg" />
                                 <x-input type="number" wire:model="body_temperature" label="Suhu Tubuh" suffix="°C" />
@@ -102,7 +106,8 @@
                                         </div>
                                         <div class="signature-container relative" wire:ignore>
                                             <div class="drawpad-dashed signature-pad h-52 w-full rounded-xl border-2 border-dashed border-slate-300 bg-slate-50 shadow-inner"
-                                                id="hasil_signature_{{ $index + 1 }}" data-type="hasil" data-index="{{ $index }}"
+                                                id="hasil_signature_{{ $index + 1 }}" data-type="hasil"
+                                                data-index="{{ $index }}"
                                             ></div>
                                             <div class="absolute bottom-3 right-3 flex gap-2">
                                                 <button

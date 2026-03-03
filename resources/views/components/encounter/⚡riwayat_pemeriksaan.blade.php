@@ -20,7 +20,7 @@ new class extends Component {
 
         $this->encounterHistory = Encounter::where('patient_id', $patient_id)
             ->with(['vitalSign', 'anthropometry', 'hasils', 'reseps'])
-            ->orderBy('created_at', 'desc')
+            ->orderBy('visit_date', 'desc')
             ->get();
     }
 };
@@ -37,12 +37,12 @@ new class extends Component {
                     </div>
                     <div class="flex items-center gap-2">
                         <i class="ti ti-home text-lg"></i>
-                        <span> {{ $patient->village->name }} - {{ $patient->district->name }} - {{ $patient->regency->name }} </span>
+                        <span> {{ $patient->village?->name }} - {{ $patient->district?->name }} - {{ $patient->regency?->name }} </span>
                     </div>
                 </div>
             @endif
 
-            @forelse ($encounterHistory as $history)
+            @forelse ($encounterHistory as $enc)
                 <div class="card border border-slate-200 bg-white shadow-md">
 
                     <div class="flex flex-wrap gap-4 border-b border-slate-200 bg-slate-50/30 p-4">
@@ -52,15 +52,15 @@ new class extends Component {
                             </div>
                             <div>
                                 <div class="">
-                                    {{ $history->created_at->format('d M Y') }}
+                                    {{ $enc->visit_date }}
                                 </div>
                                 <div class="text-xs text-slate-400">
-                                    {{ $history->created_at->format('H:i') }}
+                                    {!! $enc->statusBadge !!}
                                 </div>
                             </div>
                         </div>
 
-                        @if ($history->vitalSign)
+                        @if ($enc->vitalSign)
                             <div class="flex items-center gap-2 pr-4">
                                 <div class="flex h-8 w-8 items-center justify-center rounded-full bg-slate-200 text-slate-600">
                                     <i class="ti ti-activity text-lg"></i>
@@ -68,27 +68,27 @@ new class extends Component {
                                 <div class="flex flex-col">
                                     <span class="text-[9px] font-bold uppercase text-slate-400">TTV</span>
                                     <span class="text-slate-700">
-                                        {{ $history->vitalSign->systolic ?? '-' }}/{{ $history->vitalSign->diastolic ?? '-' }} <small
+                                        {{ $enc->vitalSign->systolic ?? '-' }}/{{ $enc->vitalSign->diastolic ?? '-' }} <small
                                             class="text-slate-400"
                                         >mmHg</small>
                                         <span class="mx-1 text-slate-300">•</span>
-                                        {{ $history->vitalSign->body_temperature ?? '-' }}<span class="text-slate-400">°C</span>
+                                        {{ $enc->vitalSign->body_temperature ?? '-' }}<span class="text-slate-400">°C</span>
                                     </span>
                                 </div>
                             </div>
                         @endif
 
-                        @if ($history->anthropometry)
+                        @if ($enc->anthropometry)
                             <div class="flex items-center gap-2 pr-4">
                                 <div class="flex h-8 w-8 items-center justify-center rounded-full bg-slate-200 text-slate-600">
                                     <i class="ti ti-scale text-lg"></i>
                                 </div>
                                 <div class="flex flex-col">
-                                    <span class="text-[9px] font-bold uppercase text-slate-400">Antropometri</span>
+                                    <span class="text-[9px] font-bold uppercase text-slate-400">BB/TB</span>
                                     <span class="text-slate-700">
-                                        {{ $history->anthropometry->body_weight ?? '-' }}<small class="text-slate-400">kg</small>
+                                        {{ $enc->anthropometry->body_weight ?? '-' }}<small class="text-slate-400">kg</small>
                                         <span class="mx-1 text-slate-300">•</span>
-                                        {{ $history->anthropometry->body_height ?? '-' }}<small class="text-slate-400">cm</small>
+                                        {{ $enc->anthropometry->body_height ?? '-' }}<small class="text-slate-400">cm</small>
                                     </span>
                                 </div>
                             </div>
@@ -107,7 +107,7 @@ new class extends Component {
                                     <h5 class="font-bold uppercase">Hasil Pemeriksaan</h5>
                                 </div>
                                 <div>
-                                    @php $hasilText = $history->hasils->firstWhere('tipe', 'text'); @endphp
+                                    @php $hasilText = $enc->hasils->firstWhere('tipe', 'text'); @endphp
                                     @if ($hasilText && $hasilText->hasil)
                                         <div class="my-2">
                                             {{ $hasilText->hasil }}
@@ -115,7 +115,7 @@ new class extends Component {
                                     @else
                                         <span class="italic text-slate-400">Tidak ada catatan pemeriksaan</span>
                                     @endif
-                                    @php $hasilDraw = $history->hasils->firstWhere('tipe', 'draw'); @endphp
+                                    @php $hasilDraw = $enc->hasils->firstWhere('tipe', 'draw'); @endphp
                                     @if ($hasilDraw && !empty($hasilDraw->signatures))
                                         <div class="space-y-2">
                                             @foreach ($hasilDraw->signatures as $sig)
@@ -137,14 +137,14 @@ new class extends Component {
                                     <h5 class="font-bold uppercase">Resep</h5>
                                 </div>
                                 <div>
-                                    @php $resepText = $history->reseps->firstWhere('tipe', 'text'); @endphp
+                                    @php $resepText = $enc->reseps->firstWhere('tipe', 'text'); @endphp
                                     @if ($resepText && $resepText->resep)
                                         {!! nl2br(e($resepText->resep)) !!}
                                     @else
                                         <span class="italic text-slate-400">Tidak ada resep</span>
                                     @endif
 
-                                    @php $resepDraw = $history->reseps->firstWhere('tipe', 'draw'); @endphp
+                                    @php $resepDraw = $enc->reseps->firstWhere('tipe', 'draw'); @endphp
                                     @if ($resepDraw && !empty($resepDraw->signatures))
                                         <div class="space-y-2">
                                             @foreach ($resepDraw->signatures as $sig)

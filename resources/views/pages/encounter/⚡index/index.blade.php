@@ -117,7 +117,7 @@
 
         <x-table :paginate="$this->dataTable">
             <x-table.thead class="bg-slate-50" :sortDirection="$sortDirection" :sortField="$sortField">
-                <x-table.th label="Antrian" sort="no_antrian" width="5%" />
+                <x-table.th label="No" sort="no_antrian" width="5%" />
                 <x-table.th label="Tanggal" width="15%" />
                 <x-table.th label="Pasien" width="35%" />
                 <x-table.th label="TTV" width="15%"/>
