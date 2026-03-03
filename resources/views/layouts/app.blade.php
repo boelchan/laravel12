@@ -74,15 +74,15 @@
                             <h2 class="menu-title mt-4">Laporan</h2>
                             <li>
                                 <a class="{{ Str::startsWith(url()->current(), url('report/visit-recap')) ? 'menu-active' : '' }}"
-                                    href={{ route('report.visit-recap') }} 
+                                    href="{{ route('report.visit-recap') }}" wire:navigate
                                 >
                                     <i class="ti ti-report text-lg"></i>Rekap Kunjungan</a>
                             </li>
                             <li>
                                 <a class="{{ Str::startsWith(url()->current(), url('report/patient-registration-recap')) ? 'menu-active' : '' }}"
-                                    href={{ route('report.patient-registration-recap') }} 
+                                    href="{{ route('report.patient-registration-recap') }}" wire:navigate
                                 >
-                                    <i class="ti ti-report-medical text-lg"></i>Rekap Pasien Baru</a>
+                                    <i class="ti ti-report-analytics text-lg"></i>Rekap Pasien Baru</a>
                             </li>
 
                             @role('administrator')
