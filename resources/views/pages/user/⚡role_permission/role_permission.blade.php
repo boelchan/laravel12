@@ -13,23 +13,26 @@
                 <div class="card-body">
                     <h2 class="card-title">Role</h2>
                     @foreach ($roles as $role)
-                        <div class="flex items-center gap-2 rounded-lg border border-slate-100  p-1 hover:border-slate-300">
+                        <div class="flex items-center gap-2 rounded-lg border border-slate-100 p-1 hover:border-slate-300">
                             <div class="flex gap-1">
                                 <button class="btn btn-success btn-soft btn-xs btn-square tooltip tooltip-top" data-tip="Edit Permission"
                                     wire:click="dispatch('role-permission-edit', { role_id: {{ $role->id }} })"
                                 >
                                     <i class="ti ti-key text-lg"></i>
                                 </button>
-                                <button class="btn btn-primary btn-soft btn-xs btn-square tooltip tooltip-top" data-tip="Edit Role"
-                                    wire:click="dispatch('role-edit', { role_id: {{ $role->id }} })"
-                                >
-                                    <i class="ti ti-edit text-lg"></i>
-                                </button>
-                                <button class="btn btn-error btn-soft btn-xs btn-square tooltip tooltip-top" data-tip="Hapus Role"
-                                    wire:click="deleteRole({{ $role->id }})"
-                                >
-                                    <i class="ti ti-trash text-lg"></i>
-                                </button>
+
+                                @if (env('APP_ENV') != 'production' || !in_array($role->name, ['administrator', 'dokter', 'bidan', 'apoteker']))
+                                    <button class="btn btn-primary btn-soft btn-xs btn-square tooltip tooltip-top" data-tip="Edit Role"
+                                        wire:click="dispatch('role-edit', { role_id: {{ $role->id }} })"
+                                    >
+                                        <i class="ti ti-edit text-lg"></i>
+                                    </button>
+                                    <button class="btn btn-error btn-soft btn-xs btn-square tooltip tooltip-top" data-tip="Hapus Role"
+                                        wire:click="deleteRole({{ $role->id }})"
+                                    >
+                                        <i class="ti ti-trash text-lg"></i>
+                                    </button>
+                                @endif
                             </div>
                             <div class="flex flex-col">
                                 <span class="font-medium text-slate-800">{{ $role->name }}</span>
@@ -45,24 +48,26 @@
                 </div>
             </div>
 
-            <div class="card border border-slate-200 col-span-3 lg:col-span-2">
+            <div class="card col-span-3 border border-slate-200 lg:col-span-2">
                 <div class="card-body">
                     <h2 class="card-title">Permission</h2>
                     <div class="grid grid-cols-1 gap-2 md:grid-flow-col md:grid-rows-10">
                         @foreach ($permissions as $permission)
                             <div class="flex items-center gap-2 rounded-lg border border-white p-1 hover:border-slate-300">
-                                <div>
-                                    <button class="btn btn-primary btn-soft btn-xs btn-square"
-                                        wire:click="dispatch('permission-edit', { permission_id: {{ $permission->id }} })"
-                                    >
-                                        <i class="ti ti-edit text-lg"></i>
-                                    </button>
-                                    <button class="btn btn-error btn-soft btn-xs btn-square"
-                                        wire:click="deletePermission({{ $permission->id }})"
-                                    >
-                                        <i class="ti ti-trash text-lg"></i>
-                                    </button>
-                                </div>
+                                @if (env('APP_ENV') != 'production')
+                                    <div>
+                                        <button class="btn btn-primary btn-soft btn-xs btn-square"
+                                            wire:click="dispatch('permission-edit', { permission_id: {{ $permission->id }} })"
+                                        >
+                                            <i class="ti ti-edit text-lg"></i>
+                                        </button>
+                                        <button class="btn btn-error btn-soft btn-xs btn-square"
+                                            wire:click="deletePermission({{ $permission->id }})"
+                                        >
+                                            <i class="ti ti-trash text-lg"></i>
+                                        </button>
+                                    </div>
+                                @endif
                                 <div>{{ $permission->name }}</div>
                             </div>
                         @endforeach

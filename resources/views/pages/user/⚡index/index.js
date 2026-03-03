@@ -1,5 +1,5 @@
 this.$js.confirmDelete = (id, nama) => {
-    $interaction('dialog')
+    $tsui.interaction('dialog')
         .wireable()
         .question('Hapus ' + nama + ' ?', 'Data yang sudah dihapus tidak dapat dikembalikan')
         .cancel('Batal')

@@ -192,7 +192,7 @@
                                 <form class="grid gap-4" wire:submit="updateEmail">
                                     <x-input type="email" label="Email Baru" placeholder="email@domain.com" wire:model="email" />
 
-                                    <x-password placeholder="Masukkan password Anda" label="Masukkan Password saat ini"
+                                    <x-input type="password" placeholder="Masukkan password Anda" label="Masukkan Password saat ini"
                                         wire:model="password_for_email"
                                     />
 
@@ -219,12 +219,12 @@
                                 <p class="text-base-content/60 mb-6">Perbarui password keamanan akun Anda</p>
 
                                 <form class="space-y-4" wire:submit="updatePassword">
-                                    <x-password label="Password saat ini" wire:model="current_password" />
+                                    <x-input type="password" label="Password saat ini" wire:model="current_password" />
 
                                     <div class="divider">Password Baru</div>
 
-                                    <x-password label="Password Baru" wire:model="password" />
-                                    <x-password label="Konfirmasi Password" wire:model="password_confirmation" />
+                                    <x-input type="password" label="Password Baru" wire:model="password" />
+                                    <x-input type="password" label="Konfirmasi Password" wire:model="password_confirmation" />
 
                                     <div class="flex gap-3 pt-4">
                                         <button class="btn btn-error" type="submit">
