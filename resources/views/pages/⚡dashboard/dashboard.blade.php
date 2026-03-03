@@ -113,7 +113,7 @@
         </div>
 
         {{-- In Progress Patients --}}
-        <div class="border-warning/20 bg-warning/5 animate-in fade-in slide-in-from-right-4 rounded-2xl border p-6 duration-500">
+        <div class="border-warning bg-warning/5 animate-in fade-in slide-in-from-right-4 rounded-2xl border p-6 duration-500">
             <h3 class="text-warning mb-4 flex items-center gap-2 text-xs font-bold uppercase tracking-widest">
                 <span class="relative flex h-2 w-2">
                     <span class="bg-warning absolute inline-flex h-full w-full animate-ping rounded-full opacity-75"></span>
