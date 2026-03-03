@@ -46,44 +46,64 @@
 
                     <nav class="flex-1 overflow-y-auto">
                         <ul class="menu w-full ps-0">
-                            <li>
-                                <a class="{{ Str::startsWith(url()->current(), url('dashboard')) ? 'menu-active' : '' }}"
-                                    href={{ route('dashboard') }}
-                                >
-                                    <i class="ti ti-home text-lg"></i>Dashboard</a>
-                            </li>
-                            <li>
-                                <a class="{{ Str::startsWith(url()->current(), url('encounter')) ? 'menu-active' : '' }}"
-                                    href={{ route('encounter.index') }} 
-                                >
-                                    <i class="ti ti-calendar text-lg"></i>Kunjungan</a>
-                            </li>
-                            <li>
-                                <a class="{{ Str::startsWith(url()->current(), url('patient')) ? 'menu-active' : '' }}"
-                                    href={{ route('patient.index') }} 
-                                >
-                                    <i class="ti ti-user-plus text-lg"></i>Pasien</a>
-                            </li>
-                            <li>
-                                <a class="{{ Str::startsWith(url()->current(), url('pharmacy')) ? 'menu-active' : '' }}"
-                                    href={{ route('pharmacy.index') }} 
-                                >
-                                    <i class="ti ti-pills text-lg"></i>Apotik</a>
-                            </li>
+                            @auth
+                                <li>
+                                    <a class="{{ Str::startsWith(url()->current(), url('dashboard')) ? 'menu-active' : '' }}"
+                                        href={{ route('dashboard') }}
+                                    >
+                                        <i class="ti ti-home text-lg"></i>Dashboard</a>
+                                </li>
+                            @endauth
 
-                            <h2 class="menu-title mt-4">Laporan</h2>
-                            <li>
-                                <a class="{{ Str::startsWith(url()->current(), url('report/visit-recap')) ? 'menu-active' : '' }}"
-                                    href="{{ route('report.visit-recap') }}" wire:navigate
-                                >
-                                    <i class="ti ti-report text-lg"></i>Rekap Kunjungan</a>
-                            </li>
-                            <li>
-                                <a class="{{ Str::startsWith(url()->current(), url('report/patient-registration-recap')) ? 'menu-active' : '' }}"
-                                    href="{{ route('report.patient-registration-recap') }}" wire:navigate
-                                >
-                                    <i class="ti ti-report-analytics text-lg"></i>Rekap Pasien Baru</a>
-                            </li>
+                            @can('kunjungan-list')
+                                <li>
+                                    <a class="{{ Str::startsWith(url()->current(), url('encounter')) ? 'menu-active' : '' }}"
+                                        href={{ route('encounter.index') }}
+                                    >
+                                        <i class="ti ti-calendar-check text-lg"></i>Kunjungan</a>
+                                </li>
+                            @endcan
+
+                            @can('pasien-list')
+                                <li>
+                                    <a class="{{ Str::startsWith(url()->current(), url('patient')) ? 'menu-active' : '' }}"
+                                        href={{ route('patient.index') }}
+                                    >
+                                        <i class="ti ti-user-plus text-lg"></i>Pasien</a>
+                                </li>
+                            @endcan
+
+                            @can('apotek-list')
+                                <h2 class="menu-title mt-4">Farmasi</h2>
+                                <li>
+                                    <a class="{{ Str::startsWith(url()->current(), url('pharmacy')) ? 'menu-active' : '' }}"
+                                        href={{ route('pharmacy.index') }}
+                                    >
+                                        <i class="ti ti-pill text-lg"></i>Apotik</a>
+                                </li>
+                            @endcan
+
+                            @canany(['rekap-kunjungan', 'rekap-pasien'])
+                                <h2 class="menu-title mt-4">Laporan</h2>
+                            @endcanany
+
+                            @can('rekap-kunjungan')
+                                <li>
+                                    <a class="{{ Str::startsWith(url()->current(), url('report/visit-recap')) ? 'menu-active' : '' }}"
+                                        href="{{ route('report.visit-recap') }}" wire:navigate
+                                    >
+                                        <i class="ti ti-report text-lg"></i>Rekap Kunjungan</a>
+                                </li>
+                            @endcan
+
+                            @can('rekap-pasien')
+                                <li>
+                                    <a class="{{ Str::startsWith(url()->current(), url('report/patient-registration-recap')) ? 'menu-active' : '' }}"
+                                        href="{{ route('report.patient-registration-recap') }}" wire:navigate
+                                    >
+                                        <i class="ti ti-report-analytics text-lg"></i>Rekap Pasien Baru</a>
+                                </li>
+                            @endcan
 
                             @role('administrator')
                                 <h2 class="menu-title mt-4">Administrator</h2>

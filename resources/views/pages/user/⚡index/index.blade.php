@@ -58,7 +58,7 @@
                 <x-table.th label="Email" sort="email" width="20%" />
                 <x-table.th label="Role" />
                 <x-table.th label="Status" />
-                <x-table.th label="Verifikasi Email" />
+                {{-- <x-table.th label="Verifikasi Email" /> --}}
                 <x-table.th />
             </x-table.thead>
 
@@ -77,7 +77,7 @@
                                 <div class="badge badge-error badge-soft">Inactive</div>
                             @endif
                         </td>
-                        <td class="p-2"> {{ $d->email_verified_at?->format('d-m-Y H:i') }} </td>
+                        {{-- <td class="p-2"> {{ $d->email_verified_at?->format('d-m-Y H:i') }} </td> --}}
                         <td class="flex gap-2 p-2">
                             <a class="btn btn-xs btn-primary btn-square btn-soft" href="{{ route('user.edit', $d->id) }}">
                                 <i class="ti ti-edit text-lg"></i></a>

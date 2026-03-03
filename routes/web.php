@@ -27,16 +27,16 @@ Route::middleware('active')->group(function () {
         Route::livewire('/user/{user}/edit', 'pages::user.edit')->name('user.edit');
         Route::livewire('/role-permission', 'pages::user.role_permission')->name('user.role_permission');
     });
-    Route::livewire('/patient', 'pages::patient.index')->name('patient.index');
-    Route::livewire('/patient/create', 'pages::patient.create')->name('patient.create');
-    Route::livewire('/patient/{patient}/edit/{uuid}', 'pages::patient.edit')->name('patient.edit');
+    Route::livewire('/patient', 'pages::patient.index')->name('patient.index')->middleware('permission:pasien-list');
+    Route::livewire('/patient/create', 'pages::patient.create')->name('patient.create')->middleware('permission:pasien-tambah');
+    Route::livewire('/patient/{patient}/edit/{uuid}', 'pages::patient.edit')->name('patient.edit')->middleware('permission:pasien-edit');
 
-    Route::livewire('/encounter', 'pages::encounter.index')->name('encounter.index');
-    Route::livewire('/encounter/create', 'pages::encounter.create')->name('encounter.create');
-    Route::livewire('/encounter/{encounter}/edit/{uuid}', 'pages::encounter.edit')->name('encounter.edit');
+    Route::livewire('/encounter', 'pages::encounter.index')->name('encounter.index')->middleware('permission:kunjungan-list');
+    Route::livewire('/encounter/create', 'pages::encounter.create')->name('encounter.create')->middleware('permission:kunjungan-tambah');
+    Route::livewire('/encounter/{encounter}/edit/{uuid}', 'pages::encounter.edit')->name('encounter.edit')->middleware('permission:kunjungan-edit');
 
-    Route::livewire('/pharmacy', 'pages::pharmacy.index')->name('pharmacy.index');
+    Route::livewire('/pharmacy', 'pages::pharmacy.index')->name('pharmacy.index')->middleware('permission:apotek-list');
 
-    Route::livewire('/report/visit-recap', 'pages::report.visit')->name('report.visit-recap');
-    Route::livewire('/report/patient-registration-recap', 'pages::report.patient-registration')->name('report.patient-registration-recap');
+    Route::livewire('/report/visit-recap', 'pages::report.visit')->name('report.visit-recap')->middleware('permission:rekap-kunjungan');
+    Route::livewire('/report/patient-registration-recap', 'pages::report.patient-registration')->name('report.patient-registration-recap')->middleware('permission:rekap-pasien');
 });

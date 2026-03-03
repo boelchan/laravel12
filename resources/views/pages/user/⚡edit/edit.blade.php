@@ -15,8 +15,8 @@
                 <x-input wire:model="name" label="Nama *" />
                 <x-input wire:model="nik" label="NIK" />
                 <x-input type="email" wire:model="email" label="Email *" />
-                <x-password wire:model="password" label="Password" />
-                <x-password wire:model="password_confirmation" label="Konfirmasi Password" />
+                <x-input type="password" wire:model="password" label="Password" />
+                <x-input type="password" wire:model="password_confirmation" label="Konfirmasi Password" />
                 <x-select.styled
                     wire:model="role"
                     label="Role"

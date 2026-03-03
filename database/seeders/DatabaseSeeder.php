@@ -40,7 +40,7 @@ class DatabaseSeeder extends Seeder
             ['name' => 'kunjungan-edit-observasi', 'guard_name' => 'web'],
             ['name' => 'kunjungan-edit-pemeriksaan', 'guard_name' => 'web'],
             ['name' => 'kunjungan-lihat-hasil', 'guard_name' => 'web'],
-            ['name' => 'apotek-lihat-resep', 'guard_name' => 'web'],
+            ['name' => 'apotek-list', 'guard_name' => 'web'],
             ['name' => 'laporan-kunjungan', 'guard_name' => 'web'],
             ['name' => 'laporan-pasien', 'guard_name' => 'web'],
         ]);
@@ -70,7 +70,7 @@ class DatabaseSeeder extends Seeder
             'kunjungan-edit-observasi',
             'kunjungan-edit-pemeriksaan',
             'kunjungan-lihat-hasil',
-            'apotek-lihat-resep',
+            'apotek-list',
             'laporan-kunjungan',
             'laporan-pasien',
         ]);
@@ -94,7 +94,7 @@ class DatabaseSeeder extends Seeder
             ['name' => 'apoteker', 'guard_name' => 'web'],
         );
         $user->givePermissionTo([
-            'apotek-lihat-resep',
+            'apotek-list',
         ]);
 
         // dummy admin
