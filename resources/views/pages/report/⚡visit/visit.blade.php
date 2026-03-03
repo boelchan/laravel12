@@ -10,13 +10,6 @@
                 </ul>
             </div>
         </div>
-        <div class="flex gap-2">
-            <button class="btn btn-soft btn-success btn-sm" wire:click="export" wire:loading.attr="disabled">
-                <i class="ti ti-file-spreadsheet text-lg" wire:loading.remove wire:target="export"></i>
-                <i class="ti ti-loader-2 animate-spin text-lg" wire:loading wire:target="export"></i>
-                Export Excel
-            </button>
-        </div>
     </div>
 
     <div class="mt-6">
@@ -32,13 +25,6 @@
             </div>
             <div class="grid grid-cols-1 gap-4 md:grid-cols-3 lg:grid-cols-4">
                 <x-input type="month" label="Bulan & Tahun" wire:model.live="search_month" />
-                
-                <x-select.styled 
-                    label="Status Kunjungan" 
-                    placeholder="Semua Status"
-                    :options="App\Enums\StatusEncounterEnum::choices()"
-                    wire:model.live="search_status" 
-                />
             </div>
         </div>
         {{-- end filter --}}
@@ -48,7 +34,12 @@
                 <x-table.thead class="bg-slate-50" :sortDirection="$sortDirection" :sortField="$sortField">
                     <x-table.th width="5%" label="No" />
                     <x-table.th label="Tanggal" sort="visit_date" />
-                    <x-table.th label="Jumlah Kunjungan" sort="total" />
+                    <x-table.th label="Total" sort="total" width="10%" />
+                    <x-table.th label="Belum Datang" width="10%" />
+                    <x-table.th label="Datang" width="10%" />
+                    <x-table.th label="Pemeriksaan" width="10%" />
+                    <x-table.th label="Selesai" width="10%" />
+                    <x-table.th label="Batal" width="10%" />
                 </x-table.thead>
 
                 <tbody>
@@ -60,16 +51,77 @@
                             <td class="p-2 font-medium"> 
                                 {{ \Carbon\Carbon::parse($d->visit_date)->translatedFormat('l, d F Y') }} 
                             </td>
-                            <td class="p-2"> 
-                                <span class="badge badge-primary">{{ $d->total }} Pasien</span>
+                            <td class="p-2 text-center">
+                                <span class="badge badge-ghost font-bold">{{ $d->total }}</span>
+                            </td>
+                            <td class="p-2 text-center">
+                                @if($d->belum_datang > 0)
+                                    <span class="badge badge-info">{{ $d->belum_datang }}</span>
+                                @else
+                                    <span class="text-slate-300">0</span>
+                                @endif
+                            </td>
+                            <td class="p-2 text-center">
+                                @if($d->datang > 0)
+                                    <span class="badge badge-primary">{{ $d->datang }}</span>
+                                @else
+                                    <span class="text-slate-300">0</span>
+                                @endif
+                            </td>
+                            <td class="p-2 text-center">
+                                @if($d->in_progress > 0)
+                                    <span class="badge badge-warning">{{ $d->in_progress }}</span>
+                                @else
+                                    <span class="text-slate-300">0</span>
+                                @endif
+                            </td>
+                            <td class="p-2 text-center">
+                                @if($d->selesai > 0)
+                                    <span class="badge badge-success">{{ $d->selesai }}</span>
+                                @else
+                                    <span class="text-slate-300">0</span>
+                                @endif
+                            </td>
+                            <td class="p-2 text-center">
+                                @if($d->batal > 0)
+                                    <span class="badge badge-error">{{ $d->batal }}</span>
+                                @else
+                                    <span class="text-slate-300">0</span>
+                                @endif
                             </td>
                         </tr>
                     @empty
                         <tr>
-                            <td class="p-4 text-center text-slate-500" colspan="3">Tidak ada data untuk filter ini</td>
+                            <td class="p-4 text-center text-slate-500" colspan="8">Tidak ada data untuk filter ini</td>
                         </tr>
                     @endforelse
                 </tbody>
+
+                @if($this->grandTotals && $this->dataTable->count() > 0)
+                    <tfoot>
+                        <tr class="bg-slate-100 font-bold text-slate-800">
+                            <td class="p-2 text-center" colspan="2">Grand Total</td>
+                            <td class="p-2 text-center">
+                                <span class="badge badge-ghost font-bold">{{ $this->grandTotals->total }}</span>
+                            </td>
+                            <td class="p-2 text-center">
+                                <span class="badge badge-info">{{ $this->grandTotals->belum_datang }}</span>
+                            </td>
+                            <td class="p-2 text-center">
+                                <span class="badge badge-primary">{{ $this->grandTotals->datang }}</span>
+                            </td>
+                            <td class="p-2 text-center">
+                                <span class="badge badge-warning">{{ $this->grandTotals->in_progress }}</span>
+                            </td>
+                            <td class="p-2 text-center">
+                                <span class="badge badge-success">{{ $this->grandTotals->selesai }}</span>
+                            </td>
+                            <td class="p-2 text-center">
+                                <span class="badge badge-error">{{ $this->grandTotals->batal }}</span>
+                            </td>
+                        </tr>
+                    </tfoot>
+                @endif
             </x-table>
         </div>
     </div>

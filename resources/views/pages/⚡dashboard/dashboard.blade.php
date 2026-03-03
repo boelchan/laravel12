@@ -113,31 +113,31 @@
         </div>
 
         {{-- In Progress Patients --}}
-        <div class="border-info/20 bg-info/5 animate-in fade-in slide-in-from-right-4 rounded-2xl border p-6 duration-500">
-            <h3 class="text-info mb-4 flex items-center gap-2 text-xs font-bold uppercase tracking-widest">
+        <div class="border-warning/20 bg-warning/5 animate-in fade-in slide-in-from-right-4 rounded-2xl border p-6 duration-500">
+            <h3 class="text-warning mb-4 flex items-center gap-2 text-xs font-bold uppercase tracking-widest">
                 <span class="relative flex h-2 w-2">
-                    <span class="bg-info absolute inline-flex h-full w-full animate-ping rounded-full opacity-75"></span>
-                    <span class="bg-info relative inline-flex h-2 w-2 rounded-full"></span>
+                    <span class="bg-warning absolute inline-flex h-full w-full animate-ping rounded-full opacity-75"></span>
+                    <span class="bg-warning relative inline-flex h-2 w-2 rounded-full"></span>
                 </span>
                 Sedang Diperiksa
             </h3>
             <div class="space-y-3">
                 @forelse($this->inprogressEncounters as $inc)
-                    <div class="border-info/10 group flex items-center justify-between rounded-xl border bg-white p-3 shadow-sm">
+                    <div class="border-warning/10 group flex items-center justify-between rounded-xl border bg-white p-3 shadow-sm">
                         <div class="min-w-0">
                             <div class="truncate text-sm font-bold text-slate-800">{{ $inc->patient->full_name }}</div>
                             <div class="flex items-center gap-1 font-mono text-[10px] text-slate-500">
-                                <i class="ti ti-hash"></i>{{ $inc->no_antrian }} • {{ $inc->patient->medical_record_number }}
+                                <i class="ti ti-hash"></i>{{ $inc->no_antrian }} • {{ $inc->patient->medical_record_number }} • {{ $inc->patient->village?->name }}
                             </div>
                         </div>
-                        <a class="btn btn-info btn-square btn-soft btn-xs group-hover:bg-info shadow-sm transition-all group-hover:text-white"
+                        <a class="btn btn-warning btn-square btn-soft btn-sm group-hover:bg-warning shadow-sm transition-all group-hover:text-white"
                             href="{{ route('encounter.edit', [$inc->id, $inc->uuid]) }}" 
                         >
                             <i class="ti ti-chevron-right text-lg"></i>
                         </a>
                     </div>
                 @empty
-                    <div class="text-info/50 flex flex-col items-center justify-center py-4 text-center text-xs italic">
+                    <div class="text-warning/50 flex flex-col items-center justify-center py-4 text-center text-xs italic">
                         <i class="ti ti-medical-cross mb-2 text-2xl opacity-20"></i>
                         Tidak ada pasien yang sedang diperiksa
                     </div>
