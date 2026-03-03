@@ -83,14 +83,22 @@ new class extends Component
 
     private function getPatientChartData()
     {
-        // Get last 14 days of new patients
+        $daysInMonth = date('t', strtotime($this->selectedMonth . '-01'));
+        $yearMonth = $this->selectedMonth;
+
+        $results = Patient::select(DB::raw('DATE(created_at) as date'), DB::raw('count(*) as count'))
+            ->where('created_at', 'like', $yearMonth . '%')
+            ->groupBy('date')
+            ->pluck('count', 'date')
+            ->toArray();
+
         $labels = [];
         $data = [];
 
-        for ($i = 13; $i >= 0; $i--) {
-            $date = date('Y-m-d', strtotime("-$i days"));
-            $labels[] = date('d M', strtotime($date));
-            $data[] = Patient::whereDate('created_at', $date)->count();
+        for ($i = 1; $i <= $daysInMonth; $i++) {
+            $date = $yearMonth . '-' . sprintf('%02d', $i);
+            $labels[] = $i;
+            $data[] = $results[$date] ?? 0;
         }
 
         return [

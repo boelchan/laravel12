@@ -5,18 +5,12 @@
             <h1 class="text-2xl font-bold tracking-tight text-slate-900">{{ $title }}</h1>
             <p class="text-sm text-slate-500">Pantau perkembangan data pasien dan kunjungan secara real-time.</p>
         </div>
-        <div class="flex items-center gap-2">
-            <x-input type="month" label="Pilih Bulan" wire:model.live="selectedMonth" />
-            <button class="btn btn-primary btn-soft btn-square" type="button" wire:click="$refresh">
-                <i class="ti ti-refresh text-lg"></i>
-            </button>
-        </div>
     </div>
 
     {{-- Stats Grid --}}
     <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <!-- Total Patients -->
-        <div class="group relative overflow-hidden rounded-2xl border border-slate-100 bg-white p-6 shadow-sm transition hover:shadow-md">
+        <div class="group relative overflow-hidden rounded-2xl border border-slate-100 bg-white p-2 shadow-sm transition hover:shadow-md">
             <div
                 class="absolute -right-4 -top-4 text-slate-50 opacity-[0.03] transition-transform group-hover:scale-110 group-hover:opacity-[0.05]">
                 <i class="ti ti-users text-9xl"></i>
@@ -35,8 +29,24 @@
             </div>
         </div>
 
+        <!-- New Patients Today -->
+        <div class="group relative overflow-hidden rounded-2xl border border-slate-100 bg-white p-2 shadow-sm transition hover:shadow-md">
+            <div
+                class="text-success absolute -right-4 -top-4 opacity-[0.03] transition-transform group-hover:scale-110 group-hover:opacity-[0.05]">
+                <i class="ti ti-user-plus text-9xl"></i>
+            </div>
+            <div class="flex items-center gap-4">
+                <div class="bg-success/10 text-success flex h-12 w-12 items-center justify-center rounded-xl">
+                    <i class="ti ti-user-plus text-2xl"></i>
+                </div>
+                <div>
+                    <h3 class="text-sm font-semibold uppercase tracking-wider text-slate-500">Pasien Baru Hari Ini</h3>
+                    <span class="text-3xl font-bold text-slate-900">{{ number_format($this->stats['new_patients_today']) }}</span>
+                </div>
+            </div>
+        </div>
         <!-- Today's Encounters -->
-        <div class="group relative overflow-hidden rounded-2xl border border-slate-100 bg-white p-6 shadow-sm transition hover:shadow-md">
+        <div class="group relative overflow-hidden rounded-2xl border border-slate-100 bg-white p-2 shadow-sm transition hover:shadow-md">
             <div
                 class="text-info absolute -right-4 -top-4 opacity-[0.03] transition-transform group-hover:scale-110 group-hover:opacity-[0.05]">
                 <i class="ti ti-stethoscope text-9xl"></i>
@@ -53,7 +63,7 @@
         </div>
 
         <!-- Monthly Encounters -->
-        <div class="group relative overflow-hidden rounded-2xl border border-slate-100 bg-white p-6 shadow-sm transition hover:shadow-md">
+        <div class="group relative overflow-hidden rounded-2xl border border-slate-100 bg-white p-2 shadow-sm transition hover:shadow-md">
             <div
                 class="text-warning absolute -right-4 -top-4 opacity-[0.03] transition-transform group-hover:scale-110 group-hover:opacity-[0.05]">
                 <i class="ti ti-calendar-event text-9xl"></i>
@@ -69,52 +79,30 @@
             </div>
         </div>
 
-        <!-- New Patients Today -->
-        <div class="group relative overflow-hidden rounded-2xl border border-slate-100 bg-white p-6 shadow-sm transition hover:shadow-md">
-            <div
-                class="text-success absolute -right-4 -top-4 opacity-[0.03] transition-transform group-hover:scale-110 group-hover:opacity-[0.05]">
-                <i class="ti ti-user-plus text-9xl"></i>
-            </div>
-            <div class="flex items-center gap-4">
-                <div class="bg-success/10 text-success flex h-12 w-12 items-center justify-center rounded-xl">
-                    <i class="ti ti-user-plus text-2xl"></i>
-                </div>
-                <div>
-                    <h3 class="text-sm font-semibold uppercase tracking-wider text-slate-500">Pasien Baru Hari Ini</h3>
-                    <span class="text-3xl font-bold text-slate-900">{{ number_format($this->stats['new_patients_today']) }}</span>
-                </div>
-            </div>
-        </div>
     </div>
 
     {{-- Shortcut Buttons & In Progress --}}
-    <div class="grid grid-cols-1 gap-6 lg:grid-cols-3">
-        <div class="flex flex-col gap-2 rounded-2xl border border-dashed border-slate-200 bg-slate-50/50 p-6 lg:col-span-2">
-            <h3 class="text-xs font-bold uppercase tracking-widest text-slate-400">Akses Cepat</h3>
+    <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
+        <div class="flex flex-col gap-2 rounded-2xl border border-dashed border-slate-200 bg-slate-50/50 p-6">
+            <span class="font-bold uppercase tracking-widest text-slate-400">Akses Cepat</span>
             <div class="flex flex-wrap gap-3">
-                <a class="btn btn-white group border-slate-200 shadow-sm" href="{{ route('patient.index') }}" wire:navigate>
-                    <div
-                        class="bg-primary/10 text-primary group-hover:bg-primary flex h-8 w-8 items-center justify-center rounded-lg transition-colors group-hover:text-white">
-                        <i class="ti ti-users"></i>
-                    </div>
+                <a class="btn btn-primary btn-outline" href="{{ route('patient.index') }}" wire:navigate>
+                    <i class="ti ti-user-plus mr-1"></i>
                     <span>Daftar Pasien</span>
                 </a>
-                <a class="btn btn-white group border-slate-200 shadow-sm" href="{{ route('encounter.index') }}" wire:navigate>
-                    <div
-                        class="bg-info/10 text-info group-hover:bg-info flex h-8 w-8 items-center justify-center rounded-lg transition-colors group-hover:text-white">
-                        <i class="ti ti-layout-list"></i>
-                    </div>
+                <a class="btn btn-info btn-outline" href="{{ route('encounter.index') }}" wire:navigate>
+                    <i class="ti ti-calendar mr-1"></i>
                     <span>Data Kunjungan</span>
                 </a>
-                <a class="btn btn-outline btn-primary border-primary/30" href="{{ route('patient.create') }}" wire:navigate>
-                    <i class="ti ti-user-plus mr-1.5"></i> Tambah Pasien Baru
+                <a class="btn btn-success btn-outline" href="{{ route('patient.create') }}" wire:navigate>
+                    <i class="ti ti-user-plus mr-1"></i> Tambah Pasien Baru
                 </a>
             </div>
         </div>
 
         {{-- In Progress Patients --}}
         <div class="border-warning bg-warning/5 animate-in fade-in slide-in-from-right-4 rounded-2xl border p-6 duration-500">
-            <h3 class="text-warning mb-4 flex items-center gap-2 text-xs font-bold uppercase tracking-widest">
+            <h3 class="text-warning mb-4 flex items-center gap-2 font-bold uppercase tracking-widest">
                 <span class="relative flex h-2 w-2">
                     <span class="bg-warning absolute inline-flex h-full w-full animate-ping rounded-full opacity-75"></span>
                     <span class="bg-warning relative inline-flex h-2 w-2 rounded-full"></span>
@@ -127,18 +115,16 @@
                         <div class="min-w-0">
                             <div class="truncate text-sm font-bold text-slate-800">{{ $inc->patient->full_name }}</div>
                             <div class="flex items-center gap-1 font-mono text-[10px] text-slate-500">
-                                <i class="ti ti-hash"></i>{{ $inc->no_antrian }} • {{ $inc->patient->medical_record_number }} • {{ $inc->patient->village?->name }}
+                                <i class="ti ti-hash"></i>{{ $inc->no_antrian }} • {{ $inc->patient->medical_record_number }} •
+                                {{ $inc->patient->village?->name }}
                             </div>
                         </div>
-                        <a class="btn btn-warning btn-square btn-md"
-                            href="{{ route('encounter.edit', [$inc->id, $inc->uuid]) }}" 
-                        >
+                        <a class="btn btn-warning btn-square btn-md" href="{{ route('encounter.edit', [$inc->id, $inc->uuid]) }}">
                             <i class="ti ti-stethoscope text-2xl font-bold"></i>
                         </a>
                     </div>
                 @empty
-                    <div class="text-warning/50 flex flex-col items-center justify-center py-4 text-center text-xs italic">
-                        <i class="ti ti-medical-cross mb-2 text-2xl opacity-20"></i>
+                    <div class="text-warning italic">
                         Tidak ada pasien yang sedang diperiksa
                     </div>
                 @endforelse
@@ -147,7 +133,15 @@
     </div>
 
     {{-- Charts Section --}}
+    <div class="flex items-center gap-2">
+        <x-input type="month" wire:model.live="selectedMonth" />
+        <button class="btn btn-primary btn-soft btn-square" type="button" wire:click="$refresh">
+            <i class="ti ti-refresh text-lg"></i>
+        </button>
+    </div>
+
     <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
+
         {{-- Daily Encounters Chart --}}
         <div class="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
             <div class="mb-6 flex items-center justify-between">
@@ -159,7 +153,7 @@
                     <i class="ti ti-chart-line text-lg"></i>
                 </div>
             </div>
-            <div class="h-[300px] w-full relative" wire:ignore>
+            <div class="relative h-[300px] w-full" wire:ignore>
                 <canvas id="dailyEncountersChart"></canvas>
             </div>
         </div>
@@ -168,14 +162,14 @@
         <div class="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
             <div class="mb-6 flex items-center justify-between">
                 <div>
-                    <h3 class="text-lg font-bold text-slate-800">Pasien Baru (14 Hari Terakhir)</h3>
-                    <p class="text-xs text-slate-500">Jumlah pendaftaran pasien baru per hari</p>
+                    <h3 class="text-lg font-bold text-slate-800">Pasien Baru</h3>
+                    <p class="text-xs text-slate-500">Pendaftaran pasien baru bulan {{ date('F Y', strtotime($selectedMonth . '-01')) }}</p>
                 </div>
                 <div class="bg-success/5 text-success flex h-8 w-8 items-center justify-center rounded-lg">
                     <i class="ti ti-chart-bar text-lg"></i>
                 </div>
             </div>
-            <div class="h-[300px] w-full relative" wire:ignore>
+            <div class="relative h-[300px] w-full" wire:ignore>
                 <canvas id="newPatientsChart"></canvas>
             </div>
         </div>
@@ -224,7 +218,9 @@
                         responsive: true,
                         maintainAspectRatio: false,
                         plugins: {
-                            legend: { display: false },
+                            legend: {
+                                display: false
+                            },
                             tooltip: {
                                 mode: 'index',
                                 intersect: false,
@@ -238,33 +234,47 @@
                                     drawBorder: false,
                                     color: 'rgba(0, 0, 0, 0.05)'
                                 },
-                                ticks: { stepSize: 1 }
+                                ticks: {
+                                    stepSize: 1
+                                }
                             },
                             x: {
-                                grid: { display: false }
+                                grid: {
+                                    display: false
+                                }
                             }
                         }
                     }
                 });
 
-                // Patient Chart (Bar)
+                // Patient Chart (Line/Area)
                 patientChart = new Chart(ctxPatient.getContext('2d'), {
-                    type: 'bar',
+                    type: 'line',
                     data: {
                         labels: pData.labels,
                         datasets: [{
                             label: 'Pasien Baru',
                             data: pData.data,
-                            backgroundColor: '#10b981',
-                            borderRadius: 6,
-                            barThickness: 20
+                            borderColor: '#10b981',
+                            backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                            borderWidth: 3,
+                            fill: true,
+                            tension: 0.4,
+                            pointRadius: 0,
+                            pointHoverRadius: 6
                         }]
                     },
                     options: {
                         responsive: true,
                         maintainAspectRatio: false,
                         plugins: {
-                            legend: { display: false }
+                            legend: {
+                                display: false
+                            },
+                            tooltip: {
+                                mode: 'index',
+                                intersect: false,
+                            }
                         },
                         scales: {
                             y: {
@@ -274,10 +284,14 @@
                                     drawBorder: false,
                                     color: 'rgba(0, 0, 0, 0.05)'
                                 },
-                                ticks: { stepSize: 1 }
+                                ticks: {
+                                    stepSize: 1
+                                }
                             },
                             x: {
-                                grid: { display: false }
+                                grid: {
+                                    display: false
+                                }
                             }
                         }
                     }
@@ -291,7 +305,7 @@
             $wire.on('refreshCharts', (data) => {
                 // Livewire v3 passes data payload inside an array, so it sits at data[0] when using named dispatcher arguments
                 const payload = Array.isArray(data) ? data[0] : data;
-                
+
                 if (payload) {
                     initCharts(payload.encounterData, payload.patientData);
                 } else {
