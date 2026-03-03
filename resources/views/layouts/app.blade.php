@@ -78,6 +78,12 @@
                                 >
                                     <i class="ti ti-report text-lg"></i>Rekap Kunjungan</a>
                             </li>
+                            <li>
+                                <a class="{{ Str::startsWith(url()->current(), url('report/patient-registration-recap')) ? 'menu-active' : '' }}"
+                                    href={{ route('report.patient-registration-recap') }} 
+                                >
+                                    <i class="ti ti-report-medical text-lg"></i>Rekap Pasien Baru</a>
+                            </li>
 
                             @role('administrator')
                                 <h2 class="menu-title mt-4">Administrator</h2>

@@ -38,4 +38,5 @@ Route::middleware('active')->group(function () {
     Route::livewire('/pharmacy', 'pages::pharmacy.index')->name('pharmacy.index');
 
     Route::livewire('/report/visit-recap', 'pages::report.visit')->name('report.visit-recap');
+    Route::livewire('/report/patient-registration-recap', 'pages::report.patient-registration')->name('report.patient-registration-recap');
 });

@@ -83,14 +83,18 @@ new class extends Component
 
         $fileName = 'rekap-kunjungan-' . ($this->search_month ?: 'semua') . '.xlsx';
         
-        $writer = SimpleExcelWriter::streamDownload($fileName);
-        
-        if ($data->isEmpty()) {
-            $writer->addRow(['Data tidak ditemukan', '', '', '', '', '', '']);
-        } else {
-            $writer->addRows($data->toArray());
-        }
+        return response()->streamDownload(function() use ($data) {
+            $writer = SimpleExcelWriter::create('php://output', 'xlsx');
+            
+            if ($data->isEmpty()) {
+                $writer->addRow(['Data tidak ditemukan', '', '', '', '', '', '']);
+            } else {
+                $writer->addRows($data->toArray());
+            }
 
-        return $writer->toBrowser();
+            $writer->close();
+        }, $fileName, [
+            'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        ]);
     }
 };

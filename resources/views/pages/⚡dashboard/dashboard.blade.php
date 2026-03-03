@@ -97,6 +97,12 @@
                 <a class="btn btn-success btn-outline" href="{{ route('patient.create') }}" wire:navigate>
                     <i class="ti ti-user-plus mr-1"></i> Tambah Pasien Baru
                 </a>
+                <a class="btn btn-warning btn-outline" href="{{ route('report.visit-recap') }}" wire:navigate>
+                    <i class="ti ti-report mr-1"></i> Rekap Kunjungan
+                </a>
+                <a class="btn btn-error btn-outline" href="{{ route('report.patient-registration-recap') }}" wire:navigate>
+                    <i class="ti ti-report-medical mr-1"></i> Rekap Pasien Baru
+                </a>
             </div>
         </div>
 
