@@ -94,70 +94,72 @@ new class extends Component {
                             </div>
                         @endif
                     </div>
-                    <div class="card-body p-4">
+                    @can('pasien-riwayat-pemeriksaan')
+                        <div class="card-body p-4">
 
-                        {{-- Split Content: Hasil (Left) vs Hasil Drawings & Resep (Right) --}}
-                        <div class="grid grid-cols-1 gap-8 md:grid-cols-2">
-                            {{-- LEFT COLUMN: Hasil Text --}}
-                            <div class="space-y-3 border-slate-200 md:border-r">
-                                <div class="flex items-center gap-2">
-                                    <div class="flex h-8 w-8 items-center justify-center rounded-full bg-slate-200 text-slate-600">
-                                        <i class="ti ti-stethoscope text-lg"></i>
+                            {{-- Split Content: Hasil (Left) vs Hasil Drawings & Resep (Right) --}}
+                            <div class="grid grid-cols-1 gap-8 md:grid-cols-2">
+                                {{-- LEFT COLUMN: Hasil Text --}}
+                                <div class="space-y-3 border-slate-200 md:border-r">
+                                    <div class="flex items-center gap-2">
+                                        <div class="flex h-8 w-8 items-center justify-center rounded-full bg-slate-200 text-slate-600">
+                                            <i class="ti ti-stethoscope text-lg"></i>
+                                        </div>
+                                        <h5 class="font-bold uppercase">Hasil Pemeriksaan</h5>
                                     </div>
-                                    <h5 class="font-bold uppercase">Hasil Pemeriksaan</h5>
-                                </div>
-                                <div>
-                                    @php $hasilText = $enc->hasils->firstWhere('tipe', 'text'); @endphp
-                                    @if ($hasilText && $hasilText->hasil)
-                                        <div class="my-2">
-                                            {{ $hasilText->hasil }}
-                                        </div>
-                                    @else
-                                        <span class="italic text-slate-400">Tidak ada catatan pemeriksaan</span>
-                                    @endif
-                                    @php $hasilDraw = $enc->hasils->firstWhere('tipe', 'draw'); @endphp
-                                    @if ($hasilDraw && !empty($hasilDraw->signatures))
-                                        <div class="space-y-2">
-                                            @foreach ($hasilDraw->signatures as $sig)
-                                                @if ($sig && strlen($sig) > 100)
-                                                    <img class="h-full w-full object-contain" src="{{ $sig }}" />
-                                                @endif
-                                            @endforeach
-                                        </div>
-                                    @endif
-                                </div>
-                            </div>
-
-                            {{-- RIGHT COLUMN: Drawings & Resep --}}
-                            <div class="space-y-3">
-                                <div class="flex items-center gap-2">
-                                    <div class="flex h-8 w-8 items-center justify-center rounded-full bg-slate-200 text-slate-600">
-                                        <i class="ti ti-pill text-lg"></i>
+                                    <div>
+                                        @php $hasilText = $enc->hasils->firstWhere('tipe', 'text'); @endphp
+                                        @if ($hasilText && $hasilText->hasil)
+                                            <div class="my-2">
+                                                {{ $hasilText->hasil }}
+                                            </div>
+                                        @else
+                                            <span class="italic text-slate-400">Tidak ada catatan pemeriksaan</span>
+                                        @endif
+                                        @php $hasilDraw = $enc->hasils->firstWhere('tipe', 'draw'); @endphp
+                                        @if ($hasilDraw && !empty($hasilDraw->signatures))
+                                            <div class="space-y-2">
+                                                @foreach ($hasilDraw->signatures as $sig)
+                                                    @if ($sig && strlen($sig) > 100)
+                                                        <img class="h-full w-full object-contain" src="{{ $sig }}" />
+                                                    @endif
+                                                @endforeach
+                                            </div>
+                                        @endif
                                     </div>
-                                    <h5 class="font-bold uppercase">Resep</h5>
                                 </div>
-                                <div>
-                                    @php $resepText = $enc->reseps->firstWhere('tipe', 'text'); @endphp
-                                    @if ($resepText && $resepText->resep)
-                                        {!! nl2br(e($resepText->resep)) !!}
-                                    @else
-                                        <span class="italic text-slate-400">Tidak ada resep</span>
-                                    @endif
 
-                                    @php $resepDraw = $enc->reseps->firstWhere('tipe', 'draw'); @endphp
-                                    @if ($resepDraw && !empty($resepDraw->signatures))
-                                        <div class="space-y-2">
-                                            @foreach ($resepDraw->signatures as $sig)
-                                                @if ($sig && strlen($sig) > 100)
-                                                    <img class="h-full w-full object-contain" src="{{ $sig }}" />
-                                                @endif
-                                            @endforeach
+                                {{-- RIGHT COLUMN: Drawings & Resep --}}
+                                <div class="space-y-3">
+                                    <div class="flex items-center gap-2">
+                                        <div class="flex h-8 w-8 items-center justify-center rounded-full bg-slate-200 text-slate-600">
+                                            <i class="ti ti-pill text-lg"></i>
                                         </div>
-                                    @endif
+                                        <h5 class="font-bold uppercase">Resep</h5>
+                                    </div>
+                                    <div>
+                                        @php $resepText = $enc->reseps->firstWhere('tipe', 'text'); @endphp
+                                        @if ($resepText && $resepText->resep)
+                                            {!! nl2br(e($resepText->resep)) !!}
+                                        @else
+                                            <span class="italic text-slate-400">Tidak ada resep</span>
+                                        @endif
+
+                                        @php $resepDraw = $enc->reseps->firstWhere('tipe', 'draw'); @endphp
+                                        @if ($resepDraw && !empty($resepDraw->signatures))
+                                            <div class="space-y-2">
+                                                @foreach ($resepDraw->signatures as $sig)
+                                                    @if ($sig && strlen($sig) > 100)
+                                                        <img class="h-full w-full object-contain" src="{{ $sig }}" />
+                                                    @endif
+                                                @endforeach
+                                            </div>
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    @endcan
                 </div>
             @empty
                 <div class="flex flex-col items-center justify-center py-12 text-slate-500">
