@@ -19,7 +19,7 @@ return new class extends Migration
             $table->dateTime('arrived_at')->nullable();
             $table->dateTime('inprogress_at')->nullable();
             $table->dateTime('finished_at')->nullable();    
-            $table->string('chief_complaint', 250)->nullable();
+            $table->string('chief_complaint', 2000)->nullable();
             $table->string('problem_list_item', 250)->nullable();
             $table->string('diagnosis', 250)->nullable();
             $table->integer('practitioner_id')->nullable()->index();
