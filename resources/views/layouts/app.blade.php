@@ -41,7 +41,9 @@
                 {{-- Scrollable content wrapper --}}
                 <div class="relative z-10 flex h-full flex-col overflow-y-auto">
                     <div class="mb-4 hidden justify-center sm:block">
-                        <img class="h-10" src="{{ asset('logo/rme-logo.png') }}" alt="logo">
+                        <a href="{{ route('dashboard') }}" wire:navigate>
+                            <img class="h-10" src="{{ asset('logo/rme-logo.png') }}" alt="logo">
+                        </a>
                     </div>
 
                     <nav class="flex-1 overflow-y-auto">

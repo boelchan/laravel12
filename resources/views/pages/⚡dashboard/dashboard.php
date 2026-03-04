@@ -44,8 +44,8 @@ new class extends Component
     {
         return Encounter::with('patient')
             ->where('status', 'inprogress')
+            ->where('visit_date', date('Y-m-d'))
             ->orderBy('visit_date', 'desc')
-            ->limit(5)
             ->get();
     }
 

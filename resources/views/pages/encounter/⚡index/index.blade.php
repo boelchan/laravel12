@@ -10,9 +10,11 @@
                 </ul>
             </div>
         </div>
-        <button class="btn btn-soft btn-primary btn-sm" wire:click="openModalEncounter">
-            <i class="ti ti-plus text-lg"></i> Tambah
-        </button>
+        @can('kunjungan-tambah')
+            <button class="btn btn-soft btn-primary btn-sm" wire:click="openModalEncounter">
+                <i class="ti ti-plus text-lg"></i> Tambah
+            </button>
+        @endcan
     </div>
 
     <div class="mt-6">
@@ -120,10 +122,10 @@
                 <x-table.th label="No" sort="no_antrian" width="5%" />
                 <x-table.th label="Tanggal" width="15%" />
                 <x-table.th label="Pasien" width="35%" />
-                <x-table.th label="TTV" width="15%"/>
-                <x-table.th label="BB/TB" width="15%"/>
-                <x-table.th label="Status" sort="status" width="10%"/>
-                <x-table.th width="15%"/>
+                <x-table.th label="TTV" width="15%" />
+                <x-table.th label="BB/TB" width="15%" />
+                <x-table.th label="Status" sort="status" width="10%" />
+                <x-table.th width="15%" />
             </x-table.thead>
 
             <tbody>
@@ -148,13 +150,15 @@
                             @else
                                 -
                             @endif
-                            @if ($d->status == 'arrived' || $d->status == 'inprogress')
-                                <button class="btn btn-xs btn-square btn-primary btn-ghost"
-                                    wire:click="openModalObservation({{ $d->id }})"
-                                >
-                                    <i class="ti ti-pencil text-lg"></i>
-                                </button>
-                            @endif
+                            @can('kunjungan-edit-observasi')
+                                @if ($d->status == 'arrived' || $d->status == 'inprogress')
+                                    <button class="btn btn-xs btn-square btn-primary btn-ghost"
+                                        wire:click="openModalObservation({{ $d->id }})"
+                                    >
+                                        <i class="ti ti-pencil text-lg"></i>
+                                    </button>
+                                @endif
+                            @endcan
                         </td>
                         <td class="p-2">
                             @if ($d->anthropometry)
@@ -164,63 +168,67 @@
                             @else
                                 -
                             @endif
-                            @if ($d->status == 'arrived' || $d->status == 'inprogress')
-                                <button class="btn btn-xs btn-square btn-primary btn-ghost"
-                                    wire:click="openModalObservation({{ $d->id }})"
-                                >
-                                    <i class="ti ti-pencil text-lg"></i>
-                                </button>
-                            @endif
+                            @can('kunjungan-edit-observasi')
+                                @if ($d->status == 'arrived' || $d->status == 'inprogress')
+                                    <button class="btn btn-xs btn-square btn-primary btn-ghost"
+                                        wire:click="openModalObservation({{ $d->id }})"
+                                    >
+                                        <i class="ti ti-pencil text-lg"></i>
+                                    </button>
+                                @endif
+                            @endcan
                         </td>
                         <td class="p-2">
                             {!! $d->statusBadge !!}
                         </td>
                         <td class="p-2">
-                            <div class="flex gap-2">
+                            @can('kunjungan-edit-status')
+                                <div class="flex gap-2">
 
-                                @if ($d->visit_date == now()->format('Y-m-d'))
-                                    @if ($d->status == 'registered')
-                                        <button class="btn btn-sm btn-square btn-primary" title="Pasien Datang"
+                                    @if ($d->visit_date == now()->format('Y-m-d'))
+                                        @if ($d->status == 'registered')
+                                            <button class="btn btn-sm btn-square btn-primary" title="Pasien Datang"
+                                                wire:click="setArrived({{ $d->id }})"
+                                            >
+                                                <i class="ti ti-check text-lg"></i>
+                                            </button>
+                                        @endif
+
+                                        @if ($d->status == 'arrived')
+                                            <button class="btn btn-sm btn-square btn-warning" title="Mulai Pemeriksaan"
+                                                wire:click="setInprogress({{ $d->id }})"
+                                            >
+                                                <i class="ti ti-send text-lg"></i>
+                                            </button>
+                                        @endif
+
+                                        @can('kunjungan-edit-pemeriksaan')
+                                            @if ($d->status == 'inprogress' || $d->status == 'finished')
+                                                <a class="btn btn-sm btn-success btn-square"
+                                                    href="{{ route('encounter.edit', [$d->id, $d->uuid]) }}" title="Pemeriksaan"
+                                                >
+                                                    <i class="ti ti-stethoscope text-lg"></i></a>
+                                            @endif
+                                        @endcan
+                                    @endif
+
+                                    @if ($d->status == 'cancelled')
+                                        <button class="btn btn-sm btn-square btn-success btn-soft" title="Pulihkan Kunjungan (Pasien Datang)"
                                             wire:click="setArrived({{ $d->id }})"
                                         >
-                                            <i class="ti ti-check text-lg"></i>
+                                            <i class="ti ti-refresh text-lg"></i>
                                         </button>
                                     @endif
 
-                                    @if ($d->status == 'arrived')
-                                        <button class="btn btn-sm btn-square btn-warning" title="Mulai Pemeriksaan"
-                                            wire:click="setInprogress({{ $d->id }})"
+                                    @if ($d->status == 'registered' || $d->status == 'arrived')
+                                        <button class="btn btn-sm btn-square btn-error btn-soft" title="Batalkan Kunjungan"
+                                            wire:click="$js.confirmBatal({{ $d->id }}, '{{ addslashes($d->patient->full_name) }}')"
                                         >
-                                            <i class="ti ti-send text-lg"></i>
+                                            <i class="ti ti-x text-lg"></i>
                                         </button>
                                     @endif
-
-                                    @can('kunjungan-edit-pemeriksaan')
-                                        @if ($d->status == 'inprogress' || $d->status == 'finished')
-                                            <a class="btn btn-sm btn-success btn-square" title="Pemeriksaan"
-                                                href="{{ route('encounter.edit', [$d->id, $d->uuid]) }}"
-                                            >
-                                                <i class="ti ti-stethoscope text-lg"></i></a>
-                                        @endif
-                                    @endcan
-                                @endif
-
-                                @if ($d->status == 'cancelled')
-                                    <button class="btn btn-sm btn-square btn-success btn-soft" title="Pulihkan Kunjungan (Pasien Datang)"
-                                        wire:click="setArrived({{ $d->id }})"
-                                    >
-                                        <i class="ti ti-refresh text-lg"></i>
-                                    </button>
-                                @endif
-
-                                @if ($d->status == 'registered' || $d->status == 'arrived')
-                                    <button class="btn btn-sm btn-square btn-error btn-soft" title="Batalkan Kunjungan"
-                                        wire:click="$js.confirmBatal({{ $d->id }}, '{{ addslashes($d->patient->full_name) }}')"
-                                    >
-                                        <i class="ti ti-x text-lg"></i>
-                                    </button>
-                                @endif
-                            </div>
+                                </div>
+                            @endcan
                         </td>
                     </tr>
                 @empty

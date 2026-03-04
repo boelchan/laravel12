@@ -87,22 +87,26 @@
             <span class="font-bold uppercase tracking-widest text-slate-400">Akses Cepat</span>
             <div class="flex flex-wrap gap-3">
                 <a class="btn btn-primary btn-outline" href="{{ route('patient.index') }}" wire:navigate>
-                    <i class="ti ti-user-plus mr-1"></i>
+                    <i class="ti ti-users mr-1 text-lg"></i>
                     <span>Daftar Pasien</span>
                 </a>
-                <a class="btn btn-info btn-outline" href="{{ route('encounter.index') }}" wire:navigate>
-                    <i class="ti ti-calendar mr-1"></i>
+                <a class="btn btn-primary btn-outline" href="{{ route('patient.create') }}" wire:navigate>
+                    <i class="ti ti-user-plus mr-1 text-lg"></i> Tambah Pasien Baru
+                </a>
+                <a class="btn btn-dark btn-outline" href="{{ route('encounter.index') }}" wire:navigate>
+                    <i class="ti ti-calendar mr-text-lg 1"></i>
                     <span>Data Kunjungan</span>
                 </a>
-                <a class="btn btn-success btn-outline" href="{{ route('patient.create') }}" wire:navigate>
-                    <i class="ti ti-user-plus mr-1"></i> Tambah Pasien Baru
-                </a>
-                <a class="btn btn-warning btn-outline" href="{{ route('report.visit-recap') }}" wire:navigate>
-                    <i class="ti ti-report mr-1"></i> Rekap Kunjungan
-                </a>
-                <a class="btn btn-error btn-outline" href="{{ route('report.patient-registration-recap') }}" wire:navigate>
-                    <i class="ti ti-report-medical mr-1"></i> Rekap Pasien Baru
-                </a>
+                @can('rekap-kunjungan')
+                    <a class="btn btn-secondary btn-outline" href="{{ route('report.visit-recap') }}" wire:navigate>
+                        <i class="ti ti-report mr-text-lg 1"></i> Rekap Kunjungan
+                    </a>
+                @endcan
+                @can('rekap-pasien')
+                    <a class="btn btn-secondary btn-outline" href="{{ route('report.patient-registration-recap') }}" wire:navigate>
+                        <i class="ti ti-report-medical mr-1 text-lg"></i> Rekap Pasien Baru
+                    </a>
+                @endcan
             </div>
         </div>
 
@@ -125,9 +129,11 @@
                                 {{ $inc->patient->village?->name }}
                             </div>
                         </div>
-                        <a class="btn btn-warning btn-square btn-md" href="{{ route('encounter.edit', [$inc->id, $inc->uuid]) }}">
-                            <i class="ti ti-stethoscope text-2xl font-bold"></i>
-                        </a>
+                        @can('kunjungan-edit-pemeriksaan')
+                            <a class="btn btn-warning btn-square btn-md" href="{{ route('encounter.edit', [$inc->id, $inc->uuid]) }}">
+                                <i class="ti ti-stethoscope text-2xl font-bold"></i>
+                            </a>
+                        @endcan
                     </div>
                 @empty
                     <div class="text-warning italic">
@@ -169,7 +175,8 @@
             <div class="mb-6 flex items-center justify-between">
                 <div>
                     <h3 class="text-lg font-bold text-slate-800">Pasien Baru</h3>
-                    <p class="text-xs text-slate-500">Pendaftaran pasien baru bulan {{ date('F Y', strtotime($selectedMonth . '-01')) }}</p>
+                    <p class="text-xs text-slate-500">Pendaftaran pasien baru bulan {{ date('F Y', strtotime($selectedMonth . '-01')) }}
+                    </p>
                 </div>
                 <div class="bg-success/5 text-success flex h-8 w-8 items-center justify-center rounded-lg">
                     <i class="ti ti-chart-bar text-lg"></i>

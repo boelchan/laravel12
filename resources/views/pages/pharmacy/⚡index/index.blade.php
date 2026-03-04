@@ -24,7 +24,6 @@
             <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
                 <x-date label="Tanggal Kunjungan" wire:model.live.debounce.500ms="search_visit_date" />
                 <x-input label="Nama Pasien" placeholder="Cari nama..." wire:model.live.debounce.500ms="search_full_name" clearable />
-                <x-input label="No. RM" placeholder="Cari No. RM..." wire:model.live.debounce.500ms="search_medical_record_number" clearable />
                 <x-select.native label="Status Obat" 
                     wire:model.live="search_status_obat"
                     :options="[
@@ -43,7 +42,6 @@
                     <x-table.th width="5%" label="No" />
                     <x-table.th label="Antrian" sort="no_antrian" width="10%" />
                     <x-table.th label="Pasien" width="25%" />
-                    <x-table.th label="Waktu Selesai Periksa" sort="finished_at" width="15%" />
                     <x-table.th label="Status Obat" width="15%" />
                     <x-table.th label="Catatan Farmasi" />
                     <x-table.th width="10%" label="Aksi" />
@@ -53,13 +51,10 @@
                     @forelse ($this->dataTable as $index => $d)
                         <tr class="bg-white hover:bg-neutral-50 transition-colors" wire:key="pharmacy-{{ $d->id }}">
                             <td class="p-3 text-center text-slate-500"> {{ $perPage * ($this->dataTable->currentPage() - 1) + $index + 1 }} </td>
-                            <td class="p-3 text-center font-bold text-primary"> {{ $d->no_antrian }} </td>
+                            <td class="p-3 text-center font-bold"> {{ $d->no_antrian }} </td>
                             <td class="p-3">
                                 <div class="font-bold text-slate-800">{{ $d->patient->full_name }}</div>
                                 <div class="text-xs text-slate-500">{{ $d->patient->medical_record_number }}</div>
-                            </td>
-                            <td class="p-3 text-slate-600">
-                                {{ $d->finished_at ? \Carbon\Carbon::parse($d->finished_at)->format('H:i') : '-' }}
                             </td>
                             <td class="p-3">
                                 @if($d->obat_diambil_at)

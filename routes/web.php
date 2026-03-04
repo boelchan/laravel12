@@ -32,8 +32,7 @@ Route::middleware('active')->group(function () {
     Route::livewire('/patient/{patient}/edit/{uuid}', 'pages::patient.edit')->name('patient.edit')->middleware('permission:pasien-edit');
 
     Route::livewire('/encounter', 'pages::encounter.index')->name('encounter.index')->middleware('permission:kunjungan-list');
-    Route::livewire('/encounter/create', 'pages::encounter.create')->name('encounter.create')->middleware('permission:kunjungan-tambah');
-    Route::livewire('/encounter/{encounter}/edit/{uuid}', 'pages::encounter.edit')->name('encounter.edit')->middleware('permission:kunjungan-edit');
+    Route::livewire('/encounter/{encounter}/edit/{uuid}', 'pages::encounter.edit')->name('encounter.edit')->middleware('permission:kunjungan-edit-pemeriksaan');
 
     Route::livewire('/pharmacy', 'pages::pharmacy.index')->name('pharmacy.index')->middleware('permission:apotek-list');
 
