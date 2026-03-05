@@ -1,11 +1,6 @@
 import './bootstrap';
-import flatpickr from "flatpickr"
-import { Indonesian } from "flatpickr/dist/l10n/id.js";
 import Quill from "quill";
 import "quill/dist/quill.snow.css";
-
-window.flatpickr = flatpickr;
-window.flatpickr_local_id = Indonesian;
 
 window.Quill = Quill;
 
