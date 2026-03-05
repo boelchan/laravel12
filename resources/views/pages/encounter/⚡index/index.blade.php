@@ -35,7 +35,7 @@
             <div class="border-info/10 rounded-xl border bg-white p-2 shadow-sm">
                 <div class="flex items-center gap-3">
                     <div class="bg-info/10 text-info flex h-10 w-10 items-center justify-center rounded-lg">
-                        <i class="ti ti-user-plus text-2xl"></i>
+                        <i class="ti ti-walk text-2xl"></i>
                     </div>
                     <div>
                         <div class="text-info/70 text-[10px] font-bold uppercase tracking-wider">Belum Datang</div>
@@ -48,7 +48,7 @@
             <div class="border-primary/10 rounded-xl border bg-white p-2 shadow-sm">
                 <div class="flex items-center gap-3">
                     <div class="bg-primary/10 text-primary flex h-10 w-10 items-center justify-center rounded-lg">
-                        <i class="ti ti-walk text-2xl"></i>
+                        <i class="ti ti-user-check text-2xl"></i>
                     </div>
                     <div>
                         <div class="text-primary/70 text-[10px] font-bold uppercase tracking-wider">Datang</div>
@@ -201,16 +201,15 @@
                                                 <i class="ti ti-send text-lg"></i>
                                             </button>
                                         @endif
-
-                                        @can('kunjungan-edit-pemeriksaan')
-                                            @if ($d->status == 'inprogress' || $d->status == 'finished')
-                                                <a class="btn btn-sm btn-success btn-square"
-                                                    href="{{ route('encounter.edit', [$d->id, $d->uuid]) }}" title="Pemeriksaan"
-                                                >
-                                                    <i class="ti ti-stethoscope text-lg"></i></a>
-                                            @endif
-                                        @endcan
                                     @endif
+                                    @can('kunjungan-edit-pemeriksaan')
+                                        @if ($d->status == 'inprogress' || $d->status == 'finished')
+                                            <a class="btn btn-sm btn-success btn-square" href="{{ route('encounter.edit', [$d->id, $d->uuid]) }}"
+                                                title="Pemeriksaan"
+                                            >
+                                                <i class="ti ti-stethoscope text-lg"></i></a>
+                                        @endif
+                                    @endcan
 
                                     @if ($d->status == 'cancelled')
                                         <button class="btn btn-sm btn-square btn-success btn-soft" title="Pulihkan Kunjungan (Pasien Datang)"

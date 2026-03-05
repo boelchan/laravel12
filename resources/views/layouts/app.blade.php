@@ -13,8 +13,6 @@
 
     <title>{{ $title ?? config('app.name') }}</title>
 
-    <link href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css" rel="stylesheet" />
-
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     @livewireStyles
@@ -53,7 +51,7 @@
                                     <a class="{{ Str::startsWith(url()->current(), url('dashboard')) ? 'menu-active' : '' }}"
                                         href={{ route('dashboard') }}
                                     >
-                                        <i class="ti ti-home text-lg"></i>Dashboard</a>
+                                        <i class="ti ti-layout-grid text-lg"></i>Dashboard</a>
                                 </li>
                             @endauth
 

@@ -17,6 +17,7 @@
         "vite": "^7.0.7"
     },
     "dependencies": {
+        "@tabler/icons-webfont": "^3.38.0",
         "flatpickr": "^4.6.13",
         "quill": "^2.0.3"
     }
