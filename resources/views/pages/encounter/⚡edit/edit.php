@@ -19,6 +19,7 @@ new class extends Component
     public $systolic, $diastolic,  $body_temperature;
     public $body_weight, $body_height;
     public $hasil_text, $resep_text;
+    public $chief_complaint;
 
     public $hasil_signatures = [];
     public $resep_signatures = [];
@@ -26,6 +27,8 @@ new class extends Component
     public function mount(Encounter $encounter)
     {
         $this->encounter = $encounter->load('vitalSign', 'anthropometry');
+
+        $this->chief_complaint = $this->encounter->chief_complaint;
 
         // Load TTV
         if ($this->encounter->vitalSign) {
@@ -99,6 +102,7 @@ new class extends Component
         $this->encounter->update([
             'finished_at' => $this->encounter->finished_at ?? now(),
             'status' => StatusEncounterEnum::FINISHED,
+            'chief_complaint' => $this->chief_complaint,
             'updated_by' => Auth::id(),
         ]);
 

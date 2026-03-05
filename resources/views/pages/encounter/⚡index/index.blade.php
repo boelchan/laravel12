@@ -453,6 +453,10 @@
     <x-modal id="modalObservation" title="Observasi" wire="modalObservation">
         <form wire:submit="saveObservation">
             <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+                <div class="col-span-2">
+                    <x-textarea label="Keluhan Utama" rows="5" wire:model="chief_complaint" />
+                </div>
+
                 <div class="space-y-4">
                     <h4 class="font-semibold text-slate-700">TTV</h4>
                     <div class="grid grid-cols-2 gap-4">
@@ -462,7 +466,7 @@
                             type="number"
                             step="0.1"
                             label="Suhu Tubuh"
-                            wire:model="body_temperature"
+                            wire:model="body_temperat   ure"
                             suffix="°C"
                         />
                     </div>

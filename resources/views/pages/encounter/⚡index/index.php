@@ -34,11 +34,14 @@ new class extends Component
     public $searchPatientVillage = '';
     public $selectedPatientName = '';
 
-    // Vitals form
+    // observation form
     public $modalObservation = false;
     public $encounter_id;
     public $systolic, $diastolic, $heart_rate, $respiratory_rate, $body_temperature;
     public $body_height, $body_weight;
+    public $chief_complaint;
+
+    public $encounter;
 
     public function mount()
     {
@@ -47,10 +50,6 @@ new class extends Component
         }
     }
 
-    public function updatedVisitDate($value)
-    {
-        $this->dispatch('load-jumlah-pendaftar', $value);
-    }
 
     #[Computed]
     public function dataTable()
@@ -102,6 +101,7 @@ new class extends Component
             'cancelled' => $data->where('status', 'cancelled')->count(),
         ];
     }
+        
 
     #[Computed]
     public function patientList()
@@ -132,6 +132,11 @@ new class extends Component
     {
         $this->reset(['patient_id', 'visit_date', 'searchPatientName', 'searchPatientMRN', 'searchPatientVillage', 'selectedPatientName']);
         $this->modalEncounter = true;
+    }
+
+    public function updatedVisitDate($value)
+    {
+        $this->dispatch('load-jumlah-pendaftar', $value);
     }
 
     #[Computed]
@@ -201,10 +206,11 @@ new class extends Component
     {
         $encounter = Encounter::findOrFail($id);
 
-        $this->encounter_id = $id;
-        $this->reset(['systolic', 'diastolic', 'body_temperature', 'body_height', 'body_weight']);
+        $this->encounter = $encounter;
 
-        // Load existing vitals if any
+        $this->encounter_id = $id;
+        $this->reset(['systolic', 'diastolic', 'body_temperature', 'body_height', 'body_weight', 'chief_complaint']);
+
         $vitals = VitalSign::where('encounter_id', $id)->first();
         if ($vitals) {
             $this->systolic = $vitals->systolic;
@@ -217,6 +223,8 @@ new class extends Component
             $this->body_height = $anthropometry->body_height;
             $this->body_weight = $anthropometry->body_weight;
         }
+
+        $this->chief_complaint = $encounter->chief_complaint;
 
         $this->modalObservation = true;
     }
@@ -249,6 +257,10 @@ new class extends Component
                 'created_by' => Auth::id(),
             ]
         );
+
+        $this->encounter->update([
+            'chief_complaint' => $this->chief_complaint,
+        ]);
 
         $this->modalObservation = false;
         $this->toast()->success('Observasi berhasil disimpan')->send();

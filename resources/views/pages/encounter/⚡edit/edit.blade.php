@@ -38,43 +38,35 @@
                     <div class="card border border-slate-200 bg-white shadow-sm">
                         <div class="border-b border-slate-200 bg-slate-50 px-6 py-2">
                             <h2 class="text-lg font-medium">
-                                TTV (Tanda Vital)
+                                Observasi
                             </h2>
                         </div>
-                        <div class="card-body">
-                            <div class="grid grid-cols-2 gap-4 md:grid-cols-3">
-                                <x-input type="number" wire:model="systolic" label="Systolic" suffix="mmHg" />
-                                <x-input type="number" wire:model="diastolic" label="Diastolic" suffix="mmHg" />
-                                <x-input type="number" wire:model="body_temperature" label="Suhu Tubuh" suffix="°C" />
-                            </div>
-                        </div>
-                    </div>
+                        <div class="card-body space-y-4">
+                            <x-textarea wire:model="chief_complaint" label="Keluhan Utama" rows="5" placeholder="Masukkan keluhan utama..." />
 
-                    {{-- ANTROPOMETRI CARD --}}
-                    <div class="card overflow-hidden border border-slate-200 bg-white shadow-sm">
-                        <div class="border-b border-slate-200 bg-slate-50 px-6 py-2">
-                            <h2 class="text-lg font-medium"> Antropometri </h2>
-                        </div>
-                        <div class="card-body" x-data="{
-                            body_weight: @entangle('body_weight'),
-                            body_height: @entangle('body_height'),
-                            get imt() {
-                                if (this.body_weight && this.body_height) {
-                                    let tbM = this.body_height / 100;
-                                    return (this.body_weight / (tbM * tbM)).toFixed(2);
-                                }
-                                return '-';
-                            }
-                        }">
-                            <div class="grid grid-cols-2 gap-4">
-                                <x-input x-model="body_weight" label="Berat Badan" suffix="kg" />
-                                <x-input x-model="body_height" label="Tinggi Badan" suffix="cm" />
+                            <div class="grid grid-cols-3 gap-2">
+                                <x-input type="number" wire:model="systolic" label="Systolic"  />
+                                <x-input type="number" wire:model="diastolic" label="Diastolic"  />
+                                <x-input type="number" wire:model="body_temperature" label="Suhu" suffix="°C" />
                             </div>
-                            <div class="mt-2 rounded-xl border border-blue-100 bg-blue-50 p-4">
-                                <p class="text-xs font-medium uppercase tracking-wider text-blue-600">Indeks Massa Tubuh (IMT)</p>
-                                <div class="flex items-baseline gap-2">
-                                    <span class="text-3xl font-bold text-blue-800" x-text="imt"></span>
-                                    <span class="text-sm font-medium text-blue-600">kg/m²</span>
+                            <div x-data="{
+                                body_weight: @entangle('body_weight'),
+                                body_height: @entangle('body_height'),
+                                get imt() {
+                                    if (this.body_weight && this.body_height) {
+                                        let tbM = this.body_height / 100;
+                                        return (this.body_weight / (tbM * tbM)).toFixed(2);
+                                    }
+                                    return '-';
+                                }
+                            }">
+                                <div class="grid grid-cols-4 gap-2">
+                                    <x-input x-model="body_weight" label="BB" />
+                                    <x-input x-model="body_height" label="TB" />
+                                    <div class="col-span-2 rounded-xl border border-blue-100 bg-blue-50 p-2">
+                                        <p class="  font-medium text-blue-600">IMT <small class="font-italic">kg/m²</small></p>
+                                        <span class="text-xl font-bold text-blue-800" x-text="imt"></span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
