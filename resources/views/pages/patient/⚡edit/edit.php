@@ -25,7 +25,7 @@ new class extends Component
 
     // Data Personal
     public $full_name;
-    public $mother_name;
+    public $family_name;
     public $birth_date;
     public $birth_place;
     public $gender;
@@ -80,7 +80,7 @@ new class extends Component
         $this->ihs_number = $patient->ihs_number;
         $this->passport_kitas = $patient->passport_kitas;
         $this->full_name = $patient->full_name;
-        $this->mother_name = $patient->mother_name;
+        $this->family_name = $patient->family_name;
         $this->birth_date = $patient->birth_date?->format('Y-m-d');
         $this->birth_place = $patient->birth_place;
         $this->gender = $patient->gender?->value;
@@ -155,7 +155,6 @@ new class extends Component
             'birth_date' => 'nullable|date',
             'village_code' => 'required',
             'gender' => 'required',
-            'nik' => 'nullable|string|size:16|unique:patients,nik,' . $this->patient->id,
             'mobile_phone' => 'nullable|string|max:20',
         ]);
 
@@ -164,7 +163,7 @@ new class extends Component
             'ihs_number' => $this->ihs_number,
             'passport_kitas' => $this->passport_kitas,
             'full_name' => $this->full_name,
-            'mother_name' => $this->mother_name,
+            'family_name' => $this->family_name,
             'birth_date' => $this->birth_date,
             'birth_place' => $this->birth_place,
             'gender' => $this->gender,
@@ -190,7 +189,7 @@ new class extends Component
             'is_active' => $this->is_active,
         ]);
 
-        $this->toast()->success('Pasien berhasil diupdate')->send();
+        $this->toast()->success('Pasien berhasil diupdate')->flash()->send();
 
         return to_route('patient.index');
     }

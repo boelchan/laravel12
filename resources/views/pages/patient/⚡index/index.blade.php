@@ -48,8 +48,8 @@
             <x-table.thead class="bg-slate-50" :sortDirection="$sortDirection" :sortField="$sortField">
                 <x-table.th width="5%" />
                 <x-table.th label="No. RM" sort="medical_record_number" width="10%" />
-                <x-table.th label="NIK" width="15%" />
                 <x-table.th label="Nama" sort="full_name" width="20%" />
+                <x-table.th label="Keluarga" width="15%" />
                 <x-table.th label="Desa" />
                 <x-table.th label="Telepon" />
                 <x-table.th label="Status" />
@@ -61,8 +61,8 @@
                     <tr class="bg-white hover:bg-neutral-50" wire:key="patient-{{ $d->id }}">
                         <td class="p-2 text-center"> {{ $perPage * ($this->dataTable->currentPage() - 1) + $index + 1 }} </td>
                         <td class="p-2"> {{ $d->medical_record_number }} </td>
-                        <td class="p-2"> {{ $d->nik ?? '-' }} </td>
                         <td class="p-2"> {{ $d->full_name }} ({{ $d->gender?->singkatan() ?? '-' }})</td>
+                        <td class="p-2"> {{ $d->family_name }} </td>
                         <td class="p-2"> {{ $d->village?->name ?? '-' }} </td>
                         <td class="p-2"> {{ $d->mobile_phone ?? ($d->phone ?? '-') }} </td>
                         <td class="p-2">

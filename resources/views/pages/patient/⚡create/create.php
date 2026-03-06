@@ -20,7 +20,7 @@ new class extends Component
 
     // Data Personal
     public $full_name;
-    public $mother_name;
+    public $family_name;
     public $birth_date;
     public $birth_place;
     public $gender = 2;
@@ -127,7 +127,7 @@ new class extends Component
             'ihs_number' => $this->ihs_number,
             'passport_kitas' => $this->passport_kitas,
             'full_name' => $this->full_name,
-            'mother_name' => $this->mother_name,
+            'family_name' => $this->family_name,
             'birth_date' => $this->birth_date,
             'birth_place' => $this->birth_place,
             'gender' => $this->gender,

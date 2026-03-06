@@ -15,18 +15,22 @@
 
                 {{-- LEFT COLUMN: VITAL SIGNS & ANTHROPOMETRY --}}
                 <div class="space-y-6 lg:col-span-4">
-                    <div class="card border border-slate-200 bg-white shadow-sm">
-                        <div class="flex items-center justify-between border-b border-slate-200 bg-slate-50 px-6 py-2">
+                    <div class="card border border-slate-200 bg-white">
+                        <div class="flex gap-2 rounded-t-lg border-b border-slate-200 bg-slate-50 px-6 py-2">
                             <h2 class="flex items-center gap-2 text-lg font-semibold text-slate-800">
                                 Pasien
                             </h2>
-                            <button class="btn btn-primary btn-square btn-soft btn-sm" type="button"
+                            <button class="btn btn-primary btn-square btn-soft btn-xs" type="button"
                                 wire:click="$dispatch('open-history-modal', [{{ $encounter->patient_id }}])"
                             ><i class="ti ti-history text-lg"></i> </button>
                         </div>
                         <div class="card-body">
                             <ul class="space-y-1">
                                 <li><i class="ti ti-user text-lg"></i> {{ $encounter->patient->full_name }}</li>
+                                <li>
+                                    <i class="ti ti-friends text-lg"></i>
+                                    {{ $encounter->patient->family_name }}
+                                </li>
                                 <li>
                                     <i class="ti ti-home text-lg"></i>
                                     {{ $encounter->patient->village?->name }} - {{ $encounter->patient->district?->name }} -
@@ -35,18 +39,16 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="card border border-slate-200 bg-white shadow-sm">
-                        <div class="border-b border-slate-200 bg-slate-50 px-6 py-2">
+                    <div class="card border border-slate-200 bg-white">
+                        <div class="rounded-t-lg border-b border-slate-200 bg-slate-50 px-6 py-2">
                             <h2 class="text-lg font-medium">
                                 Observasi
                             </h2>
                         </div>
                         <div class="card-body space-y-4">
-                            <x-textarea wire:model="chief_complaint" label="Keluhan Utama" rows="5" placeholder="Masukkan keluhan utama..." />
-
                             <div class="grid grid-cols-3 gap-2">
-                                <x-input type="number" wire:model="systolic" label="Systolic"  />
-                                <x-input type="number" wire:model="diastolic" label="Diastolic"  />
+                                <x-input type="number" wire:model="systolic" label="Systolic" />
+                                <x-input type="number" wire:model="diastolic" label="Diastolic" />
                                 <x-input type="number" wire:model="body_temperature" label="Suhu" suffix="°C" />
                             </div>
                             <div x-data="{
@@ -64,7 +66,7 @@
                                     <x-input x-model="body_weight" label="BB" />
                                     <x-input x-model="body_height" label="TB" />
                                     <div class="col-span-2 rounded-xl border border-blue-100 bg-blue-50 p-2">
-                                        <p class="  font-medium text-blue-600">IMT <small class="font-italic">kg/m²</small></p>
+                                        <p class="font-medium text-blue-600">IMT <small class="font-italic">kg/m²</small></p>
                                         <span class="text-xl font-bold text-blue-800" x-text="imt"></span>
                                     </div>
                                 </div>
@@ -75,17 +77,25 @@
 
                 {{-- RIGHT COLUMN: HASIL & RESEP --}}
                 <div class="space-y-6 lg:col-span-8">
+                    <div class="card border border-slate-200 bg-white">
+                        <div class="rounded-t-lg border-b border-slate-200 bg-slate-50 px-6 py-2">
+                            <h2 class="text-lg font-medium"> Keluhan </h2>
+                        </div>
+                        <div class="card-body space-y-4">
+                            <x-textarea wire:model="chief_complaint" rows="5" placeholder="Masukkan keluhan ..." />
+                        </div>
+                    </div>
                     {{-- HASIL PEMERIKSAAN CARD --}}
-                    <div class="card overflow-hidden border border-slate-200 bg-white text-slate-800 shadow-sm">
-                        <div class="border-b border-slate-200 bg-slate-50 px-6 py-2">
+                    <div class="card overflow-hidden border border-slate-200 bg-white text-slate-800">
+                        <div class="rounded-t-lg border-b border-slate-200 bg-slate-50 px-6 py-2">
                             <h2 class="text-lg font-medium">Hasil Pemeriksaan</h2>
                         </div>
-                        <div class="card-body space-y-6 p-6">
-                            <x-textarea wire:model="hasil_text" label="Catatan / Hasil" rows="3"
+                        <div class="card-body space-y-4">
+                            <x-textarea rows="5" wire:model="hasil_text" label="Catatan / Hasil"
                                 placeholder="Masukkan hasil pemeriksaan..."
                             />
 
-                            <div class="grid grid-cols-1 gap-6">
+                            <div class="grid grid-cols-1 gap-4">
                                 @foreach ($hasil_signatures as $index => $sig)
                                     <div class="space-y-2" wire:key="hasil-sig-{{ $index }}">
                                         <div class="flex items-center gap-2">
@@ -103,20 +113,20 @@
                                             ></div>
                                             <div class="absolute bottom-3 right-3 flex gap-2">
                                                 <button
-                                                    class="btn btn-xs h-8 border-slate-200 bg-white/90 px-2 text-slate-700 shadow-sm backdrop-blur hover:bg-white"
+                                                    class="btn btn-xs h-8 border-slate-200 bg-white/90 px-2 text-slate-700 backdrop-blur hover:bg-white"
                                                     type="button" title="Undo" onclick="undoPad('hasil_signature_{{ $index + 1 }}')"
                                                 >
                                                     <i class="ti ti-arrow-back-up text-base"></i> <span class="hidden sm:inline">Undo</span>
                                                 </button>
                                                 <button
-                                                    class="btn btn-xs h-8 border-slate-200 bg-white/90 px-2 text-slate-700 shadow-sm backdrop-blur hover:bg-white"
+                                                    class="btn btn-xs h-8 border-slate-200 bg-white/90 px-2 text-slate-700 backdrop-blur hover:bg-white"
                                                     type="button" title="Redo" onclick="redoPad('hasil_signature_{{ $index + 1 }}')"
                                                 >
                                                     <i class="ti ti-arrow-forward-up text-base"></i> <span
                                                         class="hidden sm:inline">Redo</span>
                                                 </button>
                                                 <button
-                                                    class="btn btn-xs h-8 border-red-100 bg-red-50/90 px-2 text-red-600 shadow-sm backdrop-blur hover:bg-red-100"
+                                                    class="btn btn-xs h-8 border-red-100 bg-red-50/90 px-2 text-red-600 backdrop-blur hover:bg-red-100"
                                                     type="button" title="Bersihkan"
                                                     onclick="clearPad('hasil_signature_{{ $index + 1 }}')"
                                                 >
@@ -136,16 +146,18 @@
                     </div>
 
                     {{-- RESEP CARD --}}
-                    <div class="card overflow-hidden border border-slate-200 bg-white text-slate-800 shadow-sm">
-                        <div class="border-b border-slate-200 bg-slate-50 px-6 py-2">
+                    <div class="card overflow-hidden border border-slate-200 bg-white text-slate-800">
+                        <div class="rounded-t-lg border-b border-slate-200 bg-slate-50 px-6 py-2">
                             <h2 class="flex items-center gap-2 text-lg font-semibold text-slate-800">
-                                <i class="ti ti-prescription text-primary text-xl"></i> Resep Obat
+                                Resep Obat
                             </h2>
                         </div>
-                        <div class="card-body space-y-6 p-6">
-                            <x-textarea wire:model="resep_text" label="Daftar Terapi / Obat" rows="3" placeholder="R/ ..." />
+                        <div class="card-body space-y-4">
+                            <x-textarea rows="5" wire:model="resep_text" label="Daftar Terapi / Obat"
+                                placeholder="Masukkan daftar terapi / obat..."
+                            />
 
-                            <div class="grid grid-cols-1 gap-6">
+                            <div class="grid grid-cols-1 gap-4">
                                 @foreach ($resep_signatures as $index => $sig)
                                     <div class="space-y-2" wire:key="resep-sig-{{ $index }}">
                                         <div class="flex items-center gap-2">
@@ -164,7 +176,7 @@
                                             ></div>
                                             <div class="absolute bottom-3 right-3 flex gap-2">
                                                 <button
-                                                    class="btn btn-xs h-8 border-slate-200 bg-white/90 px-2 text-slate-700 shadow-sm backdrop-blur hover:bg-white"
+                                                    class="btn btn-xs h-8 border-slate-200 bg-white/90 px-2 text-slate-700 backdrop-blur hover:bg-white"
                                                     type="button" title="Undo"
                                                     onclick="undoPad('resep_signature_{{ $index + 1 }}')"
                                                 >
@@ -172,7 +184,7 @@
                                                         class="hidden sm:inline">Undo</span>
                                                 </button>
                                                 <button
-                                                    class="btn btn-xs h-8 border-slate-200 bg-white/90 px-2 text-slate-700 shadow-sm backdrop-blur hover:bg-white"
+                                                    class="btn btn-xs h-8 border-slate-200 bg-white/90 px-2 text-slate-700 backdrop-blur hover:bg-white"
                                                     type="button" title="Redo"
                                                     onclick="redoPad('resep_signature_{{ $index + 1 }}')"
                                                 >
@@ -180,7 +192,7 @@
                                                         class="hidden sm:inline">Redo</span>
                                                 </button>
                                                 <button
-                                                    class="btn btn-xs h-8 border-red-100 bg-red-50/90 px-2 text-red-600 shadow-sm backdrop-blur hover:bg-red-100"
+                                                    class="btn btn-xs h-8 border-red-100 bg-red-50/90 px-2 text-red-600 backdrop-blur hover:bg-red-100"
                                                     type="button" title="Bersihkan"
                                                     onclick="clearPad('resep_signature_{{ $index + 1 }}')"
                                                 >
@@ -206,6 +218,7 @@
                     <a class="btn btn-soft btn-secondary" href="{{ route('encounter.index') }}" wire:navigate>Batal</a>
                     <button class="btn btn-primary" type="button" x-on:click="$dispatch('capture-signatures')">
                         <i class="ti ti-check"></i> Simpan & Selesai
+                        <div class="loading loading-spinner" wire:loading></div>
                     </button>
                 </div>
             </div>

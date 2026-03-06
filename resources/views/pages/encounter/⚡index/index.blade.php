@@ -454,7 +454,7 @@
         <form wire:submit="saveObservation">
             <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
                 <div class="col-span-2">
-                    <x-textarea label="Keluhan Utama" rows="5" wire:model="chief_complaint" />
+                    <x-textarea label="Keluhan" rows="5" wire:model="chief_complaint" />
                 </div>
 
                 <div class="space-y-4">

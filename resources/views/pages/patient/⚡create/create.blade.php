@@ -18,14 +18,14 @@
                         <h2 class="card-title">Identitas Utama</h2>
                         <x-toggle wire:model="is_active" label="Status Aktif" />
                         <x-input wire:model="medical_record_number" label="No. Rekam Medis *" readonly />
-                        <x-input wire:model="nik" label="NIK" placeholder="16 digit NIK" maxlength="16" />
+                        {{-- <x-input wire:model="nik" label="NIK" placeholder="16 digit NIK" maxlength="16" /> --}}
 
                         <x-input wire:model="full_name" label="Nama Lengkap *" />
                         <x-select.styled wire:model="gender" label="Jenis Kelamin *" :options="\App\Enums\GenderEnum::choices()" select="label:label|value:value" />
                         <x-date wire:model="birth_date" label="Tanggal Lahir" />
 
                         <x-input wire:model="mobile_phone" label="No. Handphone / WA" />
-                        <x-input type="email" wire:model="email" label="Email" />
+                        <x-input wire:model="family_name" label="Nama Keluarga" />
                     </div>
                 </div>
 
@@ -86,10 +86,10 @@
                                     searchable
                                 />
                             @else
-                                <x-select.styled label="Desa" placeholder="Pilih Kecamatan terlebih dahulu" disabled />
+                                <x-select.styled label="Desa *" placeholder="Pilih Kecamatan terlebih dahulu" disabled />
                             @endif
                         </div>
-                        <x-textarea wire:model="address" rows="2" label="Alamat" />
+                        <x-input wire:model="address" label="Alamat" />
 
                     </div>
                 </div>

@@ -163,7 +163,7 @@ new class extends Component
             ]
         );
 
-        $this->toast()->success('Data pemeriksaan berhasil diperbarui.')->send();
+        $this->toast()->success('Data pemeriksaan berhasil diperbarui.')->flash()->send();
 
         return to_route('encounter.index');
     }
