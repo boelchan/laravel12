@@ -20,8 +20,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // Blaze::optimize()
-        //     ->in(resource_path('views/components'))
-        //     ->in(resource_path('views/pages'));
+        Blaze::optimize()
+            ->in(resource_path('views/components'))
+            ->in(resource_path('views/pages'));
+        
+        if (env('APP_ENV') === 'local') {
+            Blaze::debug();
+        }
     }
 }
