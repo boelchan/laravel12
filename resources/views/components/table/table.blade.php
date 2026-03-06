@@ -10,5 +10,4 @@
 </div>
 <div class="mt-3">
     {{ $paginate->links() }}
-    {{-- {{ $paginate->links('components.table.pagination') }} --}}
 </div>

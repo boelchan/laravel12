@@ -11,7 +11,7 @@
             </div>
         </div>
         @can('kunjungan-tambah')
-            <button class="btn btn-soft btn-primary btn-sm" wire:click="openModalEncounter">
+            <button class="btn btn-primary btn-sm" wire:click="openModalEncounter">
                 <i class="ti ti-plus text-lg"></i> Tambah
             </button>
         @endcan

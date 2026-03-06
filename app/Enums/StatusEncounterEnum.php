@@ -23,11 +23,11 @@ enum StatusEncounterEnum: string
     public function badge(): string
     {
         return match ($this) {
-            static::REGISTERED => '<span class="badge badge-info h-auto">' . static::REGISTERED->label() . '</span>',
-            static::ARRIVED => '<span class="badge badge-primary h-auto">' . static::ARRIVED->label() . '</span>',
-            static::INPROGRESS => '<span class="badge badge-warning h-auto">' . static::INPROGRESS->label() . '</span>',
-            static::FINISHED => '<span class="badge badge-success h-auto">' . static::FINISHED->label() . '</span>',
-            static::CANCELLED => '<span class="badge badge-error h-auto">' . static::CANCELLED->label() . '</span>',
+            static::REGISTERED => '<span class="badge badge-soft badge-info h-auto">' . static::REGISTERED->label() . '</span>',
+            static::ARRIVED => '<span class="badge badge-soft badge-primary h-auto">' . static::ARRIVED->label() . '</span>',
+            static::INPROGRESS => '<span class="badge badge-soft badge-warning h-auto">' . static::INPROGRESS->label() . '</span>',
+            static::FINISHED => '<span class="badge badge-soft badge-success h-auto">' . static::FINISHED->label() . '</span>',
+            static::CANCELLED => '<span class="badge badge-soft badge-error h-auto">' . static::CANCELLED->label() . '</span>',
         };
     }
 

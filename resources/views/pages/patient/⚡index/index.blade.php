@@ -67,9 +67,9 @@
                         <td class="p-2"> {{ $d->mobile_phone ?? ($d->phone ?? '-') }} </td>
                         <td class="p-2">
                             @if ($d->is_active)
-                                <div class="badge badge-success">Aktif</div>
+                                <div class="badge badge-soft badge-success">Aktif</div>
                             @else
-                                <div class="badge badge-error">Tidak Aktif</div>
+                                <div class="badge badge-soft badge-error">Tidak Aktif</div>
                             @endif
                         </td>
                         <td class="flex gap-1 p-2">
