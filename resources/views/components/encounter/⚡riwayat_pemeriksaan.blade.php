@@ -27,7 +27,12 @@ new class extends Component {
 ?>
 
 <div>
-    <x-modal class="h-[90vh]" title="Riwayat Pemeriksaan" wire="showHistoryModal" size="6xl">
+    <x-modal
+        class="h-[90vh]"
+        title="Riwayat Pemeriksaan"
+        wire="showHistoryModal"
+        size="6xl"
+    >
         <div class="space-y-4">
             @if ($patient)
                 <div class="flex gap-4">
@@ -98,6 +103,35 @@ new class extends Component {
                         <p class="font-bold">KELUHAN</p>
                         <p>{{ $enc->chief_complaint }}</p>
                     </div>
+                    <div class="card-body border-b border-slate-200 p-4">
+                        <p class="font-bold">Dokumen</p>
+                        @if ($enc->documents && count($enc->documents) > 0)
+                            <div class="mt-4 space-y-2">
+                                <div class="grid grid-cols-1 gap-2">
+                                    @foreach ($enc->documents as $doc)
+                                        <div class="flex items-center justify-between rounded-lg border border-slate-100 bg-slate-50 p-2">
+                                            <div class="flex items-center gap-2 overflow-hidden">
+                                                <i class="ti ti-file text-slate-500"></i>
+                                                <span
+                                                    class="truncate text-xs"
+                                                    title="{{ $doc->name }}"
+                                                >{{ $doc->name }}</span>
+                                            </div>
+                                            <div class="flex gap-1">
+                                                <button
+                                                    class="btn btn-ghost btn-primary btn-square btn-xs"
+                                                    type="button"
+                                                    wire:click="$dispatch('open_preview', ['{{ $doc->file_path }}'])"
+                                                >
+                                                    <i class="ti ti-eye text-base text-blue-500"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                        @endif
+                    </div>
                     @can('kunjungan-edit-pemeriksaan')
                         @if ($enc->status == 'finished')
                             <div class="card-body p-4">
@@ -126,7 +160,10 @@ new class extends Component {
                                                 <div class="space-y-2">
                                                     @foreach ($hasilDraw->signatures as $sig)
                                                         @if ($sig && strlen($sig) > 100)
-                                                            <img class="h-full w-full object-contain" src="{{ $sig }}" />
+                                                            <img
+                                                                class="h-full w-full object-contain"
+                                                                src="{{ $sig }}"
+                                                            />
                                                         @endif
                                                     @endforeach
                                                 </div>
@@ -155,7 +192,10 @@ new class extends Component {
                                                 <div class="space-y-2">
                                                     @foreach ($resepDraw->signatures as $sig)
                                                         @if ($sig && strlen($sig) > 100)
-                                                            <img class="h-full w-full object-contain" src="{{ $sig }}" />
+                                                            <img
+                                                                class="h-full w-full object-contain"
+                                                                src="{{ $sig }}"
+                                                            />
                                                         @endif
                                                     @endforeach
                                                 </div>

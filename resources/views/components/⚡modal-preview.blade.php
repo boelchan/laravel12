@@ -14,6 +14,13 @@ new class extends Component
         $this->filePath = asset('storage/' . $path);
         $this->showModal = true;
     }
+
+    public function close()
+    {
+        $this->showModal = false;
+        $this->filePath = null;
+    }
+
 };
 ?>
 
@@ -23,7 +30,7 @@ new class extends Component
         wire="showModal"
         z-index="z-80"
     >
-        <div class="flex justify-center p-4">
+        <div class="flex justify-center">
             @if ($filePath)
                 @php
                     $ext = pathinfo($filePath, PATHINFO_EXTENSION);
@@ -45,11 +52,7 @@ new class extends Component
         </div>
 
         <x-slot:footer>
-            <x-button
-                label="Tutup"
-                color="slate"
-                wire="closeModal"
-            />
+            <button class="btn btn-secondary btn-ghost" wire:click="close">Tutup</button>
         </x-slot:footer>
     </x-modal>
 </div>
