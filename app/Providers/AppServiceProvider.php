@@ -23,9 +23,5 @@ class AppServiceProvider extends ServiceProvider
         Blaze::optimize()
             ->in(resource_path('views/components'), memo:true)
             ->in(resource_path('views/pages'));
-        
-        if (env('APP_ENV') === 'local') {
-            Blaze::debug();
-        }
     }
 }

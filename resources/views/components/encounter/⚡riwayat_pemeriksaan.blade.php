@@ -98,7 +98,7 @@ new class extends Component {
                         <p class="font-bold">KELUHAN</p>
                         <p>{{ $enc->chief_complaint }}</p>
                     </div>
-                    @can('pasien-riwayat-pemeriksaan')
+                    @can('kunjungan-edit-pemeriksaan')
                         @if ($enc->status == 'finished')
                             <div class="card-body p-4">
 

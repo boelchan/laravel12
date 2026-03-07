@@ -5,14 +5,17 @@ use App\Models\VitalSign;
 use App\Models\Anthropometry;
 use App\Models\Hasil;
 use App\Models\Resep;
+use App\Models\Document;
 use App\Enums\StatusEncounterEnum;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 use TallStackUi\Traits\Interactions;
 
 new class extends Component
 {
-    use Interactions;
+    use Interactions, WithFileUploads;
 
     public $encounter;
 
@@ -23,6 +26,8 @@ new class extends Component
 
     public $hasil_signatures = [];
     public $resep_signatures = [];
+    public $documents = [];
+    public $uploads = [];
 
     public function mount(Encounter $encounter)
     {
@@ -63,6 +68,9 @@ new class extends Component
 
         $resepDraw = Resep::where('encounter_id', $this->encounter->id)->where('tipe', 'draw')->first();
         $this->resep_signatures = $resepDraw->signatures ?? [''];
+
+        // Load Documents
+        $this->documents = $this->encounter->documents;
     }
 
     public function addSignature($type)
@@ -82,6 +90,34 @@ new class extends Component
         } else {
             unset($this->resep_signatures[$index]);
             $this->resep_signatures = array_values($this->resep_signatures);
+        }
+    }
+
+    public function deleteDocument($id)
+    {
+        $document = Document::find($id);
+        if ($document) {
+            Storage::disk('public')->delete($document->file_path);
+            $document->delete();
+            $this->documents = $this->encounter->documents()->get();
+            $this->toast()->success('Dokumen berhasil dihapus.')->send();
+        }
+    }
+
+    public function updatedUploads()
+    {
+        if ($this->uploads) {
+            foreach ($this->uploads as $file) {
+                $path = $file->store('documents/' . $this->encounter->id, 'public');
+                Document::create([
+                    'encounter_id' => $this->encounter->id,
+                    'name' => $file->getClientOriginalName(),
+                    'file_path' => $path,
+                ]);
+            }
+            $this->uploads = [];
+            $this->documents = $this->encounter->documents()->get();
+            $this->toast()->success('Dokumen berhasil diunggah.')->send();
         }
     }
 

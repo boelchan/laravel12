@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('vital_signs', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('encounter_id')->constrained('encounters');
+            $table->foreignId('encounter_id')->constrained('encounters')->onDelete('cascade');
             $table->integer('systolic')->nullable();
             $table->integer('diastolic')->nullable();
             $table->float('heart_rate', 1)->nullable();

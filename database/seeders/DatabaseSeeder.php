@@ -37,7 +37,8 @@ class DatabaseSeeder extends Seeder
             ['name' => 'pasien-riwayat-pemeriksaan', 'guard_name' => 'web'],
             ['name' => 'kunjungan-list', 'guard_name' => 'web'],
             ['name' => 'kunjungan-tambah', 'guard_name' => 'web'],
-            ['name' => 'kunjungan-edit-status', 'guard_name' => 'web'],
+            ['name' => 'kunjungan-edit-status-hari-ini', 'guard_name' => 'web'],
+            ['name' => 'kunjungan-edit-status-semua', 'guard_name' => 'web'],
             ['name' => 'kunjungan-edit-observasi', 'guard_name' => 'web'],
             ['name' => 'kunjungan-edit-pemeriksaan', 'guard_name' => 'web'],
             ['name' => 'apotek-list', 'guard_name' => 'web'],
@@ -67,7 +68,8 @@ class DatabaseSeeder extends Seeder
             'pasien-riwayat-pemeriksaan',
             'kunjungan-list',
             'kunjungan-tambah',
-            'kunjungan-edit-status',
+            'kunjungan-edit-status-hari-ini',
+            'kunjungan-edit-status-semua',
             'kunjungan-edit-observasi',
             'kunjungan-edit-pemeriksaan',
             'apotek-list',
@@ -86,7 +88,7 @@ class DatabaseSeeder extends Seeder
             'pasien-aktifkan',
             'kunjungan-list',
             'kunjungan-tambah',
-            'kunjungan-edit-status',
+            'kunjungan-edit-status-hari-ini',
             'kunjungan-edit-observasi',
         ]);
 

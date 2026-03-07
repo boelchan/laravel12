@@ -73,6 +73,56 @@
                             </div>
                         </div>
                     </div>
+                    <div class="card border border-slate-200 bg-white">
+                        <div class="rounded-t-lg border-b border-slate-200 bg-slate-50 px-6 py-2">
+                            <h2 class="text-lg font-medium">
+                                Dokumen
+                            </h2>
+                        </div>
+                        <div class="card-body space-y-4">
+                            <div x-data="{ isUploading: false, progress: 0 }" x-on:livewire-upload-start="isUploading = true"
+                                x-on:livewire-upload-finish="isUploading = false" x-on:livewire-upload-error="isUploading = false"
+                                x-on:livewire-upload-progress="progress = $event.detail.progress">
+                                <label class="label mb-1 block text-sm font-medium text-slate-700">Pilih Dokumen (Gambar/PDF)</label>
+                                <input class="file-input file-input-bordered file-input-sm w-full" type="file"
+                                    wire:model="uploads" multiple />
+
+                                <div class="mt-2" x-show="isUploading">
+                                    <progress class="progress progress-primary w-full" max="100"
+                                        x-bind:value="progress"></progress>
+                                </div>
+                            </div>
+
+                            @if ($documents && count($documents) > 0)
+                                <div class="mt-4 space-y-2">
+                                    <h3 class="text-sm font-medium text-slate-700">Dokumen Terunggah:</h3>
+                                    <div class="grid grid-cols-1 gap-2">
+                                        @foreach ($documents as $doc)
+                                            <div
+                                                class="flex items-center justify-between rounded-lg border border-slate-100 bg-slate-50 p-2">
+                                                <div class="flex items-center gap-2 overflow-hidden">
+                                                    <i class="ti ti-file text-slate-500"></i>
+                                                    <span class="truncate text-xs"
+                                                        title="{{ $doc->name }}">{{ $doc->name }}</span>
+                                                </div>
+                                                <div class="flex gap-1">
+                                                    <button class="btn btn-ghost btn-square btn-xs" type="button"
+                                                        wire:click="$dispatch('open_preview', ['{{ $doc->file_path }}'])">
+                                                        <i class="ti ti-eye text-blue-500 text-base"></i>
+                                                    </button>
+                                                    <button class="btn btn-ghost btn-square btn-xs" type="button"
+                                                        wire:click="deleteDocument({{ $doc->id }})"
+                                                        wire:confirm="Hapus dokumen ini?">
+                                                        <i class="ti ti-trash text-red-500 text-base"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            @endif
+                        </div>
+                    </div>
                 </div>
 
                 {{-- RIGHT COLUMN: HASIL & RESEP --}}
@@ -227,6 +277,9 @@
 
     {{-- HISTORY MODAL --}}
     <livewire:encounter.riwayat_pemeriksaan />
+
+    {{-- Modal Preview --}}
+    <livewire:modal-preview />
 </div>
 
 @push('styles')

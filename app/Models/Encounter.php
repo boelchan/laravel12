@@ -56,6 +56,11 @@ class Encounter extends Model
         return $this->hasMany(Resep::class);
     }
 
+    public function documents()
+    {
+        return $this->hasMany(Document::class);
+    }
+
     public function getStatusBadgeAttribute()
     {
         return StatusEncounterEnum::from($this->status)->badge();

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('anthropometries', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('encounter_id')->constrained('encounters');
+            $table->foreignId('encounter_id')->constrained('encounters')->onDelete('cascade');
             $table->integer('body_height')->nullable();
             $table->integer('body_weight')->nullable();
             $table->integer('created_by')->nullable();

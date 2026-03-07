@@ -182,7 +182,7 @@
                             {!! $d->statusBadge !!}
                         </td>
                         <td class="p-2">
-                            @can('kunjungan-edit-status')
+                            @canany(['kunjungan-edit-status-hari-ini', 'kunjungan-edit-status-semua'])
                                 <div class="flex gap-2">
 
                                     @if ($d->visit_date == now()->format('Y-m-d'))

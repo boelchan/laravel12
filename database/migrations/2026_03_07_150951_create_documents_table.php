@@ -11,14 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('reseps', function (Blueprint $table) {
+        Schema::create('documents', function (Blueprint $table) {
             $table->id();
             $table->foreignId('encounter_id')->constrained('encounters')->onDelete('cascade');
-            $table->text('resep')->nullable();
-            $table->longText('signature_1')->nullable();
-            $table->longText('signature_2')->nullable();
-            $table->string('tipe', 20)->nullable();
-            $table->integer('created_by')->nullable();
+            $table->string('name')->nullable();
+            $table->string('file_path');
             $table->timestamps();
         });
     }
@@ -28,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('reseps');
+        Schema::dropIfExists('documents');
     }
 };
