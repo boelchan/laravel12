@@ -20,7 +20,7 @@
                             <h2 class="flex items-center gap-2 text-lg font-semibold text-slate-800">
                                 Pasien
                             </h2>
-                            <button class="btn btn-primary btn-square btn-soft btn-xs" type="button"
+                            <button class="btn btn-success btn-square btn-xs" type="button"
                                 wire:click="$dispatch('open-history-modal', [{{ $encounter->patient_id }}])"
                             ><i class="ti ti-history text-lg"></i> </button>
                         </div>

@@ -89,7 +89,7 @@
             <div class="flex justify-between">
                 <div class="flex items-center gap-2">
                     <span class="font-semibold text-slate-800">Pencarian</span>
-                    <button class="btn btn-soft btn-error btn-xs w-6" type="button" wire:click="resetFilters">
+                    <button class="btn btn-outline btn-error btn-xs w-6" type="button" wire:click="resetFilters">
                         <i class="ti ti-filter-x text-lg"></i>
                     </button>
                 </div>
@@ -212,7 +212,7 @@
                                     @endcan
 
                                     @if ($d->status == 'cancelled')
-                                        <button class="btn btn-sm btn-square btn-success btn-soft" title="Pulihkan Kunjungan (Pasien Datang)"
+                                        <button class="btn btn-sm btn-square btn-success btn-outline" title="Pulihkan Kunjungan (Pasien Datang)"
                                             wire:click="setArrived({{ $d->id }})"
                                         >
                                             <i class="ti ti-refresh text-lg"></i>
@@ -220,7 +220,7 @@
                                     @endif
 
                                     @if ($d->status == 'registered' || $d->status == 'arrived')
-                                        <button class="btn btn-sm btn-square btn-error btn-soft" title="Batalkan Kunjungan"
+                                        <button class="btn btn-sm btn-square btn-error btn-outline" title="Batalkan Kunjungan"
                                             wire:click="$js.confirmBatal({{ $d->id }}, '{{ addslashes($d->patient->full_name) }}')"
                                         >
                                             <i class="ti ti-x text-lg"></i>
@@ -308,7 +308,7 @@
                                                 <td class="flex items-center justify-end gap-2 px-4 py-2 text-right">
                                                     {!! $history->statusBadge !!}
                                                     @if ($history->status == 'cancelled' && $history->visit_date == $visit_date)
-                                                        <button class="btn btn-xs btn-success btn-soft" title="Pulihkan ke Pasien Datang"
+                                                        <button class="btn btn-xs btn-success btn-outline" title="Pulihkan ke Pasien Datang"
                                                             wire:click="setArrived({{ $history->id }})"
                                                         >
                                                             <i class="ti ti-refresh"></i> Pulihkan

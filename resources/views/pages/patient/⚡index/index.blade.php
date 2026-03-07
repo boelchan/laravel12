@@ -73,7 +73,7 @@
                             @endif
                         </td>
                         <td class="flex gap-1 p-2">
-                            <button class="btn btn-sm btn-primary btn-square btn-soft" title="Riwayat"
+                            <button class="btn btn-sm btn-success btn-square" title="Riwayat"
                                 wire:click="$dispatch('open-history-modal', [{{ $d->id }}])"
                             >
                                 <i class="ti ti-history text-lg"></i></button>
@@ -84,13 +84,13 @@
                                 >
                                     <i class="ti ti-edit text-lg"></i></a>
 
-                                <button class="btn btn-sm btn-square btn-error btn-soft" title="Hapus"
+                                <button class="btn btn-sm btn-square btn-error btn-ghost" title="Hapus"
                                     wire:click="$js.confirmDelete({{ $d->id }}, '{{ addslashes($d->full_name) }}')"
                                 >
                                     <i class="ti ti-trash text-lg"></i> </button>
                             @else
                                 @can('pasien-aktifkan')
-                                    <button class="btn btn-sm btn-square btn-success btn-soft" title="Aktifkan"
+                                    <button class="btn btn-sm btn-square btn-success btn-outline" title="Aktifkan"
                                         wire:click="$js.confirmAktifkanPasien({{ $d->id }}, '{{ addslashes($d->full_name) }}')"
                                     >
                                         <i class="ti ti-refresh text-lg"></i>
