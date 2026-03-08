@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\StatusEncounterEnum;
 use App\Livewire\Traits\WithTableX;
 use App\Models\Encounter;
 use App\Models\Patient;
@@ -51,6 +52,17 @@ new class extends Component
     }
 
 
+    public function resetFilters()
+    {
+        foreach (get_object_vars($this) as $property => $value) {
+            if (str_starts_with($property, 'search_')) {
+                $this->$property = null;
+            }
+        }
+    
+        $this->search_visit_date = date('Y-m-d');
+    }
+
     #[Computed]
     public function dataTable()
     {
@@ -101,7 +113,7 @@ new class extends Component
             'cancelled' => $data->where('status', 'cancelled')->count(),
         ];
     }
-        
+
 
     #[Computed]
     public function patientList()
@@ -178,6 +190,25 @@ new class extends Component
         $this->toast()->success('Kunjungan berhasil ditambahkan')->send();
     }
 
+    public function pulihkanKunjungan($id)
+    {
+        $encounter = Encounter::findOrFail($id);
+
+        $status = StatusEncounterEnum::REGISTERED;
+        if ($encounter->arrived_at) {
+            $status = StatusEncounterEnum::ARRIVED;
+        }
+        if ($encounter->inprogress_at) {
+            $status = StatusEncounterEnum::INPROGRESS;
+        }
+
+        $encounter->update([
+            'status' => $status,
+        ]);
+
+        $this->toast()->success('Kunjungan dipulihkan')->send();
+    }
+
     public function setArrived($id)
     {
         $encounter = Encounter::findOrFail($id);
@@ -186,7 +217,6 @@ new class extends Component
             'arrived_at' => now(),
         ]);
 
-        $this->modalEncounter = false;
         $this->toast()->success('Status kunjungan diperbarui menjadi Datang')->send();
     }
 

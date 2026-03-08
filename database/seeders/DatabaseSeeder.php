@@ -37,10 +37,8 @@ class DatabaseSeeder extends Seeder
             ['name' => 'pasien-riwayat-pemeriksaan', 'guard_name' => 'web'],
             ['name' => 'kunjungan-list', 'guard_name' => 'web'],
             ['name' => 'kunjungan-tambah', 'guard_name' => 'web'],
-            ['name' => 'kunjungan-edit-status-hari-ini', 'guard_name' => 'web'],
-            ['name' => 'kunjungan-edit-status-semua', 'guard_name' => 'web'],
-            ['name' => 'kunjungan-edit-observasi', 'guard_name' => 'web'],
             ['name' => 'kunjungan-edit-pemeriksaan', 'guard_name' => 'web'],
+            ['name' => 'kunjungan-edit-yang-lewat-hari', 'guard_name' => 'web'],
             ['name' => 'apotek-list', 'guard_name' => 'web'],
             ['name' => 'rekap-kunjungan', 'guard_name' => 'web'],
             ['name' => 'rekap-pasien', 'guard_name' => 'web'],
@@ -68,9 +66,7 @@ class DatabaseSeeder extends Seeder
             'pasien-riwayat-pemeriksaan',
             'kunjungan-list',
             'kunjungan-tambah',
-            'kunjungan-edit-status-hari-ini',
-            'kunjungan-edit-status-semua',
-            'kunjungan-edit-observasi',
+            'kunjungan-edit-yang-lewat-hari',
             'kunjungan-edit-pemeriksaan',
             'apotek-list',
             'rekap-kunjungan',
@@ -88,8 +84,7 @@ class DatabaseSeeder extends Seeder
             'pasien-aktifkan',
             'kunjungan-list',
             'kunjungan-tambah',
-            'kunjungan-edit-status-hari-ini',
-            'kunjungan-edit-observasi',
+            'kunjungan-edit-yang-lewat-hari',
         ]);
 
         $user = Role::create(
