@@ -176,7 +176,10 @@
 
             <tbody>
                 @forelse ($this->dataTable as $index => $d)
-                    <tr class="bg-white hover:bg-neutral-50" wire:key="encounter-{{ $d->id }}" >
+                    <tr
+                        class="bg-white hover:bg-neutral-50"
+                        wire:key="encounter-{{ $d->id }}"
+                    >
                         <td class="p-2"> {{ $d->no_antrian }} </td>
                         <td class="p-2"> {{ $d->visit_date }} </td>
                         <td class="p-2">
@@ -252,7 +255,7 @@
                             @endif
                         </td>
                         <td class="p-2">
-                            @if ($d->visit_date == date('Y-m-d') || (auth()->user()->can('kunjungan-edit-yang-lewat-hari') && $d->visit_date <= date('Y-m-d')) )
+                            @if ($d->visit_date == date('Y-m-d') || (auth()->user()->can('kunjungan-edit-yang-lewat-hari') && $d->visit_date <= date('Y-m-d')))
                                 <div class="flex gap-2">
                                     @if ($d->status == 'registered')
                                         <button
