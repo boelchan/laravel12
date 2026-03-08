@@ -287,6 +287,15 @@
                                         @endif
                                     @endcan
 
+                                    @if ($d->status == 'registered' && $d->no_antrian == $antrianTerakhir)
+                                        <button
+                                            class="btn btn-sm btn-square btn-error btn-ghost"
+                                            title="Hapus Kunjungan"
+                                            wire:click="$js.confirmDelete({{ $d->id }}, '{{ addslashes($d->patient->full_name) }}')"
+                                        >
+                                            <i class="ti ti-trash text-lg"></i>
+                                        </button>
+                                    @endif
                                 </div>
                             @endif
                         </td>

@@ -44,11 +44,15 @@ new class extends Component
 
     public $encounter;
 
+    public $antrianTerakhir;
+
     public function mount()
     {
         if (empty($this->search_visit_date)) {
             $this->search_visit_date = now()->format('Y-m-d');
         }
+
+        $this->antrianTerakhir = Encounter::antrianTerakhir($this->search_visit_date);
     }
 
 

@@ -16,18 +16,26 @@ class Encounter extends Model
     {
         return DB::transaction(function () use ($data) {
 
-            $countEncounter = self::where('visit_date', $data['visit_date'])
-                ->lockForUpdate()
-                ->count();
+            $antrian = self::antrianTerakhir($data['visit_date']);
 
             return parent::create([
                 'uuid' => Str::uuid(),
                 'patient_id' => $data['patient_id'],
                 'visit_date' => $data['visit_date'],
-                'no_antrian' => $countEncounter + 1,
+                'no_antrian' => $antrian + 1,
                 'status' => StatusEncounterEnum::REGISTERED,
                 'created_by' => Auth::id(),
             ]);
+        });
+    }
+
+    public static function antrianTerakhir($visit_date)
+    {
+        return DB::transaction(function () use ($visit_date) {
+
+            return self::where('visit_date', $visit_date)
+                ->lockForUpdate()
+                ->count();
         });
     }
 

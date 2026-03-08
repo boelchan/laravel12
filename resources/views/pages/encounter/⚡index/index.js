@@ -1,7 +1,16 @@
+this.$js.confirmDelete = (id, nama) => {
+    $tsui.interaction('dialog')
+        .wireable()
+        .question('Hapus ' + nama + ' ?', 'Data yang sudah dihapus tidak dapat dikembalikan')
+        .cancel('Kembali')
+        .confirm('Ya, Hapus', 'batalkan', id)
+        .send();
+}
+
 this.$js.confirmBatal = (id, nama) => {
     $tsui.interaction('dialog')
         .wireable()
-        .question('Batalkan ' + nama + ' ?', 'Data yang sudah dibatalkan tidak dapat dikembalikan')
+        .question('Batalkan ' + nama)
         .cancel('Kembali')
         .confirm('Ya, Batal', 'batalkan', id)
         .send();
