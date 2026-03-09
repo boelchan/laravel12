@@ -27,9 +27,7 @@
                                 <li><i class="ti ti-calendar text-lg"></i> {{ $encounter->visit_date }}</li>
                                 <li><i class="ti ti-user text-lg"></i>
                                     {{ $encounter->patient->full_name }}
-                                    <button
-                                        class="btn btn-success btn-square btn-xs"
-                                        type="button"
+                                    <button class="btn btn-success btn-square btn-xs" type="button"
                                         wire:click="$dispatch('open-history-modal', [{{ $encounter->patient_id }}])"
                                     ><i class="ti ti-history text-lg"></i> </button>
                                 </li>
@@ -53,36 +51,13 @@
                         </div>
                         <div class="card-body space-y-4">
                             <div class="grid grid-cols-3 gap-2">
-                                <x-input
-                                    type="number"
-                                    wire:model="systolic"
-                                    label="Systolic"
-                                />
-                                <x-input
-                                    type="number"
-                                    wire:model="diastolic"
-                                    label="Diastolic"
-                                />
-                                <x-input
-                                    type="number"
-                                    wire:model="body_temperature"
-                                    label="Suhu"
-                                    suffix="°C"
-                                />
+                                <x-input type="number" wire:model="systolic" label="Systolic" />
+                                <x-input type="number" wire:model="diastolic" label="Diastolic" />
+                                <x-input type="number" wire:model="body_temperature" label="Suhu" suffix="°C" />
                             </div>
                             <div class="grid grid-cols-3 gap-2">
-                                <x-input
-                                    type="number"
-                                    suffix="kg"
-                                    wire:model="body_weight"
-                                    label="BB"
-                                />
-                                <x-input
-                                    type="number"
-                                    suffix="cm"
-                                    wire:model="body_height"
-                                    label="TB"
-                                />
+                                <x-input type="number" suffix="kg" wire:model="body_weight" label="BB" />
+                                <x-input type="number" suffix="cm" wire:model="body_height" label="TB" />
                             </div>
                         </div>
                     </div>
@@ -101,22 +76,13 @@
                                 x-on:livewire-upload-progress="progress = $event.detail.progress"
                             >
                                 <label class="label mb-1 block text-sm font-medium text-slate-700">Pilih Dokumen (Gambar/PDF)</label>
-                                <input
-                                    class="file-input file-input-bordered file-input-sm w-full"
-                                    type="file"
-                                    wire:model="uploads"
+                                <input class="file-input file-input-bordered file-input-sm w-full" type="file" wire:model="uploads"
                                     multiple
                                 />
 
-                                <div
-                                    class="mt-2"
-                                    x-show="isUploading"
-                                >
-                                    <progress
-                                        class="progress progress-primary w-full"
-                                        max="100"
-                                        x-bind:value="progress"
-                                    ></progress>
+                                <div class="mt-2" x-show="isUploading">
+                                    <progress class="progress progress-primary w-full" max="100"
+                                        x-bind:value="progress"></progress>
                                 </div>
                             </div>
 
@@ -129,24 +95,16 @@
                                                 class="flex items-center justify-between rounded-lg border border-slate-100 bg-slate-50 p-2">
                                                 <div class="flex items-center gap-2 overflow-hidden">
                                                     <i class="ti ti-file text-slate-500"></i>
-                                                    <span
-                                                        class="truncate text-xs"
-                                                        title="{{ $doc->name }}"
-                                                    >{{ $doc->name }}</span>
+                                                    <span class="truncate text-xs" title="{{ $doc->name }}">{{ $doc->name }}</span>
                                                 </div>
                                                 <div class="flex gap-1">
-                                                    <button
-                                                        class="btn btn-ghost btn-square btn-xs"
-                                                        type="button"
+                                                    <button class="btn btn-ghost btn-square btn-xs" type="button"
                                                         wire:click="$dispatch('open_preview', ['{{ $doc->file_path }}'])"
                                                     >
                                                         <i class="ti ti-eye text-base text-blue-500"></i>
                                                     </button>
-                                                    <button
-                                                        class="btn btn-ghost btn-square btn-xs"
-                                                        type="button"
-                                                        wire:click="deleteDocument({{ $doc->id }})"
-                                                        wire:confirm="Hapus dokumen ini?"
+                                                    <button class="btn btn-ghost btn-square btn-xs" type="button"
+                                                        wire:click="deleteDocument({{ $doc->id }})" wire:confirm="Hapus dokumen ini?"
                                                     >
                                                         <i class="ti ti-trash text-base text-red-500"></i>
                                                     </button>
@@ -167,11 +125,7 @@
                             <h2 class="text-lg font-medium"> Keluhan </h2>
                         </div>
                         <div class="card-body space-y-4">
-                            <x-textarea
-                                wire:model="chief_complaint"
-                                rows="5"
-                                placeholder="Masukkan keluhan ..."
-                            />
+                            <x-textarea wire:model="chief_complaint" rows="5" placeholder="Masukkan keluhan ..." />
                         </div>
                     </div>
                     {{-- HASIL PEMERIKSAAN CARD --}}
@@ -180,44 +134,30 @@
                             <h2 class="text-lg font-medium">Hasil Pemeriksaan</h2>
                         </div>
                         <div class="card-body space-y-4">
-                            <x-textarea
-                                rows="5"
-                                wire:model="hasil_text"
-                                label="Catatan / Hasil"
+                            <x-textarea rows="5" wire:model="hasil_text" label="Catatan / Hasil"
                                 placeholder="Masukkan hasil pemeriksaan..."
                             />
 
                             <div class="grid grid-cols-1 gap-4">
                                 @foreach ($hasil_signatures as $index => $sig)
-                                    <div
-                                        class="space-y-2"
-                                        wire:key="hasil-sig-{{ $index }}"
-                                    >
+                                    <div class="space-y-2" wire:key="hasil-sig-{{ $index }}">
                                         <div class="flex items-center gap-2">
                                             <label class="block text-sm font-medium text-slate-700">Hasil {{ $index + 1 }}</label>
-                                            <button
-                                                class="btn btn-sm btn-square btn-error btn-soft"
-                                                type="button"
+                                            <button class="btn btn-sm btn-square btn-error btn-soft" type="button"
                                                 wire:click="removeSignature('hasil', {{ $index }})"
                                             >
                                                 <i class="ti ti-trash text-lg"></i>
                                             </button>
                                         </div>
-                                        <div
-                                            class="signature-container relative"
-                                            wire:ignore
-                                        >
-                                            <div
-                                                class="drawpad-dashed signature-pad h-52 w-full rounded-xl border-2 border-dashed border-slate-300 bg-slate-50 shadow-inner"
-                                                id="hasil_signature_{{ $index + 1 }}"
-                                                data-type="hasil"
+                                        <div class="signature-container relative" wire:ignore>
+                                            <div class="drawpad-dashed signature-pad h-52 w-full rounded-xl border-2 border-dashed border-slate-300 bg-slate-50 shadow-inner"
+                                                id="hasil_signature_{{ $index + 1 }}" data-type="hasil"
                                                 data-index="{{ $index }}"
                                             ></div>
                                             <div class="absolute bottom-3 right-3 flex gap-2">
                                                 <button
                                                     class="btn btn-xs h-8 border-slate-200 bg-white/90 px-2 text-slate-700 backdrop-blur hover:bg-white"
-                                                    type="button"
-                                                    title="Undo"
+                                                    type="button" title="Undo"
                                                     onclick="undoPad('hasil_signature_{{ $index + 1 }}')"
                                                 >
                                                     <i class="ti ti-arrow-back-up text-base"></i> <span
@@ -225,8 +165,7 @@
                                                 </button>
                                                 <button
                                                     class="btn btn-xs h-8 border-slate-200 bg-white/90 px-2 text-slate-700 backdrop-blur hover:bg-white"
-                                                    type="button"
-                                                    title="Redo"
+                                                    type="button" title="Redo"
                                                     onclick="redoPad('hasil_signature_{{ $index + 1 }}')"
                                                 >
                                                     <i class="ti ti-arrow-forward-up text-base"></i> <span
@@ -234,8 +173,7 @@
                                                 </button>
                                                 <button
                                                     class="btn btn-xs h-8 border-red-100 bg-red-50/90 px-2 text-red-600 backdrop-blur hover:bg-red-100"
-                                                    type="button"
-                                                    title="Bersihkan"
+                                                    type="button" title="Bersihkan"
                                                     onclick="clearPad('hasil_signature_{{ $index + 1 }}')"
                                                 >
                                                     <i class="ti ti-trash text-base"></i> <span class="hidden sm:inline">Bersihkan</span>
@@ -246,11 +184,7 @@
                                 @endforeach
                             </div>
                             <div class="mt-4 flex justify-end">
-                                <button
-                                    class="btn btn-sm btn-outline btn-primary"
-                                    type="button"
-                                    wire:click="addSignature('hasil')"
-                                >
+                                <button class="btn btn-sm btn-outline btn-primary" type="button" wire:click="addSignature('hasil')">
                                     <i class="ti ti-plus"></i> Tambah
                                 </button>
                             </div>
@@ -265,45 +199,31 @@
                             </h2>
                         </div>
                         <div class="card-body space-y-4">
-                            <x-textarea
-                                rows="5"
-                                wire:model="resep_text"
-                                label="Daftar Terapi / Obat"
+                            <x-textarea rows="5" wire:model="resep_text" label="Daftar Terapi / Obat"
                                 placeholder="Masukkan daftar terapi / obat..."
                             />
 
                             <div class="grid grid-cols-1 gap-4">
                                 @foreach ($resep_signatures as $index => $sig)
-                                    <div
-                                        class="space-y-2"
-                                        wire:key="resep-sig-{{ $index }}"
-                                    >
+                                    <div class="space-y-2" wire:key="resep-sig-{{ $index }}">
                                         <div class="flex items-center gap-2">
                                             <label class="block text-sm font-medium text-slate-700">Resep {{ $index + 1 }}</label>
-                                            <button
-                                                class="btn btn-sm btn-square btn-error btn-soft"
-                                                type="button"
+                                            <button class="btn btn-sm btn-square btn-error btn-soft" type="button"
                                                 wire:click="removeSignature('resep', {{ $index }})"
                                             >
                                                 <i class="ti ti-trash text-lg"></i>
                                             </button>
                                         </div>
 
-                                        <div
-                                            class="signature-container relative"
-                                            wire:ignore
-                                        >
-                                            <div
-                                                class="drawpad-dashed signature-pad h-52 w-full rounded-xl border-2 border-dashed border-slate-300 bg-slate-50 shadow-inner"
-                                                id="resep_signature_{{ $index + 1 }}"
-                                                data-type="resep"
+                                        <div class="signature-container relative" wire:ignore>
+                                            <div class="drawpad-dashed signature-pad h-52 w-full rounded-xl border-2 border-dashed border-slate-300 bg-slate-50 shadow-inner"
+                                                id="resep_signature_{{ $index + 1 }}" data-type="resep"
                                                 data-index="{{ $index }}"
                                             ></div>
                                             <div class="absolute bottom-3 right-3 flex gap-2">
                                                 <button
                                                     class="btn btn-xs h-8 border-slate-200 bg-white/90 px-2 text-slate-700 backdrop-blur hover:bg-white"
-                                                    type="button"
-                                                    title="Undo"
+                                                    type="button" title="Undo"
                                                     onclick="undoPad('resep_signature_{{ $index + 1 }}')"
                                                 >
                                                     <i class="ti ti-arrow-back-up text-base"></i> <span
@@ -311,8 +231,7 @@
                                                 </button>
                                                 <button
                                                     class="btn btn-xs h-8 border-slate-200 bg-white/90 px-2 text-slate-700 backdrop-blur hover:bg-white"
-                                                    type="button"
-                                                    title="Redo"
+                                                    type="button" title="Redo"
                                                     onclick="redoPad('resep_signature_{{ $index + 1 }}')"
                                                 >
                                                     <i class="ti ti-arrow-forward-up text-base"></i> <span
@@ -320,8 +239,7 @@
                                                 </button>
                                                 <button
                                                     class="btn btn-xs h-8 border-red-100 bg-red-50/90 px-2 text-red-600 backdrop-blur hover:bg-red-100"
-                                                    type="button"
-                                                    title="Bersihkan"
+                                                    type="button" title="Bersihkan"
                                                     onclick="clearPad('resep_signature_{{ $index + 1 }}')"
                                                 >
                                                     <i class="ti ti-trash text-base"></i> <span class="hidden sm:inline">Bersihkan</span>
@@ -332,11 +250,7 @@
                                 @endforeach
                             </div>
                             <div class="mt-4 flex justify-end">
-                                <button
-                                    class="btn btn-sm btn-outline btn-primary"
-                                    type="button"
-                                    wire:click="addSignature('resep')"
-                                >
+                                <button class="btn btn-sm btn-outline btn-primary" type="button" wire:click="addSignature('resep')">
                                     <i class="ti ti-plus"></i> Tambah
                                 </button>
                             </div>
@@ -347,21 +261,10 @@
 
             <div class="mt-10 flex items-center justify-end border-t border-slate-200 pt-6">
                 <div class="flex gap-3">
-                    <a
-                        class="btn btn-soft btn-secondary"
-                        href="{{ route('encounter.index') }}"
-                        wire:navigate
-                    >Batal</a>
-                    <button
-                        class="btn btn-primary"
-                        type="button"
-                        x-on:click="$dispatch('capture-signatures')"
-                    >
+                    <a class="btn btn-soft btn-secondary" href="{{ route('encounter.index') }}" wire:navigate>Batal</a>
+                    <button class="btn btn-primary" type="button" x-on:click="$dispatch('capture-signatures')">
                         <i class="ti ti-check"></i> Simpan & Selesai
-                        <div
-                            class="loading loading-spinner"
-                            wire:loading
-                        ></div>
+                        <div class="loading loading-spinner" wire:loading></div>
                     </button>
                 </div>
             </div>

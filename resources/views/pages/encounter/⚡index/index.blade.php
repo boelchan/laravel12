@@ -11,10 +11,7 @@
             </div>
         </div>
         @can('kunjungan-tambah')
-            <button
-                class="btn btn-primary btn-sm"
-                wire:click="openModalEncounter"
-            >
+            <button class="btn btn-primary btn-sm" wire:click="openModalEncounter">
                 <i class="ti ti-plus text-lg"></i> Tambah
             </button>
         @endcan
@@ -92,21 +89,14 @@
             <div class="flex justify-between">
                 <div class="flex items-center gap-2">
                     <span class="font-semibold text-slate-800">Pencarian</span>
-                    <button
-                        class="btn btn-outline btn-error btn-xs w-6"
-                        type="button"
-                        wire:click="resetFilters"
-                    >
+                    <button class="btn btn-outline btn-error btn-xs w-6" type="button" wire:click="resetFilters">
                         <i class="ti ti-filter-x text-lg"></i>
                     </button>
                 </div>
             </div>
             <div>
                 <div class="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-5">
-                    <x-date
-                        value="{{ request()->search_visit_date }}"
-                        label="Tanggal"
-                        placeholder="cari tanggal..."
+                    <x-date value="{{ request()->search_visit_date }}" label="Tanggal" placeholder="cari tanggal..."
                         wire:model.live.debounce.500ms="search_visit_date"
                     />
                     <x-input
@@ -116,23 +106,11 @@
                         placeholder="cari Nomer Antrian."
                         wire:model.live.debounce.500ms="search_no_antrian"
                     />
-                    <x-input
-                        clearable
-                        label="Nama Pasien"
-                        placeholder="cari nama..."
-                        wire:model.live.debounce.500ms="search_full_name"
-                    />
-                    <x-input
-                        clearable
-                        label="No. RM"
-                        placeholder="cari No. RM..."
+                    <x-input clearable label="Nama Pasien" placeholder="cari nama..." wire:model.live.debounce.500ms="search_full_name" />
+                    <x-input clearable label="No. RM" placeholder="cari No. RM..."
                         wire:model.live.debounce.500ms="search_medical_record_number"
                     />
-                    <x-select.styled
-                        wire:model.live="search_status"
-                        label="Status"
-                        :options="\App\Enums\StatusEncounterEnum::choices()"
-                    />
+                    <x-select.styled wire:model.live="search_status" label="Status" :options="\App\Enums\StatusEncounterEnum::choices()" />
 
                 </div>
             </div>
@@ -140,58 +118,31 @@
         {{-- end filter --}}
 
         <x-table :paginate="$this->dataTable">
-            <x-table.thead
-                class="bg-slate-50"
-                :sortDirection="$sortDirection"
-                :sortField="$sortField"
-            >
-                <x-table.th
-                    label="No"
-                    sort="no_antrian"
-                    width="5%"
-                />
-                <x-table.th
-                    label="Tanggal"
-                    width="15%"
-                />
-                <x-table.th
-                    label="Pasien"
-                    width="35%"
-                />
-                <x-table.th
-                    label="TTV"
-                    width="15%"
-                />
-                <x-table.th
-                    label="BB/TB"
-                    width="15%"
-                />
-                <x-table.th
-                    label="Status"
-                    sort="status"
-                    width="10%"
-                />
+            <x-table.thead class="bg-slate-50" :sortDirection="$sortDirection" :sortField="$sortField">
+                <x-table.th label="No" sort="no_antrian" width="5%" />
+                <x-table.th label="Tanggal" width="15%" />
+                <x-table.th label="Pasien" width="35%" />
+                <x-table.th label="TTV" width="15%" />
+                <x-table.th label="BB/TB" width="15%" />
+                <x-table.th label="Status" sort="status" width="10%" />
                 <x-table.th width="15%" />
             </x-table.thead>
 
             <tbody>
                 @forelse ($this->dataTable as $index => $d)
-                    <tr
-                        class="bg-white hover:bg-neutral-50"
-                        wire:key="encounter-{{ $d->id }}"
-                    >
+                    <tr class="bg-white hover:bg-neutral-50" wire:key="encounter-{{ $d->id }}">
                         <td class="p-2"> {{ $d->no_antrian }} </td>
                         <td class="p-2"> {{ $d->visit_date }} </td>
                         <td class="p-2">
                             {{ $d->patient->medical_record_number }}<br>
                             {{ $d->patient->full_name }}
-                            <button
-                                class="btn btn-xs btn-square btn-primary btn-ghost"
-                                title="Panggil Pasien"
-                                wire:click="$js.speak('Nomor antrian {{ $d->no_antrian }}. atas nama {{ addslashes($d->patient->full_name) }}')"
-                            >
-                                <i class="ti ti-volume text-lg"></i>
-                            </button>
+                            @if ($d->status != 'cancelled')
+                                <button class="btn btn-xs btn-square btn-primary btn-ghost" title="Panggil Pasien"
+                                    wire:click="$js.speak('Nomor antrian {{ $d->no_antrian }}. atas nama {{ addslashes($d->patient->full_name) }}')"
+                                >
+                                    <i class="ti ti-volume text-lg"></i>
+                                </button>
+                            @endif
                         </td>
                         <td class="p-2">
                             @if ($d->vitalSign)
@@ -203,8 +154,7 @@
                             @endif
                             @if ($d->visit_date == date('Y-m-d') || auth()->user()->can('kunjungan-edit-yang-lewat-hari'))
                                 @if ($d->status == 'arrived' || $d->status == 'inprogress')
-                                    <button
-                                        class="btn btn-xs btn-square btn-primary btn-ghost"
+                                    <button class="btn btn-xs btn-square btn-primary btn-ghost"
                                         wire:click="openModalObservation({{ $d->id }})"
                                     >
                                         <i class="ti ti-pencil text-lg"></i>
@@ -222,8 +172,7 @@
                             @endif
                             @if ($d->visit_date == date('Y-m-d') || auth()->user()->can('kunjungan-edit-yang-lewat-hari'))
                                 @if ($d->status == 'arrived' || $d->status == 'inprogress')
-                                    <button
-                                        class="btn btn-xs btn-square btn-primary btn-ghost"
+                                    <button class="btn btn-xs btn-square btn-primary btn-ghost"
                                         wire:click="openModalObservation({{ $d->id }})"
                                     >
                                         <i class="ti ti-pencil text-lg"></i>
@@ -235,18 +184,14 @@
                             {!! $d->statusBadge !!}
                             @if ($d->visit_date >= date('Y-m-d') || auth()->user()->can('kunjungan-edit-yang-lewat-hari'))
                                 @if ($d->status == 'cancelled')
-                                    <button
-                                        class="btn btn-xs btn-square btn-success btn-ghost"
-                                        title="Pulihkan Kunjungan"
+                                    <button class="btn btn-xs btn-square btn-success btn-ghost" title="Pulihkan Kunjungan"
                                         wire:click="$js.confirmPulihkan({{ $d->id }}, '{{ addslashes($d->patient->full_name) }}')"
                                     >
                                         <i class="ti ti-refresh text-lg"></i>
                                     </button>
                                 @endif
                                 @if ($d->status == 'registered' || $d->status == 'arrived')
-                                    <button
-                                        class="btn btn-xs btn-square btn-error btn-ghost"
-                                        title="Batalkan Kunjungan"
+                                    <button class="btn btn-xs btn-square btn-error btn-ghost" title="Batalkan Kunjungan"
                                         wire:click="$js.confirmBatal({{ $d->id }}, '{{ addslashes($d->patient->full_name) }}')"
                                     >
                                         <i class="ti ti-x text-lg"></i>
@@ -258,9 +203,7 @@
                             @if ($d->visit_date == date('Y-m-d') || (auth()->user()->can('kunjungan-edit-yang-lewat-hari') && $d->visit_date <= date('Y-m-d')))
                                 <div class="flex gap-2">
                                     @if ($d->status == 'registered')
-                                        <button
-                                            class="btn btn-sm btn-square btn-primary"
-                                            title="Pasien Datang"
+                                        <button class="btn btn-sm btn-square btn-primary" title="Pasien Datang"
                                             wire:click="setArrived({{ $d->id }})"
                                         >
                                             <i class="ti ti-check text-lg"></i>
@@ -268,9 +211,7 @@
                                     @endif
 
                                     @if ($d->status == 'arrived')
-                                        <button
-                                            class="btn btn-sm btn-square btn-warning"
-                                            title="Mulai Pemeriksaan"
+                                        <button class="btn btn-sm btn-square btn-warning" title="Mulai Pemeriksaan"
                                             wire:click="setInprogress({{ $d->id }})"
                                         >
                                             <i class="ti ti-send text-lg"></i>
@@ -278,34 +219,27 @@
                                     @endif
                                     @can('kunjungan-edit-pemeriksaan')
                                         @if ($d->status == 'inprogress' || $d->status == 'finished')
-                                            <a
-                                                class="btn btn-sm btn-success btn-square"
-                                                href="{{ route('encounter.edit', [$d->id, $d->uuid]) }}"
-                                                title="Pemeriksaan"
+                                            <a class="btn btn-sm btn-success btn-square"
+                                                href="{{ route('encounter.edit', [$d->id, $d->uuid]) }}" title="Pemeriksaan"
                                             >
                                                 <i class="ti ti-stethoscope text-lg"></i></a>
                                         @endif
                                     @endcan
 
-                                    @if ($d->status == 'registered' && $d->no_antrian == $antrianTerakhir)
-                                        <button
-                                            class="btn btn-sm btn-square btn-error btn-ghost"
-                                            title="Hapus Kunjungan"
-                                            wire:click="$js.confirmDelete({{ $d->id }}, '{{ addslashes($d->patient->full_name) }}')"
-                                        >
-                                            <i class="ti ti-trash text-lg"></i>
-                                        </button>
-                                    @endif
                                 </div>
+                            @endif
+                            @if ($d->status == 'registered' && $d->no_antrian == $antrianTerakhir)
+                                <button class="btn btn-sm btn-square btn-error" title="Hapus Kunjungan"
+                                    wire:click="$js.confirmDelete({{ $d->id }}, '{{ addslashes($d->patient->full_name) }}')"
+                                >
+                                    <i class="ti ti-trash text-lg"></i>
+                                </button>
                             @endif
                         </td>
                     </tr>
                 @empty
                     <tr>
-                        <td
-                            class="p-4 text-center text-slate-500"
-                            colspan="9"
-                        >Tidak ada data</td>
+                        <td class="p-4 text-center text-slate-500" colspan="9">Tidak ada data</td>
                     </tr>
                 @endforelse
             </tbody>
@@ -343,11 +277,8 @@
                                 <div class="text-xs font-medium uppercase tracking-wider text-slate-500">Pasien Terpilih</div>
                                 <div class="text-lg font-bold text-slate-800">{{ $selectedPatientName }}</div>
                             </div>
-                            <button
-                                class="btn btn-circle btn-ghost btn-sm text-error hover:bg-error/10"
-                                type="button"
-                                title="Ganti Pasien"
-                                wire:click="$set('selectedPatientName', '')"
+                            <button class="btn btn-circle btn-ghost btn-sm text-error hover:bg-error/10" type="button"
+                                title="Ganti Pasien" wire:click="$set('selectedPatientName', '')"
                             >
                                 <i class="ti ti-rotate text-lg"></i>
                             </button>
@@ -384,8 +315,7 @@
                                                 <td class="flex items-center justify-end gap-2 px-4 py-2 text-right">
                                                     {!! $history->statusBadge !!}
                                                     @if ($history->status == 'cancelled' && $history->visit_date == $visit_date)
-                                                        <button
-                                                            class="btn btn-xs btn-success btn-outline"
+                                                        <button class="btn btn-xs btn-success btn-outline"
                                                             title="Pulihkan ke Pasien Datang"
                                                             wire:click="setArrived({{ $history->id }})"
                                                         >
@@ -396,10 +326,7 @@
                                             </tr>
                                         @empty
                                             <tr>
-                                                <td
-                                                    class="px-4 py-6 text-center italic text-slate-400"
-                                                    colspan="4"
-                                                >Belum ada riwayat
+                                                <td class="px-4 py-6 text-center italic text-slate-400" colspan="4">Belum ada riwayat
                                                     kunjungan</td>
                                             </tr>
                                         @endforelse
@@ -412,38 +339,23 @@
                     <div class="space-y-3">
                         <div class="flex items-end gap-3">
                             <div class="grid flex-1 grid-cols-1 gap-3 md:grid-cols-3">
-                                <x-input
-                                    label="No. RM"
-                                    placeholder="Ketik No. RM..."
-                                    wire:model.live.debounce.500ms="searchPatientMRN"
-                                />
-                                <x-input
-                                    label="Nama Pasien"
-                                    placeholder="Ketik nama..."
+                                <x-input label="No. RM" placeholder="Ketik No. RM..."
+                                    wire:model.live.debounce.500ms="searchPatientMRN" />
+                                <x-input label="Nama Pasien" placeholder="Ketik nama..."
                                     wire:model.live.debounce.500ms="searchPatientName"
                                 />
-                                <x-input
-                                    label="Desa"
-                                    placeholder="Ketik desa..."
-                                    wire:model.live.debounce.500ms="searchPatientVillage"
-                                />
+                                <x-input label="Desa" placeholder="Ketik desa..."
+                                    wire:model.live.debounce.500ms="searchPatientVillage" />
                             </div>
                             <div class="shrink-0 pb-1">
-                                <a
-                                    class="btn btn-primary btn-sm"
-                                    href="{{ route('patient.create') }}"
-                                >
+                                <a class="btn btn-primary btn-sm" href="{{ route('patient.create') }}">
                                     <i class="ti ti-user-plus mr-1.5"></i> Baru
                                 </a>
                             </div>
                         </div>
 
                         {{-- Loading Indicator --}}
-                        <div
-                            class="mt-2"
-                            wire:loading
-                            wire:target="searchPatientMRN, searchPatientName, searchPatientVillage"
-                        >
+                        <div class="mt-2" wire:loading wire:target="searchPatientMRN, searchPatientName, searchPatientVillage">
                             <div class="border-primary/10 bg-primary/5 flex items-center gap-2 rounded-lg border px-3 py-2">
                                 <i class="ti ti-loader-2 text-primary animate-spin"></i>
                                 <span class="text-primary text-xs font-medium">Mencari data pasien...</span>
@@ -451,17 +363,13 @@
                         </div>
 
                         {{-- Search Results --}}
-                        <div
-                            wire:loading.remove
-                            wire:target="searchPatientMRN, searchPatientName, searchPatientVillage"
-                        >
+                        <div wire:loading.remove wire:target="searchPatientMRN, searchPatientName, searchPatientVillage">
                             @if ($this->patientList->count() > 0)
                                 <div class="mt-2 max-h-60 overflow-y-auto rounded-xl border border-slate-200 bg-white shadow-sm">
                                     @foreach ($this->patientList as $p)
                                         <button
                                             class="hover:bg-primary/5 group flex w-full items-center gap-4 border-b border-slate-50 px-4 py-3 text-left transition last:border-b-0"
-                                            type="button"
-                                            wire:click="selectPatient({{ $p->id }})"
+                                            type="button" wire:click="selectPatient({{ $p->id }})"
                                             wire:key="patient-search-{{ $p->id }}"
                                         >
                                             <div
@@ -514,17 +422,11 @@
                 </div>
 
                 <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
-                    <x-date
-                        label="Tanggal Periksa"
-                        wire:model.live="visit_date"
-                    />
+                    <x-date label="Tanggal Periksa" wire:model.live="visit_date" :min-date="today()"/>
 
                     @if ($visit_date)
                         @if ($this->isAlreadyRegistered && $selectedPatientName)
-                            <div
-                                class="alert alert-error"
-                                role="alert"
-                            >
+                            <div class="alert alert-error" role="alert">
                                 <i class="ti ti-alert-triangle text-2xl"></i>
                                 <span>PASIEN SUDAH TERDAFTAR <br>pada tanggal {{ $visit_date }}</span>
                             </div>
@@ -540,25 +442,13 @@
             <div class="flex w-full items-center justify-between">
                 <p class="text-[10px] font-medium uppercase tracking-tighter text-slate-400">* Wajib diisi</p>
                 <div class="flex gap-2">
-                    <button
-                        class="btn btn-ghost"
-                        type="button"
-                        wire:click="$set('modalEncounter', false)"
-                    >Batal</button>
+                    <button class="btn btn-ghost" type="button" wire:click="$set('modalEncounter', false)">Batal</button>
                     @if (!$this->isAlreadyRegistered)
-                        <button
-                            class="btn btn-primary shadow-primary/20 px-6 shadow-lg"
-                            type="button"
-                            wire:click="saveEncounter"
-                        >
+                        <button class="btn btn-primary shadow-primary/20 px-6 shadow-lg" type="button" wire:click="saveEncounter">
                             <i class="ti ti-device-floppy mr-1.5"></i> Simpan Kunjungan
                         </button>
                     @else
-                        <button
-                            class="btn btn-outline btn-error cursor-not-allowed opacity-50"
-                            type="button"
-                            disabled
-                        >
+                        <button class="btn btn-outline btn-error cursor-not-allowed opacity-50" type="button" disabled>
                             Sudah Terdaftar
                         </button>
                     @endif
@@ -568,36 +458,18 @@
     </x-modal>
 
     {{-- Modal observasi --}}
-    <x-modal
-        id="modalObservation"
-        title="Observasi"
-        wire="modalObservation"
-    >
+    <x-modal id="modalObservation" title="Observasi" wire="modalObservation">
         <form wire:submit="saveObservation">
             <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
                 <div class="col-span-2">
-                    <x-textarea
-                        label="Keluhan"
-                        rows="5"
-                        wire:model="chief_complaint"
-                    />
+                    <x-textarea label="Keluhan" rows="5" wire:model="chief_complaint" />
                 </div>
 
                 <div class="space-y-4">
                     <h4 class="font-semibold text-slate-700">TTV</h4>
                     <div class="grid grid-cols-2 gap-4">
-                        <x-input
-                            type="number"
-                            label="Systolic"
-                            wire:model="systolic"
-                            suffix="mmHg"
-                        />
-                        <x-input
-                            type="number"
-                            label="Diastolic"
-                            wire:model="diastolic"
-                            suffix="mmHg"
-                        />
+                        <x-input type="number" label="Systolic" wire:model="systolic" suffix="mmHg" />
+                        <x-input type="number" label="Diastolic" wire:model="diastolic" suffix="mmHg" />
                         <x-input
                             type="number"
                             step="0.1"
@@ -610,31 +482,14 @@
                 <div class="space-y-4">
                     <h4 class="font-semibold text-slate-700">Antropometri</h4>
                     <div class="grid grid-cols-2 gap-4">
-                        <x-input
-                            type="number"
-                            label="Berat Badan"
-                            wire:model="body_weight"
-                            suffix="kg"
-                        />
-                        <x-input
-                            type="number"
-                            label="Tinggi Badan"
-                            wire:model="body_height"
-                            suffix="cm"
-                        />
+                        <x-input type="number" label="Berat Badan" wire:model="body_weight" suffix="kg" />
+                        <x-input type="number" label="Tinggi Badan" wire:model="body_height" suffix="cm" />
                     </div>
                 </div>
             </div>
             <div class="mt-2 flex justify-end gap-2">
-                <button
-                    class="btn btn-ghost"
-                    type="button"
-                    wire:click="$set('modalObservation', false)"
-                >Batal</button>
-                <button
-                    class="btn btn-primary"
-                    type="submit"
-                >Simpan</button>
+                <button class="btn btn-ghost" type="button" wire:click="$set('modalObservation', false)">Batal</button>
+                <button class="btn btn-primary" type="submit">Simpan</button>
             </div>
         </form>
     </x-modal>

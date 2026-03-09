@@ -3,7 +3,7 @@ this.$js.confirmDelete = (id, nama) => {
         .wireable()
         .question('Hapus ' + nama + ' ?', 'Data yang sudah dihapus tidak dapat dikembalikan')
         .cancel('Kembali')
-        .confirm('Ya, Hapus', 'batalkan', id)
+        .confirm('Ya, Hapus', 'delete', id)
         .send();
 }
 

@@ -190,6 +190,8 @@ new class extends Component
 
         $this->modalEncounter = false;
         $this->search_visit_date = $this->visit_date;
+        $this->reset('visit_date');
+        
 
         $this->toast()->success('Kunjungan berhasil ditambahkan')->send();
     }
