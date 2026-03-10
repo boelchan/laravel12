@@ -44,7 +44,7 @@ new class extends Component
 
     public $encounter;
 
-    public $antrianTerakhir;
+    //public $antrianTerakhir;
 
     public function mount()
     {
@@ -53,6 +53,12 @@ new class extends Component
             $this->search_visit_date = now()->format('Y-m-d');
         }
 
+        $this->antrianTerakhir = Encounter::antrianTerakhir($this->search_visit_date);
+    }
+
+    #[Computed]
+    public function antrianTerakhir()
+    {
         $this->antrianTerakhir = Encounter::antrianTerakhir($this->search_visit_date);
     }
 
