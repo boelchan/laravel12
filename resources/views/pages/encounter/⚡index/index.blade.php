@@ -228,7 +228,7 @@
 
                                 </div>
                             @endif
-                            @if ($d->status == 'registered' && $d->no_antrian == $antrianTerakhir)
+                            @if ($d->status == 'registered' && $d->no_antrian == $this->antrianTerakhir)
                                 <button class="btn btn-sm btn-square btn-error" title="Hapus Kunjungan"
                                     wire:click="$js.confirmDelete({{ $d->id }}, '{{ addslashes($d->patient->full_name) }}')"
                                 >
