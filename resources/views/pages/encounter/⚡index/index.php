@@ -52,16 +52,13 @@ new class extends Component
         if (empty($this->search_visit_date)) {
             $this->search_visit_date = now()->format('Y-m-d');
         }
-
-        $this->antrianTerakhir = Encounter::antrianTerakhir($this->search_visit_date);
     }
 
     #[Computed]
     public function antrianTerakhir()
     {
-        $this->antrianTerakhir = Encounter::antrianTerakhir($this->search_visit_date);
+        return Encounter::antrianTerakhir($this->search_visit_date);
     }
-
 
     public function resetFilters()
     {
@@ -92,8 +89,7 @@ new class extends Component
             ->when($this->search_no_antrian, fn($q) => $q->where('no_antrian', $this->search_no_antrian))
             ->where('visit_date', $this->search_visit_date ?? now()->format('Y-m-d'))
             ->orderBy($this->sortField, $this->sortDirection)
-            ->paginate($this->perPage)
-            ->onEachSide(1);
+            ->paginate($this->perPage);
     }
 
     public function delete($id)
@@ -148,18 +144,22 @@ new class extends Component
             $this->patient_id = $patient->id;
             $this->selectedPatientName = $patient->full_name . ' (' . $patient->medical_record_number . ')';
             $this->reset(['searchPatientName', 'searchPatientMRN', 'searchPatientVillage']);
+            if ($this->visit_date){
+                $this->dispatch('load-jumlah-pendaftar', $this->visit_date);
+            }
         }
     }
 
     public function openModalEncounter()
     {
         $this->reset(['patient_id', 'visit_date', 'searchPatientName', 'searchPatientMRN', 'searchPatientVillage', 'selectedPatientName']);
+        $this->visit_date = now()->format('Y-m-d');
         $this->modalEncounter = true;
     }
 
     public function updatedVisitDate($value)
     {
-        $this->dispatch('load-jumlah-pendaftar', $value);
+        $this->dispatch('load-jumlah-pendaftar', $this->visit_date);
     }
 
     #[Computed]

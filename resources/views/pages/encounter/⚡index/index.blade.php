@@ -96,7 +96,7 @@
             </div>
             <div>
                 <div class="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-5">
-                    <x-date value="{{ request()->search_visit_date }}" label="Tanggal" placeholder="cari tanggal..."
+                    <x-date wire:key="search-visit-date" value="{{ request()->search_visit_date }}" label="Tanggal" placeholder="cari tanggal..."
                         wire:model.live.debounce.500ms="search_visit_date"
                     />
                     <x-input
@@ -200,8 +200,8 @@
                             @endif
                         </td>
                         <td class="p-2">
-                            @if ($d->visit_date == date('Y-m-d') || (auth()->user()->can('kunjungan-edit-yang-lewat-hari') && $d->visit_date <= date('Y-m-d')))
-                                <div class="flex gap-2">
+                            <div class="flex gap-2">
+                                @if ($d->visit_date == date('Y-m-d') || (auth()->user()->can('kunjungan-edit-yang-lewat-hari') && $d->visit_date <= date('Y-m-d')))
                                     @if ($d->status == 'registered')
                                         <button class="btn btn-sm btn-square btn-primary" title="Pasien Datang"
                                             wire:click="setArrived({{ $d->id }})"
@@ -217,6 +217,7 @@
                                             <i class="ti ti-send text-lg"></i>
                                         </button>
                                     @endif
+
                                     @can('kunjungan-edit-pemeriksaan')
                                         @if ($d->status == 'inprogress' || $d->status == 'finished')
                                             <a class="btn btn-sm btn-success btn-square"
@@ -226,15 +227,17 @@
                                         @endif
                                     @endcan
 
-                                </div>
-                            @endif
-                            @if ($d->status == 'registered' && $d->no_antrian == $this->antrianTerakhir)
-                                <button class="btn btn-sm btn-square btn-error" title="Hapus Kunjungan"
-                                    wire:click="$js.confirmDelete({{ $d->id }}, '{{ addslashes($d->patient->full_name) }}')"
-                                >
-                                    <i class="ti ti-trash text-lg"></i>
-                                </button>
-                            @endif
+                                @endif
+                                @if ($d->status == 'registered' && $d->no_antrian == $this->antrianTerakhir)
+                                    @can('kunjungan-hapus')
+                                        <button class="btn btn-sm btn-square btn-error" title="Hapus Kunjungan"
+                                            wire:click="$js.confirmDelete({{ $d->id }}, '{{ addslashes($d->patient->full_name) }}')"
+                                        >
+                                            <i class="ti ti-trash text-lg"></i>
+                                        </button>
+                                    @endcan
+                                @endif
+                            </div>
                         </td>
                     </tr>
                 @empty
@@ -349,7 +352,7 @@
                             </div>
                             <div class="shrink-0 pb-1">
                                 <a class="btn btn-primary btn-sm" href="{{ route('patient.create') }}">
-                                    <i class="ti ti-user-plus mr-1.5"></i> Baru
+                                    <i class="ti ti-user-plus mr-1.5 text-lg"></i> Baru
                                 </a>
                             </div>
                         </div>
@@ -422,7 +425,7 @@
                 </div>
 
                 <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
-                    <x-date label="Tanggal Periksa" wire:model.live="visit_date" :min-date="today()"/>
+                    <x-date wire:key="visit-date-input" label="Tanggal Periksa" wire:model.live="visit_date" :min-date="today()"/>
 
                     @if ($visit_date)
                         @if ($this->isAlreadyRegistered && $selectedPatientName)

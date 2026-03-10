@@ -39,8 +39,7 @@ new class extends Component
             ->when($this->search_role, fn($q) => $q->whereHas('roles', fn($q) => $q->where('name', $this->search_role)))
             ->when($this->search_status, fn($q) => $q->where('status', $this->search_status))
             ->orderBy($this->sortField, $this->sortDirection)
-            ->paginate($this->perPage)
-            ->onEachSide(1);
+            ->paginate($this->perPage);
     }
 
 

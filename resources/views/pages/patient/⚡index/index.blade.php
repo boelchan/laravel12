@@ -10,9 +10,11 @@
                 </ul>
             </div>
         </div>
-        <a class="btn btn-primary btn-sm" href="{{ route('patient.create') }}" wire:navigate>
-            <i class="ti ti-plus text-lg"></i> Tambah
-        </a>
+        @can('pasien-tambah')
+            <a class="btn btn-primary btn-sm" href="{{ route('patient.create') }}" wire:navigate>
+                <i class="ti ti-plus text-lg"></i> Tambah
+            </a>
+        @endcan
     </div>
 
     <div class="mt-6">
@@ -79,15 +81,19 @@
                                 <i class="ti ti-history text-lg"></i></button>
 
                             @if ($d->is_active)
-                                <a class="btn btn-sm btn-primary btn-square" href="{{ route('patient.edit', [$d->id, $d->uuid]) }}"
-                                    title="Ubah"
-                                >
-                                    <i class="ti ti-edit text-lg"></i></a>
+                                @can('pasien-edit')
+                                    <a class="btn btn-sm btn-primary btn-square" href="{{ route('patient.edit', [$d->id, $d->uuid]) }}"
+                                        title="Ubah"
+                                    >
+                                        <i class="ti ti-edit text-lg"></i></a>
+                                @endcan
 
-                                <button class="btn btn-sm btn-square btn-error btn-ghost" title="Hapus"
-                                    wire:click="$js.confirmDelete({{ $d->id }}, '{{ addslashes($d->full_name) }}')"
-                                >
-                                    <i class="ti ti-trash text-lg"></i> </button>
+                                @can('pasien-hapus')
+                                    <button class="btn btn-sm btn-square btn-error btn-ghost" title="Hapus"
+                                        wire:click="$js.confirmDelete({{ $d->id }}, '{{ addslashes($d->full_name) }}')"
+                                    >
+                                        <i class="ti ti-trash text-lg"></i> </button>
+                                @endcan
                             @else
                                 @can('pasien-aktifkan')
                                     <button class="btn btn-sm btn-square btn-success btn-outline" title="Aktifkan"

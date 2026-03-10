@@ -55,8 +55,7 @@ new class extends Component
             })
             ->where('visit_date', $this->search_visit_date ?? now()->format('Y-m-d'))
             ->orderBy($this->sortField, $this->sortDirection)
-            ->paginate($this->perPage)
-            ->onEachSide(1);
+            ->paginate($this->perPage);
     }
 
     public function openModalResep($id)

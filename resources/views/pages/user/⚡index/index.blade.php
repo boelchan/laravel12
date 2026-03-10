@@ -82,11 +82,13 @@
                             <a class="btn btn-xs btn-primary btn-square btn-soft" href="{{ route('user.edit', $d->id) }}">
                                 <i class="ti ti-edit text-lg"></i></a>
 
-                            <button class="btn btn-xs btn-square btn-error btn-soft"
-                                wire:click="$js.confirmDelete({{ $d->id }}, '{{ $d->name }}')"
-                            >
-                                <i class="ti ti-trash text-lg"></i>
-                            </button>
+                            @if ($d->id != 1)
+                                <button class="btn btn-xs btn-square btn-error btn-soft"
+                                    wire:click="$js.confirmDelete({{ $d->id }}, '{{ $d->name }}')"
+                                >
+                                    <i class="ti ti-trash text-lg"></i>
+                                </button>
+                            @endif
                         </td>
                     </tr>
                 @empty

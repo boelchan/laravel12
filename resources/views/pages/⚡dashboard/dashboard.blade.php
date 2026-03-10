@@ -86,25 +86,37 @@
         <div class="flex flex-col gap-2 rounded-2xl border border-dashed border-slate-200 bg-slate-50/50 p-6">
             <span class="font-bold uppercase tracking-widest text-slate-400">Akses Cepat</span>
             <div class="flex flex-wrap gap-3">
-                <a class="btn btn-primary btn-outline" href="{{ route('patient.index') }}" wire:navigate>
-                    <i class="ti ti-users mr-1 text-lg"></i>
-                    <span>Daftar Pasien</span>
-                </a>
-                <a class="btn btn-primary btn-outline" href="{{ route('patient.create') }}" wire:navigate>
-                    <i class="ti ti-user-plus mr-1 text-lg"></i> Tambah Pasien Baru
-                </a>
-                <a class="btn btn-dark btn-outline" href="{{ route('encounter.index') }}" wire:navigate>
-                    <i class="ti ti-calendar mr-text-lg 1"></i>
-                    <span>Data Kunjungan</span>
-                </a>
+
+                @can('kunjungan-list')
+                    <a class="btn btn-dark btn-outline" href="{{ route('encounter.index') }}" wire:navigate>
+                        <i class="ti ti-calendar-check mr-1 text-lg"></i>
+                        <span>Data Kunjungan</span>
+                    </a>
+                @endcan
+                @can('pasien-list')
+                    <a class="btn btn-primary btn-outline" href="{{ route('patient.index') }}" wire:navigate>
+                        <i class="ti ti-users mr-1 text-lg"></i>
+                        <span>Data Pasien</span>
+                    </a>
+                @endcan
+                @can('pasien-tambah')
+                    <a class="btn btn-primary btn-outline" href="{{ route('patient.create') }}" wire:navigate>
+                        <i class="ti ti-user-plus mr-1 text-lg"></i> Tambah Pasien Baru
+                    </a>
+                @endcan
                 @can('rekap-kunjungan')
                     <a class="btn btn-secondary btn-outline" href="{{ route('report.visit-recap') }}" wire:navigate>
-                        <i class="ti ti-report mr-text-lg 1"></i> Rekap Kunjungan
+                        <i class="ti ti-report mr-1 text-lg"></i> Rekap Kunjungan
                     </a>
                 @endcan
                 @can('rekap-pasien')
                     <a class="btn btn-secondary btn-outline" href="{{ route('report.patient-registration-recap') }}" wire:navigate>
                         <i class="ti ti-report-medical mr-1 text-lg"></i> Rekap Pasien Baru
+                    </a>
+                @endcan
+                @can('apotek-list')
+                    <a class="btn btn-warning btn-outline" href="{{ route('pharmacy.index') }}" wire:navigate>
+                        <i class="ti ti-pill mr-1 text-lg"></i> Apotek
                     </a>
                 @endcan
             </div>

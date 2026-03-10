@@ -69,7 +69,7 @@
                                     <a class="{{ Str::startsWith(url()->current(), url('patient')) ? 'menu-active' : '' }}"
                                         href={{ route('patient.index') }}
                                     >
-                                        <i class="ti ti-user-plus text-lg"></i>Pasien</a>
+                                        <i class="ti ti-users text-lg"></i>Pasien</a>
                                 </li>
                             @endcan
 
@@ -79,7 +79,7 @@
                                     <a class="{{ Str::startsWith(url()->current(), url('pharmacy')) ? 'menu-active' : '' }}"
                                         href={{ route('pharmacy.index') }}
                                     >
-                                        <i class="ti ti-pill text-lg"></i>Apotik</a>
+                                        <i class="ti ti-pill text-lg"></i>Apotek</a>
                                 </li>
                             @endcan
 

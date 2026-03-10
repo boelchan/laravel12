@@ -30,7 +30,7 @@ trait WithTableX
         }
     }
 
-    public $perPage = 10;
+    public $perPage = 50;
 
     public bool $open = false;
 
