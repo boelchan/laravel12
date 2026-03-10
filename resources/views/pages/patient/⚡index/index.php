@@ -38,8 +38,7 @@ new class extends Component
                 }
             })
             ->orderBy($this->sortField, $this->sortDirection)
-            ->paginate($this->perPage)
-            ->onEachSide(1);
+            ->paginate($this->perPage);
     }
 
     public function delete($id)

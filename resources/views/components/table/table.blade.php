@@ -9,5 +9,5 @@
     </table>
 </div>
 <div class="mt-3">
-    {{ $paginate->links() }}
+    {{ $paginate->onEachSide(1)->links() }}
 </div>

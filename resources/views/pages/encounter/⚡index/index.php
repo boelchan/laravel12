@@ -48,6 +48,7 @@ new class extends Component
 
     public function mount()
     {
+        $this->perPage = 100;
         if (empty($this->search_visit_date)) {
             $this->search_visit_date = now()->format('Y-m-d');
         }

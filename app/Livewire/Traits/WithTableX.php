@@ -30,7 +30,7 @@ trait WithTableX
         }
     }
 
-    public $perPage = 50;
+    public $perPage = 10;
 
     public bool $open = false;
 
@@ -73,6 +73,6 @@ trait WithTableX
 
     public function paginationView()
     {
-        return 'components.table.pagination';
+        return 'vendor.pagination.custom';
     }
 }
