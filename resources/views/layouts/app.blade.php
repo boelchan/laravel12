@@ -103,6 +103,16 @@
                                     >
                                         <i class="ti ti-report-analytics text-lg"></i>Rekap Pasien Baru</a>
                                 </li>
+                            @endcan 
+
+                            @can('posting-pamflet')
+                            <h2 class="menu-title mt-4">Informasi</h2>
+                            <li>
+                                <a class="{{ Str::startsWith(url()->current(), url('post')) ? 'menu-active' : '' }}"
+                                    href="{{ route('post.index') }}" wire:navigate
+                                >
+                                    <i class="ti ti-news text-lg"></i>Pamflet</a>
+                            </li>
                             @endcan
 
                             @role('administrator')

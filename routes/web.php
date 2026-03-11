@@ -38,4 +38,8 @@ Route::middleware('active')->group(function () {
 
     Route::livewire('/report/visit-recap', 'pages::report.visit')->name('report.visit-recap')->middleware('permission:rekap-kunjungan');
     Route::livewire('/report/patient-registration-recap', 'pages::report.patient-registration')->name('report.patient-registration-recap')->middleware('permission:rekap-pasien');
+
+    Route::livewire('/post', 'pages::post.index')->name('post.index')->middleware('permission:posting-pamflet');
+    Route::livewire('/post/create', 'pages::post.create')->name('post.create')->middleware('permission:posting-pamflet');
+    Route::livewire('/post/{post}/edit/{uuid}', 'pages::post.edit')->name('post.edit')->middleware('permission:posting-pamflet');
 });
