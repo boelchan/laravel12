@@ -70,51 +70,38 @@
         @endauth
     </header>
 
-    <main class="relative z-10 flex h-screen flex-col px-4 pb-3 pt-12">
-        <div class="mx-auto flex h-full w-full max-w-6xl flex-col">
-
-            {{-- Hero Section — compact --}}
-            <div class="mb-4 shrink-0 text-center">
+    <main class="relative z-10 px-4 pt-14 pb-3" style="height: 100dvh;">
+        <div class="mx-auto flex h-full max-w-6xl flex-col">
+    
+            {{-- Hero --}}
+            <div class="mb-3 shrink-0 text-center">
                 <h1 class="text-lg font-black leading-tight tracking-tight text-slate-900">
                     Praktek Dokter Kandungan
                     <br>
                     <span class="relative inline-block">
                         <span class="relative z-10 text-3xl text-blue-600">dr. Wongso Suhendro, SpOG</span>
-                        <svg
-                            class="-z-1 absolute -bottom-1 left-0 h-2 w-full text-blue-200"
-                            viewBox="0 0 100 10"
-                            preserveAspectRatio="none"
-                        >
-                            <path
-                                d="M0,5 Q25,0 50,5 T100,5"
-                                stroke="currentColor"
-                                stroke-width="8"
-                                fill="none"
-                                stroke-linecap="round"
-                            />
+                        <svg class="-z-1 absolute -bottom-1 left-0 h-2 w-full text-blue-200" viewBox="0 0 100 10" preserveAspectRatio="none">
+                            <path d="M0,5 Q25,0 50,5 T100,5" stroke="currentColor" stroke-width="8" fill="none" stroke-linecap="round"/>
                         </svg>
                     </span>
                 </h1>
-                <p class="mx-auto mt-3 max-w-xl text-sm font-medium text-slate-400">
+                <p class="mx-auto mt-2 max-w-xl text-sm font-medium text-slate-400">
                     Jl. Jendral Sudirman No.50a, Kabupaten Sumenep, Jawa Timur
                 </p>
             </div>
-
+    
             @php
                 $posts = \App\Models\Post::where('publish', 'ya')->latest()->take(6)->get();
-                $storage_url = asset('storage');
             @endphp
-
-            {{-- Grid — fill remaining height --}}
-            {{-- Grid — fill remaining height --}}
-            <div class="grid min-h-0 flex-1 grid-cols-2 gap-3 p-4 md:grid-cols-3">
+    
+            {{-- Grid murni: 2 col x 3 row di mobile, 3 col x 2 row di desktop --}}
+            <div class="grid flex-1 min-h-0 grid-cols-2 grid-rows-3 gap-2 p-2 md:grid-cols-3 md:grid-rows-2">
                 @forelse ($posts as $post)
                     <div
                         class="group relative cursor-pointer overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-[0_4px_15px_rgb(0,0,0,0.05)] transition-all duration-500 hover:shadow-[0_12px_30px_rgba(59,130,246,0.12)]"
                         x-on:click="selectedPost = {{ $post->toJson() }}"
                     >
-                        {{-- Kotak fix dengan aspect-square --}}
-                        <div class="relative aspect-square w-full overflow-hidden">
+                        <div class="relative h-full w-full overflow-hidden">
                             @if ($post->gambar)
                                 <img
                                     class="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
@@ -129,8 +116,7 @@
                                     <p class="text-xs font-medium text-slate-400">No Image</p>
                                 </div>
                             @endif
-                            <div
-                                class="absolute inset-0 flex items-end bg-gradient-to-t from-black/60 via-transparent to-transparent p-4 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                            <div class="absolute inset-0 flex items-end bg-gradient-to-t from-black/60 via-transparent to-transparent p-4 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
                                 <span class="flex items-center gap-1.5 text-sm font-bold text-white">
                                     Lihat Detail <i class="ti ti-arrow-right text-sm"></i>
                                 </span>
