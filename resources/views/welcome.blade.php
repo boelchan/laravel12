@@ -42,7 +42,7 @@
 </head>
 
 <body
-    class="overflow-hidden bg-[#f8faff] text-slate-900 antialiased"
+    class=" bg-[#f8faff] text-slate-900 antialiased"
     x-data="{ selectedPost: null }"
     x-cloak
 >
@@ -70,22 +70,22 @@
         @endauth
     </header>
 
-    <main class="relative z-10 px-4 pt-14 pb-3" style="height: 100dvh;">
-        <div class="mx-auto flex h-full max-w-6xl flex-col">
+    <main class="z-10 px-4 pt-16 pb-6">
+        <div class="mx-auto max-w-4xl">
     
             {{-- Hero --}}
-            <div class="mb-3 shrink-0 text-center">
+            <div class="mb-4 text-center">
                 <h1 class="text-lg font-black leading-tight tracking-tight text-slate-900">
                     Praktek Dokter Kandungan
                     <br>
                     <span class="relative inline-block">
-                        <span class="relative z-10 text-3xl text-blue-600">dr. Wongso Suhendro, SpOG</span>
+                        <span class="relative z-10 text-2xl text-blue-600">dr. Wongso Suhendro, SpOG</span>
                         <svg class="-z-1 absolute -bottom-1 left-0 h-2 w-full text-blue-200" viewBox="0 0 100 10" preserveAspectRatio="none">
                             <path d="M0,5 Q25,0 50,5 T100,5" stroke="currentColor" stroke-width="8" fill="none" stroke-linecap="round"/>
                         </svg>
                     </span>
                 </h1>
-                <p class="mx-auto mt-2 max-w-xl text-sm font-medium text-slate-400">
+                <p class="mx-auto mt-2 max-w-xl text-xs font-medium text-slate-400">
                     Jl. Jendral Sudirman No.50a, Kabupaten Sumenep, Jawa Timur
                 </p>
             </div>
@@ -94,14 +94,15 @@
                 $posts = \App\Models\Post::where('publish', 'ya')->latest()->take(6)->get();
             @endphp
     
-            {{-- Grid murni: 2 col x 3 row di mobile, 3 col x 2 row di desktop --}}
-            <div class="grid flex-1 min-h-0 grid-cols-2 grid-rows-3 gap-2 p-2 md:grid-cols-3 md:grid-rows-2">
+            {{-- Grid scroll bebas, gambar kotak fix --}}
+            <div class="grid grid-cols-2 gap-3 sm:grid-cols-3 p-5">
                 @forelse ($posts as $post)
                     <div
-                        class="group relative cursor-pointer overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-[0_4px_15px_rgb(0,0,0,0.05)] transition-all duration-500 hover:shadow-[0_12px_30px_rgba(59,130,246,0.12)]"
+                        class="group cursor-pointer overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-[0_4px_15px_rgb(0,0,0,0.05)] transition-all duration-500 hover:shadow-[0_12px_30px_rgba(59,130,246,0.12)]"
                         x-on:click="selectedPost = {{ $post->toJson() }}"
                     >
-                        <div class="relative h-full w-full overflow-hidden">
+                        {{-- aspect-[3/4] agar kotak portrait konsisten di semua device --}}
+                        <div class="relative aspect-square w-full overflow-hidden">
                             @if ($post->gambar)
                                 <img
                                     class="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
@@ -110,15 +111,15 @@
                                 >
                             @else
                                 <div class="absolute inset-0 flex flex-col items-center justify-center gap-2 bg-slate-50">
-                                    <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-slate-100">
-                                        <i class="ti ti-photo text-3xl text-slate-300"></i>
+                                    <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-100">
+                                        <i class="ti ti-photo text-2xl text-slate-300"></i>
                                     </div>
                                     <p class="text-xs font-medium text-slate-400">No Image</p>
                                 </div>
                             @endif
-                            <div class="absolute inset-0 flex items-end bg-gradient-to-t from-black/60 via-transparent to-transparent p-4 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                                <span class="flex items-center gap-1.5 text-sm font-bold text-white">
-                                    Lihat Detail <i class="ti ti-arrow-right text-sm"></i>
+                            <div class="absolute inset-0 flex items-end bg-gradient-to-t from-black/60 via-transparent to-transparent p-3 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                                <span class="flex items-center gap-1 text-xs font-bold text-white">
+                                    Lihat Detail <i class="ti ti-arrow-right text-xs"></i>
                                 </span>
                             </div>
                         </div>
@@ -135,7 +136,6 @@
             </div>
         </div>
     </main>
-
     {{-- Detail Modal --}}
     <template x-if="selectedPost">
         <div
