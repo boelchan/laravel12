@@ -306,22 +306,38 @@
 
             {{-- Hero --}}
             <div class="mb-4 text-center">
-                <h1 class="text-lg font-black leading-tight tracking-tight text-blue-900">
-                    Praktek Dokter Kandungan
+                <h1 class="text-md font-black leading-tight tracking-tight text-blue-800">
+                    Dokter Spesialis Kandungan
                     <br>
                     <span class="relative inline-block">
-                        <span class="relative z-10 text-2xl text-blue-600">dr. Wongso Suhendro, SpOG</span>
-                        <svg class="absolute -bottom-1 left-0 h-2 w-full text-blue-200"
-                            style="z-index:-1"
-                            viewBox="0 0 100 10"
-                            preserveAspectRatio="none">
-                            <path d="M0,5 Q25,0 50,5 T100,5"
-                                stroke="currentColor" stroke-width="8" fill="none" stroke-linecap="round"/>
-                        </svg>
+                        <span class="relative z-10 text-2xl sm:text-4xl text-blue-700">dr. Wongso Suhendro, Sp.OG</span>
+                        <svg viewBox="0 0 200 20" width="100%" height="20" preserveAspectRatio="none">
+                            <g>
+                              <path
+                                d="M0,10 Q25,0 50,10 T100,10 T150,10 T200,10 T250,10 T300,10"
+                                fill="none"
+                                stroke="#93c5fd"
+                                stroke-width="4"
+                                stroke-linecap="round">
+                                
+                                <animateTransform
+                                  attributeName="transform"
+                                  type="translate"
+                                  from="0 0"
+                                  to="-100 0"
+                                  dur="3s"
+                                  repeatCount="indefinite" />
+                                  
+                              </path>
+                            </g>
+                          </svg>
                     </span>
                 </h1>
                 <p class="mx-auto mt-2 max-w-xl text-xs font-medium text-slate-400">
-                    Jl. Jendral Sudirman No.50a, Kabupaten Sumenep, Jawa Timur
+                    Jl. Jendral Sudirman No.50a Sumenep, Jawa Timur
+                    <a href="https://maps.app.goo.gl/nJcEaiUD8A6VreyQ7" target="_blank" >
+                        <i class="ti ti-location text-red-500 text-lg"></i>
+                    </a>
                 </p>
             </div>
 
