@@ -42,6 +42,7 @@ class DatabaseSeeder extends Seeder
             ['name' => 'apotek-list', 'guard_name' => 'web'],
             ['name' => 'rekap-kunjungan', 'guard_name' => 'web'],
             ['name' => 'rekap-pasien', 'guard_name' => 'web'],
+            ['name' => 'posting-pamflet', 'guard_name' => 'web'],
         ]);
 
         $role = Role::create(
@@ -71,6 +72,7 @@ class DatabaseSeeder extends Seeder
             'apotek-list',
             'rekap-kunjungan',
             'rekap-pasien',
+            'posting-pamflet',
         ]);
 
         $user = Role::create(

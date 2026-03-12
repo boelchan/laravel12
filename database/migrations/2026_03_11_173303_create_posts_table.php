@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('judul', 250);
             $table->string('slug', 250);
-            $table->text('isi');
-            $table->string('gambar', 250);
+            $table->text('isi')->nullable();
+            $table->string('gambar', 250)->nullable();
             $table->enum('publish', ['ya', 'tidak'])->default('ya');
             $table->timestamps();
         });

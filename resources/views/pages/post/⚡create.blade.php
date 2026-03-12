@@ -66,7 +66,7 @@ new class extends Component
             <form wire:submit="save" class="space-y-4">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div class="space-y-4">
-                        <x-input label="Judul *" placeholder="Masukkan judul pamflet" wire:model.blur="judul" />
+                        <x-input label="Judul *" placeholder="Masukkan judul pamflet" wire:model="judul" />
                     </div>
                     
                     <div class="space-y-4">
