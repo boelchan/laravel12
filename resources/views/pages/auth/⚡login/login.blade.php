@@ -1,8 +1,7 @@
 <div>
     <div class="absolute left-1/2 top-1/2 w-full -translate-x-1/2 -translate-y-1/2 p-3">
         <div class="align-center mx-auto max-w-96">
-            {{-- <img src="{{ asset('icon/icon-long.png') }}" alt="logo" class="h-10 mx-auto mb-1"> --}}
-            <div class="text-center">
+            <div class="text-center text-2xl font-bold">
                 Rekam Medis Elektronik
             </div>
         </div>

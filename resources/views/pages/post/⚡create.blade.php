@@ -6,8 +6,7 @@ use Livewire\WithFileUploads;
 use Illuminate\Support\Str;
 use TallStackUi\Traits\Interactions;
 
-new class extends Component
-{
+new class extends Component {
     use WithFileUploads, Interactions;
 
     public $judul;
@@ -41,7 +40,7 @@ new class extends Component
             'publish' => $this->publish,
         ]);
 
-        $this->toast()->success('Pamflet berhasil ditambahkan')->send();
+        $this->toast()->success('Pamflet berhasil ditambahkan')->flash()->send();
         return $this->redirect(route('post.index'), navigate: true);
     }
 };
@@ -63,34 +62,26 @@ new class extends Component
 
     <div class="mt-6 max-w-4xl">
         <x-card class="bg-white">
-            <form wire:submit="save" class="space-y-4">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <form class="space-y-4" wire:submit="save">
+                <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
                     <div class="space-y-4">
                         <x-input label="Judul *" placeholder="Masukkan judul pamflet" wire:model="judul" />
                     </div>
-                    
+
                     <div class="space-y-4">
-                        <x-upload label="Gambar *" 
-                            wire:model="gambar" 
-                            accept="image/*"
-                            hint="Maksimal 2MB"
-                        >
+                        <x-upload label="Gambar *" wire:model="gambar" accept="image/*" hint="Maksimal 2MB">
                             @if ($gambar)
-                                <img src="{{ $gambar->temporaryUrl() }}" class="mt-2 h-32 w-full object-cover rounded shadow-sm">
+                                <img class="mt-2 h-32 w-full rounded object-cover shadow-sm" src="{{ $gambar->temporaryUrl() }}">
                             @endif
                         </x-upload>
                     </div>
                 </div>
 
                 <x-textarea label="Isi Pamflet" placeholder="Tuliskan isi pamflet di sini..." wire:model="isi" rows="10" />
-                
-                <x-select.native
-                    label="Publish *"
-                    :options="[['label' => 'Ya', 'value' => 'ya'], ['label' => 'Tidak', 'value' => 'tidak']]"
-                    wire:model="publish"
-                />
 
-                <div class="flex justify-end gap-2 mt-6">
+                <x-select.native label="Publish *" :options="[['label' => 'Ya', 'value' => 'ya'], ['label' => 'Tidak', 'value' => 'tidak']]" wire:model="publish" />
+
+                <div class="mt-6 flex justify-end gap-2">
                     <a class="btn btn-ghost" href="{{ route('post.index') }}" wire:navigate>Batal</a>
                     <button class="btn btn-primary" type="submit">Simpan</button>
                 </div>

@@ -63,7 +63,7 @@ new class extends Component {
 
         $this->post->update($data);
 
-        $this->toast()->success('Pamflet berhasil diperbarui')->send();
+        $this->toast()->success('Pamflet berhasil diperbarui')->flash()->send();
         return $this->redirect(route('post.index'), navigate: true);
     }
 };
@@ -87,20 +87,20 @@ new class extends Component {
         <x-card class="bg-white">
             <form class="space-y-4" wire:submit="save">
                 <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
-                    <x-input label="Judul" placeholder="Masukkan judul pamflet" wire:model.blur="judul" />
-
-                    <x-upload label="Gambar" wire:model="gambar" accept="image/*"
-                        hint="Kosongkan jika tidak ingin mengubah gambar. Maksimal 2MB"
-                    >
-                        @if ($gambar)
-                            <img class="mt-2 h-32 w-full rounded object-cover shadow-sm" src="{{ $gambar->temporaryUrl() }}">
-                        @elseif ($existing_gambar)
-                            <img class="mt-2 h-32 w-full rounded border object-cover shadow-sm" src="{{ Storage::url($existing_gambar) }}">
-                        @endif
-                    </x-upload>
-                    <x-textarea label="Isi Pamflet" placeholder="Tuliskan isi pamflet di sini..." wire:model="isi" rows="10" />
-                    <x-select.native label="Publish" :options="[['label' => 'Ya', 'value' => 'ya'], ['label' => 'Tidak', 'value' => 'tidak']]" wire:model="publish" />
+                    <div class="space-y-4">
+                        <x-input label="Judul" placeholder="Masukkan judul pamflet" wire:model="judul" />
+                    </div>
+                    <div class="space-y-4">
+                        <x-upload label="Gambar" wire:model="gambar" accept="image/*"
+                            hint="Kosongkan jika tidak ingin mengubah gambar. Maksimal 2MB"
+                        />
+                    </div>
                 </div>
+
+                <x-textarea label="Isi Pamflet" placeholder="Tuliskan isi pamflet di sini..." wire:model="isi" rows="10" />
+
+                <x-select.native label="Publish" :options="[['label' => 'Ya', 'value' => 'ya'], ['label' => 'Tidak', 'value' => 'tidak']]" wire:model="publish" />
+
                 <div class="mt-6 flex justify-end gap-2">
                     <a class="btn btn-ghost" href="{{ route('post.index') }}" wire:navigate>Batal</a>
                     <button class="btn btn-primary" type="submit">Simpan Perubahan</button>

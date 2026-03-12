@@ -2,9 +2,9 @@
 
 namespace App\Providers;
 
-use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 use Livewire\Blaze\Blaze;
+use TallStackUi\Facades\TallStackUi;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -24,5 +24,10 @@ class AppServiceProvider extends ServiceProvider
         Blaze::optimize()
             ->in(resource_path('views/components'))
             ->in(resource_path('views/pages'));
+
+
+        TallStackUi::customize()
+            ->globals()
+            ->colorful(toast: true, dialog: false);
     }
 }

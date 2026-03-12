@@ -138,19 +138,15 @@ new class extends Component
             </x-table>
         </div>
     </div>
-
-    @push('scripts')
-    <script>
-        document.addEventListener('livewire:initialized', () => {
-            @this.$js.confirmDelete = (id, judul) => {
-                $tsui.interaction('dialog')
-                    .wireable()
-                    .question('Hapus Pamflet?', 'Apakah Anda yakin ingin menghapus pamflet "' + judul + '"?')
-                    .cancel('Batal')
-                    .confirm('Ya, Hapus', 'delete', id)
-                    .send();
-            }
-        });
-    </script>
-    @endpush
 </div>
+
+<script>
+    this.$js.confirmDelete = (id, nama) => {
+        $tsui.interaction('dialog')
+            .wireable()
+            .question('Hapus Pamflet?', 'Apakah Anda yakin ingin menghapus pamflet "' + nama + '"?')
+            .cancel('Kembali')
+            .confirm('Ya, Hapus', 'delete', id)
+            .send();
+    }
+</script>

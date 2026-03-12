@@ -9,10 +9,46 @@
     <link type="image/svg+xml" href="{{ asset('favicon/favicon.svg') }}" rel="icon" />
     <link href="{{ asset('favicon/favicon.ico') }}" rel="shortcut icon" />
     <link href="{{ asset('favicon/apple-touch-icon.png') }}" rel="apple-touch-icon" sizes="180x180" />
-    <meta name="apple-mobile-web-app-title" content="MyWebSite" />
     <link href="{{ asset('favicon/manifest.json') }}" rel="manifest" />
     <link href="https://fonts.bunny.net" rel="preconnect">
     <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600,700&display=swap" rel="stylesheet" />
+    <meta name="apple-mobile-web-app-title" content="RME" />
+
+    {{-- ═══════════════════════════════════════════
+     SEO & GEO META TAGS
+     ═══════════════════════════════════════════ --}}
+
+    {{-- Primary SEO --}}
+    <meta name="description"
+        content="Praktek Dokter Kandungan dr. Wongso Suhendro, SpOG di Jl. Jendral Sudirman No.50a, Kabupaten Sumenep, Jawa Timur. Konsultasi kehamilan, USG, dan kesehatan reproduksi wanita."
+    >
+    <meta name="keywords"
+        content="dokter kandungan sumenep, dokter obgyn sumenep, SpOG sumenep, dokter kehamilan sumenep, USG kehamilan sumenep, klinik kandungan sumenep, dr wongso suhendro"
+    >
+    <meta name="author" content="dr. Wongso Suhendro, SpOG">
+    <meta name="robots" content="index, follow">
+    <link href="{{ url()->current() }}" rel="canonical">
+
+    {{-- Open Graph (Facebook, WhatsApp, Telegram) --}}
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:title" content="Praktek Dokter Kandungan dr. Wongso Suhendro, SpOG - Sumenep">
+    <meta property="og:description" content="Konsultasi kehamilan, USG, dan kesehatan reproduksi wanita di Kabupaten Sumenep, Jawa Timur.">
+    <meta property="og:image" content="{{ asset('favicon/apple-touch-icon.png') }}">
+    <meta property="og:locale" content="id_ID">
+    <meta property="og:site_name" content="{{ config('app.name', 'RME') }}">
+
+    {{-- Twitter Card --}}
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Praktek Dokter Kandungan dr. Wongso Suhendro, SpOG – Sumenep">
+    <meta name="twitter:description" content="Konsultasi kehamilan, USG, dan kesehatan reproduksi wanita di Kabupaten Sumenep, Jawa Timur.">
+    <meta name="twitter:image" content="{{ asset('favicon/apple-touch-icon.png') }}">
+
+    {{-- GEO Tags --}}
+    <meta name="geo.region" content="ID-JI">
+    <meta name="geo.placename" content="Kabupaten Sumenep, Jawa Timur, Indonesia">
+    <meta name="geo.position" content="-7.0167;113.8667">
+    <meta name="ICBM" content="-7.0167, 113.8667">
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
@@ -35,7 +71,7 @@
     </style>
 </head>
 
-<body class="min-h-screen  bg-[#f8faff] text-slate-900 antialiased" x-data="{ selectedPost: null }" x-cloak>
+<body class="min-h-screen bg-[#f8faff] text-slate-900 antialiased" x-data="{ selectedPost: null }" x-cloak>
     <x-toast />
     <x-dialog />
 
@@ -58,18 +94,20 @@
         @endauth
     </header>
 
-    <main class="z-10 px-4 pb-6 pt-16">
+    <main class="z-10 min-h-screen px-4 pb-6 pt-16">
         <div class="mx-auto max-w-4xl">
 
             {{-- Hero --}}
             <div class="mb-4 text-center">
-                <h1 class="text-lg font-black leading-tight tracking-tight text-blue-900">
+                <h1 class="text-lg font-black leading-tight tracking-tight text-slate-900">
                     Praktek Dokter Kandungan
                     <br>
                     <span class="relative inline-block">
                         <span class="relative z-10 text-2xl text-blue-600">dr. Wongso Suhendro, SpOG</span>
-                        <svg class="-z-1 absolute -bottom-1 left-0 h-2 w-full text-blue-200" viewBox="0 0 100 10"
-                            preserveAspectRatio="none">
+                        {{-- FIX: ganti -z-1 (tidak valid) ke style="z-index:-1" --}}
+                        <svg class="absolute -bottom-1 left-0 h-2 w-full text-blue-200" style="z-index:-1" viewBox="0 0 100 10"
+                            preserveAspectRatio="none"
+                        >
                             <path
                                 d="M0,5 Q25,0 50,5 T100,5"
                                 stroke="currentColor"
@@ -89,13 +127,11 @@
                 $posts = \App\Models\Post::where('publish', 'ya')->latest()->take(6)->get();
             @endphp
 
-            {{-- Grid scroll bebas, gambar kotak fix --}}
             <div class="grid grid-cols-2 gap-3 p-5 sm:grid-cols-3">
                 @forelse ($posts as $post)
-                    <div class="group cursor-pointer overflow-hidden rounded-[2rem] sm:rounded-[4rem] border border-slate-100 bg-white shadow-[0_4px_15px_rgb(0,0,0,0.05)] transition-all duration-500 hover:shadow-[0_12px_30px_rgba(59,130,246,0.12)]"
+                    <div class="group cursor-pointer overflow-hidden rounded-[3rem] border border-slate-100 bg-white shadow-[0_4px_15px_rgb(0,0,0,0.05)] transition-all duration-500 hover:shadow-[0_12px_30px_rgba(59,130,246,0.12)]"
                         x-on:click="selectedPost = {{ $post->toJson() }}"
                     >
-                        {{-- aspect-[3/4] agar kotak portrait konsisten di semua device --}}
                         <div class="relative aspect-square w-full overflow-hidden">
                             @if ($post->gambar)
                                 <img class="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
@@ -111,7 +147,7 @@
                             @endif
                             <div
                                 class="absolute inset-0 flex items-end bg-gradient-to-t from-black/60 via-transparent to-transparent p-3 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                                <span class="flex items-center gap-1 text-xs font-bold text-white m-5">
+                                <span class="flex items-center gap-1 text-xs font-bold text-white">
                                     Lihat Detail <i class="ti ti-arrow-right text-xs"></i>
                                 </span>
                             </div>
@@ -129,6 +165,7 @@
             </div>
         </div>
     </main>
+
     {{-- Detail Modal --}}
     <template x-if="selectedPost">
         <div
@@ -149,15 +186,15 @@
                 x-transition:enter-end="opacity-100 scale-100 translate-y-0"
             >
                 <button
-                    class="absolute right-6 top-6 z-[110] flex h-10 w-10 items-center justify-center rounded-full border border-white/30 bg-white/20 text-white shadow-lg backdrop-blur-md transition-all duration-300 hover:bg-white hover:text-red-500 md:border-transparent md:bg-slate-100/50 md:text-slate-500 md:hover:bg-slate-200"
+                    class="absolute right-6 top-6 z-[110] flex h-10 w-10 items-center justify-center rounded-full bg-white/80 text-slate-600 shadow-lg backdrop-blur-md transition-all duration-300 hover:bg-white hover:text-red-500"
                     x-on:click="selectedPost = null"
                 >
                     <i class="ti ti-x text-xl"></i>
                 </button>
 
-                <div class="relative h-[40vh] w-full overflow-hidden bg-slate-100 md:h-auto md:w-[45%]">
-                    <img class="h-full w-full object-cover" alt="" :src="'/storage/' + selectedPost.gambar">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+                {{-- FIX: Gambar full tanpa crop, pakai object-contain --}}
+                <div class="flex w-full items-center justify-center overflow-hidden bg-slate-950 md:w-[45%]">
+                    <img class="h-auto max-h-[92vh] w-full object-contain" alt="" :src="'/storage/' + selectedPost.gambar">
                 </div>
 
                 <div class="custom-scrollbar flex w-full flex-col overflow-y-auto p-10 md:w-[55%] md:p-14">
@@ -167,7 +204,8 @@
                             Infografis Digital
                         </div>
                         <h2 class="mb-5 text-3xl font-black leading-[1.1] text-slate-900 md:text-4xl" x-text="selectedPost.judul"></h2>
-                        <div class="flex items-center gap-4 self-start rounded-xl bg-slate-50 px-4 py-2.5 text-sm font-bold text-slate-400">
+                        <div
+                            class="flex items-center gap-4 self-start rounded-xl bg-slate-50 px-4 py-2.5 text-sm font-bold text-slate-400">
                             <span class="flex items-center gap-2">
                                 <i class="ti ti-calendar text-base text-blue-500"></i>
                                 <span
