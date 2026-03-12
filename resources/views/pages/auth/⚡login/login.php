@@ -17,6 +17,13 @@ new class extends Component
         'password' => 'required',
     ];
 
+    public function mount()
+    {
+        if (Auth::check()) {
+            return redirect()->route('dashboard');
+        }
+    }
+    
     public function authenticate()
     {
         $this->validate();

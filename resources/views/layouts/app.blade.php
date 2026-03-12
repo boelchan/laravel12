@@ -51,7 +51,7 @@
                                     <a class="{{ Str::startsWith(url()->current(), url('dashboard')) ? 'menu-active' : '' }}"
                                         href={{ route('dashboard') }}
                                     >
-                                        <i class="ti ti-layout-grid text-lg"></i>Dashboard</a>
+                                        <i class="ti ti-layout-dashboard text-lg"></i>Dashboard</a>
                                 </li>
                             @endauth
 
@@ -105,8 +105,12 @@
                                 </li>
                             @endcan 
 
-                            @can('posting-pamflet')
                             <h2 class="menu-title mt-4">Informasi</h2>
+                            <li>
+                                <a href='/' >
+                                    <i class="ti ti-external-link text-lg"></i>Halaman depan</a>
+                            </li>
+                            @can('posting-pamflet')
                             <li>
                                 <a class="{{ Str::startsWith(url()->current(), url('post')) ? 'menu-active' : '' }}"
                                     href="{{ route('post.index') }}" wire:navigate
@@ -182,52 +186,66 @@
             <!-- Mobile Header -->
             @auth()
                 <header
-                    class="sticky left-0 right-0 top-0 z-20 m-2 flex items-center justify-between rounded-3xl bg-white/10 p-1 shadow-[0_2px_6px_rgba(99,102,241,0.08),0_4px_10px_rgba(0,0,0,0.06)] backdrop-blur-2xl lg:hidden"
+                    class="sticky left-0 right-0 top-0 z-20 m-2 flex items-center justify-between rounded-3xl bg-white/10 p-1 px-3 shadow-[0_2px_6px_rgba(99,102,241,0.08),0_4px_10px_rgba(0,0,0,0.06)] backdrop-blur-2xl lg:hidden"
                 >
-                    <button class="btn btn-ghost btn-circle" id="hamburger-btn">
-                        <svg
-                            class="h-6 w-6"
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                        >
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7" />
-                        </svg>
-                    </button>
-                    <div class="flex items-center gap-2 text-xl font-bold text-slate-900">
-                        <a href="{{ route('dashboard') }}">
-                            <div class="flex items-center justify-center">
-                                <img class="h-8" src="{{ asset('logo/rme-logo.png') }}" alt="logo">
-                            </div>
-                        </a>
-                    </div>
-                    <div class="dropdown dropdown-end z-50">
-                        <div class="btn btn-ghost btn-circle border-0" role="button" tabindex="0">
-                            <x-icon class="h-6 w-6" name="user-circle" outline />
-                        </div>
-                        @auth
-                            <ul class="z-100 menu dropdown-content menu-sm rounded-box bg-base-100 my-3 w-48 border border-slate-200 p-2"
-                                tabindex="0"
+                    <div class="flex items-center gap-1">
+                        <button class="btn btn-ghost btn-circle" id="hamburger-btn">
+                            <svg
+                                class="h-6 w-6"
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
                             >
-                                <!-- User Info -->
-                                <li class="py-1">
-                                    <span class="my-0 font-semibold uppercase">{{ Auth::user()?->name }}</span>
-                                    <span class="text-xs text-slate-500">{{ Auth::user()?->email }}</span>
-                                </li>
-                                <div class="divider m-0"></div>
-                                <li>
-                                    <a href="{{ route('account') }}" wire:navigate> <i class="ti ti-user-edit text-lg"></i> Akun </a>
-                                </li>
-                                <li>
-                                    <a class="text-red-500 hover:bg-red-50 hover:text-red-600" href="#"
-                                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
-                                    >
-                                        <i class="ti ti-logout text-lg"></i> Log out
-                                    </a>
-                                </li>
-                            </ul>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7" />
+                            </svg>
+                        </button>
+                        <div class="flex items-center gap-2 text-xl font-bold text-slate-900">
+                            <a href="{{ route('dashboard') }}">
+                                <div class="flex items-center justify-center">
+                                    <img class="h-8" src="{{ asset('logo/rme-logo.png') }}" alt="logo">
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-1">
+                        @auth
+                            <a href="{{ route('encounter.index') }}" class="btn btn-ghost btn-circle" wire:navigate>
+                                <i class="ti ti-calendar-check text-2xl"></i>
+                            </a>
+                            <a href="{{ route('patient.index') }}" class="btn btn-ghost btn-circle" wire:navigate>
+                                <i class="ti ti-users text-2xl"></i>
+                            </a>
                         @endauth
+
+                        <div class="dropdown dropdown-end z-50">
+                            <div class="btn btn-ghost btn-circle" role="button" tabindex="0">
+                                <i class="ti ti-user-circle text-2xl"></i>
+                            </div>
+                            @auth
+                                <ul class="z-100 menu dropdown-content menu-sm rounded-box bg-base-100 my-3 w-48 border border-slate-200 p-2"
+                                    tabindex="0"
+                                >
+                                    <!-- User Info -->
+                                    <li class="py-1">
+                                        <span class="my-0 font-semibold uppercase">{{ Auth::user()?->name }}</span>
+                                        <span class="text-xs text-slate-500">{{ Auth::user()?->email }}</span>
+                                    </li>
+                                    <div class="divider m-0"></div>
+                                    <li>
+                                        <a href="{{ route('account') }}" wire:navigate> <i class="ti ti-user-edit text-lg"></i> Akun </a>
+                                    </li>
+                                    <li>
+                                        <a class="text-red-500 hover:bg-red-50 hover:text-red-600" href="#"
+                                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
+                                        >
+                                            <i class="ti ti-logout text-lg"></i> Log out
+                                        </a>
+                                    </li>
+                                </ul>
+                            @endauth
+                        </div>
                     </div>
                 </header>
             @endauth

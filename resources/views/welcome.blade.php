@@ -336,7 +336,7 @@
                 <p class="mx-auto mt-2 max-w-xl text-xs font-medium text-slate-400">
                     Jl. Jendral Sudirman No.50a Sumenep, Jawa Timur
                     <a href="https://maps.app.goo.gl/nJcEaiUD8A6VreyQ7" target="_blank" >
-                        <i class="ti ti-location text-red-500 text-lg"></i>
+                        <i class="ti ti-brand-telegram text-red-500 text-lg"></i>
                     </a>
                 </p>
             </div>
@@ -361,7 +361,7 @@
                                     <p class="text-xs font-medium text-slate-400">No Image</p>
                                 </div>
                             @endif
-                            <div class="absolute inset-0 flex items-end bg-gradient-to-t from-black/60 via-transparent to-transparent p-3 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                            <div class="absolute inset-0 flex items-end bg-gradient-to-t from-black/60 via-transparent to-transparent p-5 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
                                 <span class="flex items-center gap-1 text-xs font-bold text-white">
                                     Lihat Detail <i class="ti ti-arrow-right text-xs"></i>
                                 </span>
@@ -408,35 +408,24 @@
                 </button>
 
                 <!-- Gambar full tanpa crop -->
-                <div class="flex w-full items-center justify-center overflow-hidden bg-slate-950 md:w-[45%]">
+                <div class="flex w-full items-center aspect-square justify-center overflow-hidden bg-slate-950 md:w-[45%]">
                     <img class="h-auto max-h-[92vh] w-full object-contain" alt="" :src="'/storage/' + selectedPost.gambar">
                 </div>
 
-                <div class="custom-scrollbar flex w-full flex-col overflow-y-auto p-10 md:w-[55%] md:p-14">
-                    <div class="mb-8">
-                        <div class="mb-5 inline-flex items-center gap-2 rounded-xl bg-blue-50 px-4 py-1.5 text-xs font-black uppercase tracking-[0.2em] text-blue-600">
-                            Infografis Digital
-                        </div>
-                        <h2 class="mb-5 text-3xl font-black leading-[1.1] text-slate-900 md:text-4xl"
-                            x-text="selectedPost.judul"></h2>
-                        <div class="flex items-center gap-4 self-start rounded-xl bg-slate-50 px-4 py-2.5 text-sm font-bold text-slate-400">
+                <div class="custom-scrollbar flex w-full flex-col overflow-y-auto p-8 md:w-[55%]">
+                    <div class="mb-5">
+                        <div class="flex items-center gap-4 self-start rounded-xl bg-slate-50 text-sm font-bold text-slate-400">
                             <span class="flex items-center gap-2">
                                 <i class="ti ti-calendar text-base text-blue-500"></i>
                                 <span x-text="new Date(selectedPost.created_at).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })"></span>
                             </span>
                         </div>
+                        <h2 class="mb-3 text-lg font-black leading-[1.1] text-slate-900 md:text-4xl"
+                            x-text="selectedPost.judul"></h2>
                     </div>
 
                     <div class="prose prose-slate max-w-none text-base leading-relaxed text-slate-600"
-                        x-html="selectedPost.isi.replace(/\n/g, '<br>')"></div>
-
-                    <div class="mt-12 border-t border-slate-100 pt-8">
-                        <button
-                            class="flex h-14 w-full items-center justify-center rounded-2xl bg-slate-900 text-base font-black text-white shadow-xl shadow-slate-900/10 transition-colors duration-300 hover:bg-blue-600"
-                            x-on:click="selectedPost = null"
-                        >
-                            Tutup
-                        </button>
+                        x-html="selectedPost.isi.replace(/\n/g, '<br>')">
                     </div>
                 </div>
             </div>
