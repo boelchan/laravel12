@@ -1,24 +1,18 @@
 <!DOCTYPE html>
-<html
-    class="light"
-    lang="{{ str_replace('_', '-', app()->getLocale()) }}"
->
+<html class="light" lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
     <meta charset="utf-8">
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1"
-    >
-    <title>{{ config('app.name', 'Pamflet Digital') }}</title>
-    <link
-        href="https://fonts.bunny.net"
-        rel="preconnect"
-    >
-    <link
-        href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600,700&display=swap"
-        rel="stylesheet"
-    />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ config('app.name', 'RME') }}</title>
+    <link type="image/png" href="{{ asset('favicon/favicon-96x96.png') }}" rel="icon" sizes="96x96" />
+    <link type="image/svg+xml" href="{{ asset('favicon/favicon.svg') }}" rel="icon" />
+    <link href="{{ asset('favicon/favicon.ico') }}" rel="shortcut icon" />
+    <link href="{{ asset('favicon/apple-touch-icon.png') }}" rel="apple-touch-icon" sizes="180x180" />
+    <meta name="apple-mobile-web-app-title" content="MyWebSite" />
+    <link href="{{ asset('favicon/manifest.json') }}" rel="manifest" />
+    <link href="https://fonts.bunny.net" rel="preconnect">
+    <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600,700&display=swap" rel="stylesheet" />
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
@@ -41,27 +35,21 @@
     </style>
 </head>
 
-<body
-    class=" bg-[#f8faff] text-slate-900 antialiased"
-    x-data="{ selectedPost: null }"
-    x-cloak
->
+<body class="min-h-screen  bg-[#f8faff] text-slate-900 antialiased" x-data="{ selectedPost: null }" x-cloak>
     <x-toast />
     <x-dialog />
 
     <!-- Navigation -->
     <header class="fixed left-0 right-0 top-0 z-50 flex justify-end px-6 py-3">
         @auth
-            <a
-                class="group flex items-center gap-2 text-sm font-semibold text-slate-600 transition hover:text-blue-700"
+            <a class="group flex items-center gap-2 text-sm font-semibold text-slate-600 transition hover:text-blue-700"
                 href="{{ url('/dashboard') }}"
             >
                 Dashboard
                 <i class="ti ti-arrow-right transition-transform group-hover:translate-x-1"></i>
             </a>
         @else
-            <a
-                class="group flex items-center gap-2 text-sm font-semibold text-slate-600 transition hover:text-blue-700"
+            <a class="group flex items-center gap-2 text-sm font-semibold text-slate-600 transition hover:text-blue-700"
                 href="{{ route('login') }}"
             >
                 Log in
@@ -70,18 +58,25 @@
         @endauth
     </header>
 
-    <main class="z-10 px-4 pt-16 pb-6">
+    <main class="z-10 px-4 pb-6 pt-16">
         <div class="mx-auto max-w-4xl">
-    
+
             {{-- Hero --}}
             <div class="mb-4 text-center">
-                <h1 class="text-lg font-black leading-tight tracking-tight text-slate-900">
+                <h1 class="text-lg font-black leading-tight tracking-tight text-blue-900">
                     Praktek Dokter Kandungan
                     <br>
                     <span class="relative inline-block">
                         <span class="relative z-10 text-2xl text-blue-600">dr. Wongso Suhendro, SpOG</span>
-                        <svg class="-z-1 absolute -bottom-1 left-0 h-2 w-full text-blue-200" viewBox="0 0 100 10" preserveAspectRatio="none">
-                            <path d="M0,5 Q25,0 50,5 T100,5" stroke="currentColor" stroke-width="8" fill="none" stroke-linecap="round"/>
+                        <svg class="-z-1 absolute -bottom-1 left-0 h-2 w-full text-blue-200" viewBox="0 0 100 10"
+                            preserveAspectRatio="none">
+                            <path
+                                d="M0,5 Q25,0 50,5 T100,5"
+                                stroke="currentColor"
+                                stroke-width="8"
+                                fill="none"
+                                stroke-linecap="round"
+                            />
                         </svg>
                     </span>
                 </h1>
@@ -89,25 +84,22 @@
                     Jl. Jendral Sudirman No.50a, Kabupaten Sumenep, Jawa Timur
                 </p>
             </div>
-    
+
             @php
                 $posts = \App\Models\Post::where('publish', 'ya')->latest()->take(6)->get();
             @endphp
-    
+
             {{-- Grid scroll bebas, gambar kotak fix --}}
-            <div class="grid grid-cols-2 gap-3 sm:grid-cols-3 p-5">
+            <div class="grid grid-cols-2 gap-3 p-5 sm:grid-cols-3">
                 @forelse ($posts as $post)
-                    <div
-                        class="group cursor-pointer overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-[0_4px_15px_rgb(0,0,0,0.05)] transition-all duration-500 hover:shadow-[0_12px_30px_rgba(59,130,246,0.12)]"
+                    <div class="group cursor-pointer overflow-hidden rounded-[2rem] sm:rounded-[4rem] border border-slate-100 bg-white shadow-[0_4px_15px_rgb(0,0,0,0.05)] transition-all duration-500 hover:shadow-[0_12px_30px_rgba(59,130,246,0.12)]"
                         x-on:click="selectedPost = {{ $post->toJson() }}"
                     >
                         {{-- aspect-[3/4] agar kotak portrait konsisten di semua device --}}
                         <div class="relative aspect-square w-full overflow-hidden">
                             @if ($post->gambar)
-                                <img
-                                    class="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                                    src="{{ Storage::url($post->gambar) }}"
-                                    alt="{{ $post->judul }}"
+                                <img class="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                                    src="{{ Storage::url($post->gambar) }}" alt="{{ $post->judul }}"
                                 >
                             @else
                                 <div class="absolute inset-0 flex flex-col items-center justify-center gap-2 bg-slate-50">
@@ -117,8 +109,9 @@
                                     <p class="text-xs font-medium text-slate-400">No Image</p>
                                 </div>
                             @endif
-                            <div class="absolute inset-0 flex items-end bg-gradient-to-t from-black/60 via-transparent to-transparent p-3 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                                <span class="flex items-center gap-1 text-xs font-bold text-white">
+                            <div
+                                class="absolute inset-0 flex items-end bg-gradient-to-t from-black/60 via-transparent to-transparent p-3 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                                <span class="flex items-center gap-1 text-xs font-bold text-white m-5">
                                     Lihat Detail <i class="ti ti-arrow-right text-xs"></i>
                                 </span>
                             </div>
@@ -163,11 +156,7 @@
                 </button>
 
                 <div class="relative h-[40vh] w-full overflow-hidden bg-slate-100 md:h-auto md:w-[45%]">
-                    <img
-                        class="h-full w-full object-cover"
-                        alt=""
-                        :src="'/storage/' + selectedPost.gambar"
-                    >
+                    <img class="h-full w-full object-cover" alt="" :src="'/storage/' + selectedPost.gambar">
                     <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
                 </div>
 
@@ -177,10 +166,7 @@
                             class="mb-5 inline-flex items-center gap-2 rounded-xl bg-blue-50 px-4 py-1.5 text-xs font-black uppercase tracking-[0.2em] text-blue-600">
                             Infografis Digital
                         </div>
-                        <h2
-                            class="mb-5 text-3xl font-black leading-[1.1] text-slate-900 md:text-4xl"
-                            x-text="selectedPost.judul"
-                        ></h2>
+                        <h2 class="mb-5 text-3xl font-black leading-[1.1] text-slate-900 md:text-4xl" x-text="selectedPost.judul"></h2>
                         <div class="flex items-center gap-4 self-start rounded-xl bg-slate-50 px-4 py-2.5 text-sm font-bold text-slate-400">
                             <span class="flex items-center gap-2">
                                 <i class="ti ti-calendar text-base text-blue-500"></i>
@@ -191,8 +177,7 @@
                         </div>
                     </div>
 
-                    <div
-                        class="prose prose-slate max-w-none text-base leading-relaxed text-slate-600"
+                    <div class="prose prose-slate max-w-none text-base leading-relaxed text-slate-600"
                         x-html="selectedPost.isi.replace(/\n/g, '<br>')"
                     ></div>
 
