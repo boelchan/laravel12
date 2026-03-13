@@ -20,6 +20,7 @@ enum StatusEncounterEnum: string
             static::CANCELLED => 'Batal',
         };
     }
+
     public function badge(): string
     {
         return match ($this) {
@@ -28,6 +29,17 @@ enum StatusEncounterEnum: string
             static::INPROGRESS => '<span class="badge badge-soft badge-warning h-auto">' . static::INPROGRESS->label() . '</span>',
             static::FINISHED => '<span class="badge badge-soft badge-success h-auto">' . static::FINISHED->label() . '</span>',
             static::CANCELLED => '<span class="badge badge-soft badge-error h-auto">' . static::CANCELLED->label() . '</span>',
+        };
+    }
+
+    public function color(): string
+    {
+        return match ($this) {
+            static::REGISTERED => 'info',
+            static::ARRIVED => 'primary',
+            static::INPROGRESS => 'warning',
+            static::FINISHED => 'success',
+            static::CANCELLED => 'error',
         };
     }
 

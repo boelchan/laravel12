@@ -108,7 +108,7 @@
                             <h2 class="menu-title mt-4">Informasi</h2>
                             <li>
                                 <a href='/' >
-                                    <i class="ti ti-external-link text-lg"></i>Halaman depan</a>
+                                    <i class="ti ti-external-link text-lg"></i>Lihat Website</a>
                             </li>
                             @can('posting-pamflet')
                             <li>

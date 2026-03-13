@@ -52,7 +52,7 @@ new class extends Component {
 
                     <div class="flex flex-wrap gap-4 border-b border-slate-200 bg-slate-50/30 p-4">
                         <div class="flex items-center gap-2 pr-4">
-                            <div class="bg-primary/10 text-primary flex h-8 w-8 items-center justify-center rounded-full">
+                            <div class="bg-{{ $enc->status_color }} flex h-8 w-8 items-center justify-center rounded-full">
                                 <i class="ti ti-calendar-event text-lg"></i>
                             </div>
                             <div>

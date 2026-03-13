@@ -29,8 +29,12 @@ new class extends Component
     public $documents = [];
     public $uploads = [];
 
-    public function mount(Encounter $encounter)
+    public function mount(Encounter $encounter, String $uuid)
     {
+        if ($uuid != $encounter->uuid) {
+            return to_route('encounter.index');
+        }
+
         $this->encounter = $encounter->load('vitalSign', 'anthropometry');
 
         $this->chief_complaint = $this->encounter->chief_complaint;

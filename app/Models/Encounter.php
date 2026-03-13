@@ -73,4 +73,9 @@ class Encounter extends Model
     {
         return StatusEncounterEnum::from($this->status)->badge();
     }
+
+    public function getStatusColorAttribute()
+    {
+        return StatusEncounterEnum::from($this->status)->color();
+    }
 }
