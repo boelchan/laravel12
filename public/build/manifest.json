@@ -1,18 +1,18 @@
 {
   "node_modules/@tabler/icons-webfont/dist/fonts/tabler-icons.ttf": {
-    "file": "assets/tabler-icons-Dn3R26UZ.ttf",
+    "file": "assets/tabler-icons-B7zcV7B8.ttf",
     "src": "node_modules/@tabler/icons-webfont/dist/fonts/tabler-icons.ttf"
   },
   "node_modules/@tabler/icons-webfont/dist/fonts/tabler-icons.woff": {
-    "file": "assets/tabler-icons-CirSC-uA.woff",
+    "file": "assets/tabler-icons-Ce-u4wkP.woff",
     "src": "node_modules/@tabler/icons-webfont/dist/fonts/tabler-icons.woff"
   },
   "node_modules/@tabler/icons-webfont/dist/fonts/tabler-icons.woff2": {
-    "file": "assets/tabler-icons-DKcxLl4S.woff2",
+    "file": "assets/tabler-icons-DM-Th6Ap.woff2",
     "src": "node_modules/@tabler/icons-webfont/dist/fonts/tabler-icons.woff2"
   },
   "resources/css/app.css": {
-    "file": "assets/app-35JWJXru.css",
+    "file": "assets/app-Be6kGPUx.css",
     "src": "resources/css/app.css",
     "isEntry": true,
     "name": "app",
