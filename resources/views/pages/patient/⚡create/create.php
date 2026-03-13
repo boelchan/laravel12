@@ -159,7 +159,7 @@ new class extends Component
                 'patient_id' => $user->id,
                 'visit_date' => $this->booking_date,
             ]);
-            $this->toast()->success('Pasien berhasil ditambahkan')->send();
+            $this->toast()->success('Pasien berhasil ditambahkan')->flash()->send();
             return to_route('encounter.index', ['search_visit_date' => $this->booking_date]);
         }
 

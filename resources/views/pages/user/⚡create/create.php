@@ -47,7 +47,7 @@ new class extends Component
 
         $user->assignRole($this->role);
 
-        $this->toast()->success('User berhasil ditambahkan')->send();
+        $this->toast()->success('User berhasil ditambahkan')->flash()->send();
 
         return to_route('user');
     }
