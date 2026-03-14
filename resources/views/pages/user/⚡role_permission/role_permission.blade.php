@@ -82,9 +82,11 @@
                         @endforeach
                     </div>
 
-                    <div class="mt-auto">
-                        <livewire:user.permission_form />
-                    </div>
+                    @if (env('APP_ENV') == 'local')
+                        <div class="mt-auto">
+                            <livewire:user.permission_form />
+                        </div>
+                    @endif
                 </div>
             </div>
 
