@@ -26,7 +26,7 @@
                                     <i class="ti ti-users text-lg"></i>
                                 </button>
 
-                                @if (env('APP_ENV') != 'production' || !in_array($role->name, ['administrator', 'dokter', 'bidan', 'apoteker']))
+                                @if (env('APP_ENV') == 'local' || !in_array($role->name, ['administrator', 'dokter', 'bidan', 'apoteker']))
                                     <button class="btn btn-primary btn-soft btn-xs btn-square tooltip tooltip-top" data-tip="Edit Role"
                                         wire:click="dispatch('role-edit', { role_id: {{ $role->id }} })"
                                     >
@@ -60,7 +60,7 @@
                         @foreach ($permissions as $permission)
                             <div class="flex items-center gap-2 rounded-lg border border-white p-1 hover:border-slate-300">
                                 <div>
-                                    @if (env('APP_ENV') != 'production')
+                                    @if (env('APP_ENV') == 'local')
                                         <button class="btn btn-primary btn-soft btn-xs btn-square"
                                             wire:click="dispatch('permission-edit', { permission_id: {{ $permission->id }} })"
                                         >
