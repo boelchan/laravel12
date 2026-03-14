@@ -35,11 +35,11 @@ enum StatusEncounterEnum: string
     public function color(): string
     {
         return match ($this) {
-            static::REGISTERED => 'info',
-            static::ARRIVED => 'primary',
-            static::INPROGRESS => 'warning',
-            static::FINISHED => 'success',
-            static::CANCELLED => 'error',
+            static::REGISTERED => 'cyan-500',
+            static::ARRIVED => 'blue-500',
+            static::INPROGRESS => 'orange-500',
+            static::FINISHED => 'green-500',
+            static::CANCELLED => 'red-500',
         };
     }
 
