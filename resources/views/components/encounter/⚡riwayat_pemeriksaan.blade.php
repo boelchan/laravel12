@@ -103,6 +103,12 @@ new class extends Component {
                     <div class="card-body border-b border-slate-200 p-4">
                         <p class="font-bold">KELUHAN</p>
                         <p>{{ $enc->chief_complaint }}</p>
+                        @if ($enc->diagnosis)
+                            <div class="mt-4">
+                                <p class="font-bold">DIAGNOSA</p>
+                                <p>{{ $enc->diagnosis }}</p>
+                            </div>
+                        @endif
                     </div>
 
                     @can('kunjungan-edit-pemeriksaan')

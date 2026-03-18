@@ -23,6 +23,7 @@ new class extends Component
     public $body_weight, $body_height;
     public $hasil_text, $resep_text;
     public $chief_complaint;
+    public $diagnosis;
 
     public $hasil_signatures = [];
     public $resep_signatures = [];
@@ -38,6 +39,7 @@ new class extends Component
         $this->encounter = $encounter->load('vitalSign', 'anthropometry');
 
         $this->chief_complaint = $this->encounter->chief_complaint;
+        $this->diagnosis = $this->encounter->diagnosis;
 
         // Load TTV
         if ($this->encounter->vitalSign) {
@@ -143,6 +145,7 @@ new class extends Component
             'finished_at' => $this->encounter->finished_at ?? now(),
             'status' => StatusEncounterEnum::FINISHED,
             'chief_complaint' => $this->chief_complaint,
+            'diagnosis' => $this->diagnosis,
             'updated_by' => Auth::id(),
         ]);
 
