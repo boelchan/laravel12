@@ -128,6 +128,14 @@
                             <x-textarea wire:model="chief_complaint" rows="5" placeholder="Masukkan keluhan ..." />
                         </div>
                     </div>
+                    <div class="card border border-slate-200 bg-white">
+                        <div class="rounded-t-lg border-b border-slate-200 bg-slate-50 px-6 py-2">
+                            <h2 class="text-lg font-medium"> Diagnosa </h2>
+                        </div>
+                        <div class="card-body space-y-4">
+                            <x-textarea wire:model="diagnosis" rows="3" placeholder="Masukkan diagnosa (opsional)..." />
+                        </div>
+                    </div>
                     {{-- HASIL PEMERIKSAAN CARD --}}
                     <div class="card overflow-hidden border border-slate-200 bg-white text-slate-800">
                         <div class="rounded-t-lg border-b border-slate-200 bg-slate-50 px-6 py-2">
